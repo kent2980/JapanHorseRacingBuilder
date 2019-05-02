@@ -58,6 +58,7 @@
 					<th>R</th>
 					<th>時間</th>
 					<th>レース名</th>
+					<th>競争条件</th>
 				</tr>
 				<%
 					List<JvdRaceShosai> raceDataList = raceList.stream()
@@ -86,6 +87,13 @@
 							%>
 						</a>
 					</td>
+					<td>
+						<%
+							out.print(CodeConvert.valueOf(TrackCode.class, data.getTrackCode()).getBaba() + " ");
+							out.print(data.getKyori() + "m ");
+							out.print(data.getShussoTosu() + "頭");
+						%>
+					</td>
 				</tr>
 				<%
 					}
@@ -103,6 +111,7 @@
 					<th>R</th>
 					<th>時間</th>
 					<th>レース名</th>
+					<th>競争条件</th>
 				</tr>
 				<%
 					raceDataList = raceList.stream().filter(s -> s.getKeibajoCode().equals(keibajoCode.get(1)))
@@ -131,6 +140,13 @@
 							%>
 						</a>
 					</td>
+					<td>
+						<%
+							out.print(CodeConvert.valueOf(TrackCode.class, data.getTrackCode()).getBaba() + " ");
+							out.print(data.getKyori() + "m ");
+							out.print(data.getShussoTosu() + "頭");
+						%>
+					</td>
 				</tr>
 				<%
 					}
@@ -150,6 +166,7 @@
 					<th>R</th>
 					<th>時間</th>
 					<th>レース名</th>
+					<th>競争条件</th>
 				</tr>
 				<%
 					raceDataList = raceList.stream().filter(s -> s.getKeibajoCode().equals(keibajoCode.get(2)))
@@ -178,6 +195,13 @@
 							%>
 						</a>
 					</td>
+					<td>
+						<%
+							out.print(CodeConvert.valueOf(TrackCode.class, data.getTrackCode()).getBaba() + " ");
+							out.print(data.getKyori() + "m ");
+							out.print(data.getShussoTosu() + "頭");
+						%>
+					</td>
 				</tr>
 				<%
 					}
@@ -199,6 +223,7 @@
 				<th>開催日</th>
 				<th>競馬場</th>
 				<th>レース名</th>
+				<th>競争条件</th>
 				<th>登録頭数</th>
 			</tr>
 <%
@@ -212,6 +237,12 @@
 				<td><%out.print(dtf.format(kaisaiNengappi)); %></td>
 				<td><%out.print(CodeConvert.valueOf(KeibajoCode.class, data.getKeibajoCode()).getContent()); %></td>
 				<td><a href="racedata?racecode=<%out.print(data.getRaceCode()); %>&shubetsu=TK"><%out.print(data.getKyosomeiHondai()); %></a></td>
+				<td>
+						<%
+							out.print(CodeConvert.valueOf(TrackCode.class, data.getTrackCode()).getBaba() + " ");
+							out.print(data.getKyori() + "m ");
+						%>
+				</td>
 				<td><%out.print(data.getTorokuTosu() + "頭"); %></td>
 			</tr>
 <%

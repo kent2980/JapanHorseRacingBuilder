@@ -416,7 +416,7 @@ th,td {
 
 .tableTitle {
     margin: auto;
-    width: 1240px;
+    width: 1200px;
 			font-size: 0.9em;
 }
 .datails {
@@ -533,6 +533,190 @@ td.smallFont {
 td.srunCell {
 	width: 40px;
 }
+
+table tr:nth-child(odd){
+	background-color: #d2e2e6;
+}
+
+/******************************************************************************
+*****		ここからJHR Indexのスタイルシート		***************************************
+*******************************************************************************/
+#JHRdance th {
+	padding: 0;
+}
+#JHRdance th.wakuban {
+	width: 38px;
+}
+#JHRdance th.umaban {
+	width: 38px;
+}
+#JHRdance th.bamei{
+	width: 219px;
+}
+#JHRdance th.kishu {
+	width: 80px;
+}
+#JHRdance th.odds {
+	width: 40px;
+}
+#JHRdance th.kako {
+	width: 181px;
+	max-width: 181px;
+}
+#JHRdance th.drun {
+	width: 65px;
+}
+#JHRdance td.srun {
+    width: 32px;
+    font-size: 10px;
+		font-weight: 600;
+		line-height: 23px;
+}
+#JHRdance td.race {
+	width: 120px;
+}
+
+#JHRdance td span.bamei {
+	font-size: 17px;
+	font-weight: 600;
+	line-height: 15px;
+}
+#JHRdance td span.parent {
+	font-size: 10px;
+}
+#JHRdance td span.chokyoshi {
+    font-size: 12px;
+    line-height: 25px;
+}
+#JHRdance td span.banushi {
+	font-size: 9px;
+}
+#JHRdance td.bamei {
+line-height: 15px;
+}
+
+#JHRdance td div.bamei {
+    line-height: 25px;
+}
+
+#JHRdance span.seirei {
+    font-size: 12px;
+}
+#JHRdance td.kakoRace {
+	line-height: 15px;
+}
+#JHRdance td.kakoRace span.kyosomei {
+    font-size: 14px;
+    line-height: 22px;
+    font-weight: 600;
+}
+#JHRdance td.kakoRace span.kaisaiNengappi {
+	font-size: 10px;
+}
+#JHRdance td.kakoRace div.kyosoData {
+	font-size: 11px;
+}
+#JHRdance td.kakoRace div.resultData {
+	line-height: 20px;
+	padding-top: 3px;
+}
+#JHRdance td.kakoRace div.resultData span.result{
+	font-weight: 600;
+}
+#JHRdance td.kishumei {
+	font-size: 12px;
+	line-height: 30px;
+}
+#JHRdance div.srun {
+    background: #efeaea;
+    color: #494949;
+    width: 120px;
+    margin: auto;
+    height: 20px;
+}
+#JHRdance div.srun span {
+    line-height: 21px;
+		font-weight: 600;
+}
+/*** SRun 60以上	************/
+#JHRdance div.srun.redBack {
+    background: #ef5f47;
+    border-left: solid 5px #484848;
+    color: #ffffff;
+    -webkit-text-stroke: 1px #c1bebe;
+		text-stroke: 1px #c1bebe;
+}
+/*** SRun 55以上	************/
+#JHRdance div.srun.blueBack {
+	background: #2d6ce6;
+	border-left: solid 5px #484848;
+	color: #ffffff;
+	-webkit-text-stroke: 1px #c1bebe;
+	text-stroke: 1px #c1bebe;
+}
+/*** SRun 50以上	************/
+#JHRdance div.srun.yellowBack {
+	background: #cbec2a;
+	border-left: solid 5px #484848;
+	color: #000;
+	-webkit-text-stroke: 1px #c1bebe;
+	text-stroke: 1px #c1bebe;
+}
+/*** SRun Nothing	************/
+#JHRdance div.srun.brackBack {
+	background: #a4a6a4;
+	border-left: solid 5px #4d4d4e;
+}
+/*************************************************
+*****		srunセルのスタイル		***********************
+**************************************************/
+/***	srunクラスのdiv要素にボーダーを設定		*******/
+#JHRdance td.srun div {
+    border: solid 1px #000;
+    width: 27px;
+    margin: auto;
+}
+/***	contentクラスに背景を設定		*******/
+#JHRdance div.content {
+    background: #fff;
+}
+/***		詰脚の背景		******************/
+#JHRdance div.tsumeashi {
+    background: rgba(237, 242, 0);
+    color: #000;
+}
+/***		行脚の背景		******************/
+#JHRdance div.senko {
+    background: rgba(235, 63, 18, 0.88);
+    color: #fff;
+}/***		行脚の背景		******************/
+#JHRdance div.drun {
+    background: #2760cd;
+    color: #fff;
+}
+/***		詰脚-行脚が正の場合のセル背景		********/
+#JHRdance td.srun.redBack {
+	background: #e29a2a;
+}
+/***		詰脚-行脚が負の場合のセル背景		********/
+#JHRdance td.srun.blueBack {
+	background: #4cb0f0;
+}
+/***		値がnullの場合の背景		*********/
+#JHRdance td.srun.brackBack {
+	background: #626162;
+}
+/***	drunクラスのdiv要素にボーダーを設定		*******/
+#JHRdance td.drun div {
+    border: solid 1px #000;
+    width: 57px;
+    margin: auto;
+    line-height: 15px;
+}
+
+/******************************************************************************
+*****		ここまでJHR Indexのスタイルシート		***************************************
+*******************************************************************************/
 
 		/****テーブルの幅を調整する****/
 				th.chakujun {

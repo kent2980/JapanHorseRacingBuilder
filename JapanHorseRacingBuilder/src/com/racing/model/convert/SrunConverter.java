@@ -42,5 +42,13 @@ public class SrunConverter {
 	private void setHoseiSrun(BigDecimal hoseiSrun) {
 		this.hoseiSrun = hoseiSrun;
 	}
+	@Override
+	public String toString() {
+		if(convertSrun == null) {
+			return "SRun：Nothing";
+		}else {
+			return "SRun：" + String.valueOf(convertSrun);
+		}
+	}
 
 }

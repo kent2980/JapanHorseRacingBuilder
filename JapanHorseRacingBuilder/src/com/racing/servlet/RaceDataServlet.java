@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.racing.model.ChokyoshiMaster;
 import com.racing.model.Horse;
 import com.racing.model.KakoUmagotoRaceJoho;
+import com.racing.model.KishuMaster;
+import com.racing.model.KyosobaMaster;
 import com.racing.model.Race;
 import com.racing.model.RaceShosai;
 import com.racing.model.TokubetsuTorokuba;
@@ -28,6 +31,7 @@ public class RaceDataServlet extends HttpServlet {
 	private Race raceData;
 	private Horse horseData;
 	private KakoUmagotoRaceJoho kakoRace;
+	private KyosobaMaster kyosobaMaster;
 	private String shubetsu;
 
     /**
@@ -51,14 +55,19 @@ public class RaceDataServlet extends HttpServlet {
 			break;
 		case "RA":
 			raceData = new RaceShosai(raceCode);
-			horseData = new UmagotoRaceJoho(raceCode);
+			UmagotoRaceJoho umagotoJoho = new UmagotoRaceJoho(raceCode);
+			horseData = umagotoJoho;
+			KishuMaster kishuMaster = new KishuMaster(umagotoJoho.getKishuList());
+			request.setAttribute("kishuMaster", kishuMaster);
 		}
 
-		request.setAttribute("raceData", raceData);
-		request.setAttribute("umagoto", horseData);
 		List<String> kettoTorokuBango = horseData.getKettotorokubango();
 		kakoRace = new KakoUmagotoRaceJoho(raceCode, kettoTorokuBango);
+		kyosobaMaster = new KyosobaMaster(kettoTorokuBango);
+		request.setAttribute("raceData", raceData);
+		request.setAttribute("umagoto", horseData);
 		request.setAttribute("kakoRace", kakoRace);
+		request.setAttribute("kyosobaMaster", kyosobaMaster);
 		RequestDispatcher di = null;
 
 		switch(shubetsu) {

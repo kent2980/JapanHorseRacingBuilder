@@ -20,7 +20,7 @@
     <%
     String shubetsu = request.getParameter("shubetsu");
     Race race = (Race)request.getAttribute("raceData");
-    Horse horse = (Horse)request.getAttribute("umagoto");
+    TorokubagotoJoho horse = (TorokubagotoJoho)request.getAttribute("umagoto");
     KakoUmagotoRaceJoho kakoRace = (KakoUmagotoRaceJoho)request.getAttribute("kakoRace");
     JvdTokubetsuTorokuba raceData = (JvdTokubetsuTorokuba)race.getList().get(0);
     List<HorseData> horseData = horse.getList();
