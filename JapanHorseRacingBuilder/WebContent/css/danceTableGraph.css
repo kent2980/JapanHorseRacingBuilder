@@ -112,7 +112,10 @@ span.underGray {
 	width: 1080px;
 	margin: auto;
 }
-
+div#torokuRace {
+    width: 1080px;
+		margin: auto;
+}
 #index .torokubaButton {
 	background: #eaeee4;
 	width: 140px;
@@ -436,7 +439,7 @@ table.danceIndex {
 }
 
 .tableTitle {
-    padding: 150px;
+    padding-top: 150px;
 }
 
 .index {
@@ -958,23 +961,23 @@ font-size: 3.6em;
     border-radius: 10px 10px 10px 10px;
  	 padding: 0 0 1em 0;
 }
-
+#JHRdance div.srun {
+    font-size: 12px;
+}
 		.danceIndex {
     display: block;
     width: 100%;
 }
 
 .tableTitle {
-    margin: 0 2em 2em 2em;
-    width: auto;
 }
 
 table {
 	font-size: 1.2em;
+    margin-top: 60px;
 }
 
 table,td {
-	font-size: 1.5em;
 	height: 6em;
 }
 
@@ -983,8 +986,6 @@ table,td {
 }
 
 #index {
-	display: none;
-    margin: 0 2em;
 }
 
 #menu {
@@ -1042,7 +1043,6 @@ table,td {
 	}
 
 	table, td {
-		font-size: 0.8em;
     height: 5em;
 }
 
