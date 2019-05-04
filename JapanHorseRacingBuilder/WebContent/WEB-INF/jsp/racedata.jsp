@@ -190,7 +190,6 @@
 <div class="tableTitle">
 	<table id="kako4sou">
 		<tr>
-			<th class="wakuban">枠<p>番</th>
 			<th class="umaban">馬<p>番</th>
 			<th class="bamei">馬名</th>
 			<th class="kishu">騎手</th>
@@ -225,8 +224,7 @@
 			BigDecimal futanJuryo;
 		%>
 		<tr>
-			<td><% out.print(data.getWakuban()); %></td>
-			<td><% out.print(data.getUmaban()); %></td>
+			<td class="waku<%out.print(data.getWakuban()); %>"><% out.print(data.getUmaban()); %></td>
 			<td class="bamei">
 				<div class="bamei">
 					<span class="bamei"><% out.print(bamei); %></span>
@@ -277,10 +275,23 @@
 						}catch(NullPointerException e){
 							plus = "*";
 						}
-						String ijoKubun = view.getIjoKubunCode();
-						SrunConverter srun = new SrunConverter(view.getSrun55(), data.getFutanJuryo());
-						BigDecimal tsumeashi = view.getTsumeashi();
-						BigDecimal kohan3fChakusa = view.getKohan3fchakusa();
+						//過去走のローカル変数
+						String ijoKubun = view.getIjoKubunCode();		/**異常区分**/
+						SrunConverter srun = new SrunConverter(view.getSrun55(), data.getFutanJuryo());		/**SRun**/
+						BigDecimal tsumeashi = view.getTsumeashi();		/**詰脚**/
+						BigDecimal kohan3fChakusa = view.getKohan3fchakusa();		/**後半3F地点着差**/
+						String kyoriCompare = null;		//距離比較
+
+						//現レースと過去レースの距離を比較します
+						if(raceData.getKyori() > view.getKyori()){
+							kyoriCompare = "<div class=\"content chaBlue bold\"><span>↙</span></div>";
+						}else if(raceData.getKyori() < view.getKyori()){
+							kyoriCompare = "<div class=\"content chaRed bold\"><span>↖</span></div>";
+						}else{
+							kyoriCompare = "<div class=\"content bold\"><span>-</span></div>";
+						}
+
+						//過去4走の合算値(SRun,詰脚,後半3F地点着差)
 						if(srun.getConvertSrun() != null & ijoKubun.equals("0")){
 							srunAll.add(srun.getConvertSrun().doubleValue());
 						}
@@ -310,6 +321,8 @@
 							<div class="content"><span><% out.print(tsumeashi); %></span></div>
 							<div class="senko"><span>行脚</span></div>
 							<div class="content"><span><% out.print(kohan3fChakusa); %></span></div>
+							<div class="kyoriCompare"><span>距離</span></div>
+							<%out.print(kyoriCompare); %>
 			<%
 							}else{
 			%>
