@@ -40,6 +40,7 @@
     import="java.time.ZoneId"
     %>
     <%
+    //変数を宣言します
     String shubetsu = request.getParameter("shubetsu");
     Race race = (Race)request.getAttribute("raceData");
     UmagotoRaceJoho horse = (UmagotoRaceJoho)request.getAttribute("umagoto");
@@ -59,12 +60,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css"
 	rel="stylesheet" />
-<link href="../css/danceTableGraph.css" rel="stylesheet">
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
 <link rel="shortcut icon" href="/JapanHorseRacingBuilder/icon/kyosoba_3.ico">
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="../js/pop.js"></script>
 <script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 <title>Insert title here</title>
 </head>
