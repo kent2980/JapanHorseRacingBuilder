@@ -922,8 +922,63 @@ border-color: #dedede #666666 #666666 #dedede;
 font-size: 14px;
 font-weight: 600;
 		}
+
+		/************************************************************************/
+		/**PC画面での表示設定		***********************************************/
+		/************************************************************************/
+
+		/**		PC画面での表示設定		**/
+
+		.pc {
+			display: table-cell !important;
+		}
+		.sp {
+			display: none !important;
+		}
+		/*************************************************************************/
+		/**		ここからスマホ縦画面の表示設定		***********************************/
+		/**		********************************************************************/
+
 @media screen and (orientation: portrait) {
     /*　縦画面で適用　*/
+
+/**		テーブルの表示領域を設定します		**/
+.tableTitle {
+  margin: auto;
+  width: 100vw;
+  font-size: 14px;
+}
+
+/**		スマホ縦画面での表示設定		**/
+
+.pc {
+	display: none !important;
+}
+.sp {
+	display: table-cell !important;
+}
+
+/**		過去走の表示領域を設定します	**/
+#JHRdance th.kako {
+    width: 100px;
+    max-width: 100px;
+}
+
+/**		過去レース詳細画面の表示領域を設定します		**/
+.kakoRace {
+	width: 68px;
+	max-width: 68px;
+}
+
+/**馬名セルの表示領域を設定します		**/
+td.bamei {
+	width: 200px;
+	max-width: 200px;
+}
+
+span.ninki {
+	display: inline;
+}
 
 		#title {
     width: 100%;

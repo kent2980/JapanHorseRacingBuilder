@@ -197,16 +197,26 @@
 		<tr>
 			<th class="umaban">馬<p>番</th>
 			<th class="bamei">馬名</th>
-			<th class="kishu">騎手</th>
-			<th class="odds">人<p>気</th>
+			<th class="pc kishu">騎手</th>
+			<th class="pc odds">人<p>気</th>
 			<th colspan="2" class="kako">1走前</th>
 			<th colspan="2" class="kako">2走前</th>
 			<th colspan="2" class="kako">3走前</th>
 			<th colspan="2" class="kako">4走前</th>
 			<th class="drun">DRun</th>
 		</tr>
+
+<!-- ********************************************************************************************************* -->
+<!-- ここから出馬表の記述を始めます -->
+<!-- ********************************************************************************************************* -->
+
 		<%
 		for(HorseData dataModel : horseData){
+
+		/*************************************************************************************/
+		/** 現在のレース情報を記述します	**********************************************************/
+		/*************************************************************************************/
+
 			JvdUmagotoRaceJoho data = (JvdUmagotoRaceJoho) dataModel;
 			//競走馬マスタ
 			JvdKyosobaMaster kyosobaMasterSet = kyosobaMasterList.stream()
@@ -221,19 +231,30 @@
 			String umaban;
 			//馬名を９文字で生成します
 			String bamei = new BameiConverter(data.getBamei()).getBameiConvert();
+			//性齢を生成します
+			String seirei = CodeConvert.valueOf(SeibetsuCode.class, data.getSeibetsuCode()).getContentIsShort() + data.getBarei();
 			//父馬名を９文字で生成します
 			String father = new BameiConverter(kyosobaMasterSet.getKetto1Bamei()).getBameiConvert();
 			//母馬名を９文字で生成します
 			String mother = new BameiConverter(kyosobaMasterSet.getKetto2Bamei()).getBameiConvert();
-			String kishumeiRyakusho;
+			String kishumei = Normalizer.normalize(kishuMasterSet.getKishumei().replaceAll("　", ""), Normalizer.Form.NFKC);
+			String chokyoshi = data.getChokyoshimeiRyakusho().replaceAll("　", "");
+			String tozaiShozoku = CodeConvert.valueOf(TozaiShozokuCode.class, data.getTozaiShozokuCode()).getContentIsShort();
 			BigDecimal futanJuryo;
+			//各データ合算用の変数を準備します
+			List<Double> srunAll = new ArrayList<>();
+			List<Double> tsumeashiAll = new ArrayList<>();
+			List<Double> kohan3fChakusaAll = new ArrayList<>();
 		%>
 		<tr>
-			<td class="waku<%out.print(data.getWakuban()); %> bold"><% out.print(data.getUmaban()); %></td>
-			<td class="bamei">
+
+		<!-- デスクトップ表示用のHTML -->
+
+			<td class="pc waku<%out.print(data.getWakuban()); %> bold"><% out.print(data.getUmaban()); %></td>
+			<td class="pc bamei">
 				<div class="bamei">
 					<span class="bamei"><% out.print(bamei); %></span>
-					<span class="seirei"><%out.print(CodeConvert.valueOf(SeibetsuCode.class, data.getSeibetsuCode()).getContentIsShort()); %><%out.print(data.getBarei()); %></span>
+					<span class="seirei"><%out.print(seirei); %></span>
 				</div>
 				<span class="parent">父：<%out.print(father); %></span>
 				<br>
@@ -241,28 +262,47 @@
 				<br>
 				<span class="parent">(<%out.print(kyosobaMasterSet.getKetto5Bamei()); %>)</span>
 				<br>
-				<span class="chokyoshi"><%out.print(data.getChokyoshimeiRyakusho().replaceAll("　", "")); %>
-										(<%out.print(CodeConvert.valueOf(TozaiShozokuCode.class, data.getTozaiShozokuCode()).getContentIsShort()); %>)
+				<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)
 				</span>
 			</td>
-			<td class="kishumei">
-				<span class="kishumei"><% out.print(Normalizer.normalize(kishuMasterSet.getKishumei().replaceAll("　", ""), Normalizer.Form.NFKC)); %></span>
+			<td class="pc kishumei">
+				<span class="kishumei"><% out.print(kishumei); %></span>
 				<br>
 				<span>(<%out.print(CodeConvert.valueOf(TozaiShozokuCode.class, kishuMasterSet.getTozaiShozokuCode()).getContentIsShort()); %>)</span>
 				<br>
 				<span><%out.print(CodeConvert.valueOf(KishuMinaraiCode.class, data.getKishuMinaraiCode()).getContentKigo() + data.getFutanJuryo() + "kg"); %></span>
 			</td>
-			<td>
+			<td class="pc">
 				<span><% out.print(data.getTanshoNinkijun()); %></span>
 				<br>
 				<span>(<%out.print(data.getTanshoOdds()); %>)</span>
 			</td>
+
+		<!-- モバイル表示用のHTML -->
+			<!-- 馬番 セル-->
+			<td class="sp waku<%out.print(data.getWakuban()); %> bold"><% out.print(data.getUmaban()); %></td>
+			<!-- 馬名セル -->
+			<td class="sp mobile bamei">
+				<!-- 馬名、性齢 、調教師、所属、騎手、斤量、人気-->
+				<div class="bamei">
+					<span class="bamei"><%out.print(bamei); %></span>
+					<span class="seirei"><%out.print(seirei); %></span>
+					<br>
+					<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)</span>
+					<br>
+					<span class="kishumei"><%out.print(kishumei); %></span>
+					<span class="futanJuryo"><%out.print(data.getFutanJuryo()); %></span>
+					<br>
+					<span class="ninki"><%out.print(data.getTanshoNinkijun() + "人気"); %>(<%out.print(data.getTanshoOdds()); %>)</span>
+				</div>
+			</td>
+
+			<!-- *************************************************************************************** -->
+			<!--	ここから過去レースの記述を始めます	******************************************************** -->
+			<!-- *************************************************************************************** -->
+
 			<%
-			int t = 0;
-			List<Double> srunAll = new ArrayList<>();
-			List<Double> tsumeashiAll = new ArrayList<>();
-			List<Double> kohan3fChakusaAll = new ArrayList<>();
-			for(int i = 0; t < 4; i++){
+			for(int i = 0, t = 0; t < 4; i++){
 				try{
 					UmaDataView view = kakoList.get(i);
 					//	<<過去レースローカル変数>>	******************************************************************
@@ -347,7 +387,10 @@
 							}
 			%>
 						</td>
-						<td class="kakoRace">
+
+					<!-- デスクトップ表示用のHTML -->
+
+						<td class="pc kakoRace">
 							<span class="kaisaiNengappi"><%out.print(kakoKaisaiNengappi); %></span>
 							<br>
 							<span class="kyosomei"><%out.print(kakoKyosomei); %></span>
@@ -389,6 +432,13 @@
 								</div>
 							</div>
 						</td>
+
+					<!-- モバイル表示用のHTML -->
+
+						<td class="sp kakoRace">
+							<span><%out.print(kakoKyosomei); %></span>
+						</td>
+
 <%						}
 				}catch(IndexOutOfBoundsException e){
 					switch(t){
