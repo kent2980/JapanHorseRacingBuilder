@@ -65,7 +65,13 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
-<title>Insert title here</title>
+<title>
+	<%LocalDate kaisai_Nengappi = raceData.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	  String kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy/MM/dd").format(kaisai_Nengappi);%>
+	 <%out.print(CodeConvert.valueOf(KeibajoCode.class, raceData.getKeibajoCode()).getContent() + raceData.getRaceBango() + "R "); %>
+	<%out.print(new KyosomeiConverter(raceData.getKyosomeiHondai(),raceData.getKyosoShubetsuCode(), raceData.getKyosoJokenCodeSaijakunen()).getConvertKyosomei());%>
+	出馬表 | <%out.print(kaisaiNengappi); %>
+</title>
 </head>
 <body id="JHRdance">
 
@@ -75,10 +81,9 @@
      *****************************************************************************************
      ***************************************************************************************** -->
      <%
-     LocalDate kaisai_Nengappi = raceData.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
      LocalDateTime hasso_Jikoku = raceData.getHassoJikoku().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
      //レースデータで使用する変数
-     String kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy年MM月dd日 (E)").format(kaisai_Nengappi);
+     kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy年MM月dd日 (E)").format(kaisai_Nengappi);
      String yobiCode;
      String keibajoCode;
      Short raceBango;
@@ -128,7 +133,7 @@
 				%>
 			</span> <span class="kyosomei">
 				<%
-					out.print(raceData.getKyosomeiHondai());
+					out.print(new KyosomeiConverter(raceData.getKyosomeiHondai(), raceData.getKyosoShubetsuCode(), raceData.getKyosoJokenCodeSaijakunen()).getConvertKyosomei());
 				%>
 			</span>
 		</div>
@@ -281,6 +286,7 @@
 						BigDecimal tsumeashi = view.getTsumeashi();		/**詰脚**/
 						BigDecimal kohan3fChakusa = view.getKohan3fchakusa();		/**後半3F地点着差**/
 						String kyoriCompare = null;		//距離比較
+						String futanJuryoCompare = null;		//斤量比較
 
 						//現レースと過去レースの距離を比較します
 						if(raceData.getKyori() > view.getKyori()){
@@ -289,6 +295,14 @@
 							kyoriCompare = "<div class=\"content kyoriCompare chaRed bold\"><span>↖</span></div>";
 						}else{
 							kyoriCompare = "<div class=\"content bold\"><span>-</span></div>";
+						}
+						//現レースと過去レースの斤量を比較します
+						if(data.getFutanJuryo().compareTo(view.getFutanJuryo()) > 0){
+							futanJuryoCompare = "<div class=\"content futanJuryoCompare chaBlue bold\"><span>↙</span></div>";
+						}else if(data.getFutanJuryo().compareTo(view.getFutanJuryo()) < 0){
+							futanJuryoCompare = "<div class=\"content futanJuryoCompare chaRed bold\"><span>↖</span></div>";
+						}else{
+							futanJuryoCompare = "<div class=\"content bold\"><span>-</span></div>";
 						}
 
 						//過去4走の合算値(SRun,詰脚,後半3F地点着差)
@@ -323,6 +337,8 @@
 							<div class="content"><span><% out.print(kohan3fChakusa); %></span></div>
 							<div class="kyoriCompare"><span>距離</span></div>
 							<%out.print(kyoriCompare); %>
+							<div class="futanJuryoCompare"><span>斤量</span></div>
+							<%out.print(futanJuryoCompare); %>
 			<%
 							}else{
 			%>
@@ -361,6 +377,8 @@
 										srunClass= " blueBack";
 									}else if(srun.getConvertSrun().compareTo(BigDecimal.valueOf(50)) >= 0){
 										srunClass = " yellowBack";
+									}else if(srun.getConvertSrun().compareTo(BigDecimal.valueOf(45)) >= 0){
+										srunClass = " greenBack";
 									}
 								}catch(NullPointerException e){
 									srunClass = " brackBack";

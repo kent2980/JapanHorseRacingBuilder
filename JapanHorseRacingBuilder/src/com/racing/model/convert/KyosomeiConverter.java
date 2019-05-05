@@ -4,8 +4,20 @@ import com.pckeiba.enumutil.CodeConvert;
 import com.pckeiba.enumutil.KyosoJokenCode;
 import com.pckeiba.enumutil.KyosoShubetsuCode;
 
+/**
+ * 競争名を生成するクラスです。
+ * コンストラクタの引数に１．競争名、２．競争種別コード、３．競争条件コードを指定します。
+ * @author kent2
+ *
+ */
 public class KyosomeiConverter {
 
+	/**
+	 * コンストラクタ
+	 * @param kyosomei 競争名
+	 * @param kyosoShubetsuCode	競争種別コード
+	 * @param kyosoJokenCode 競争条件コード
+	 */
 	public KyosomeiConverter(String kyosomei, String kyosoShubetsuCode, String kyosoJokenCode) {
 		super();
 		this.kyosomei = kyosomei;

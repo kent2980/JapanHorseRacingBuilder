@@ -103,7 +103,7 @@ span.underGray {
 
 .bold {
     font-weight: 700;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 /*********************************************************************************
@@ -574,7 +574,7 @@ table tr:nth-child(odd){
     width: 32px;
     font-size: 10px;
 		font-weight: 600;
-		line-height: 18px;
+		line-height: 13px;
 }
 #JHRdance td.race {
 	width: 120px;
@@ -661,6 +661,12 @@ line-height: 15px;
 	border-left: solid 5px #484848;
 	color: #000;
 }
+/*** SRun 45以上	************/
+#JHRdance div.srun.greenBack {
+	background: #42e33a;
+	border-left: solid 5px #484848;
+	color: #000;
+}
 /*** SRun Nothing	************/
 #JHRdance div.srun.brackBack {
 	background: #a4a6a4;
@@ -699,11 +705,16 @@ line-height: 15px;
     background: #c6f5ca;
     color: #272727;
 }
-#JHRdance div.content.kyoriCompare.chaRed {
+/***		斤量比較の背景		******************/
+#JHRdance div.futanJuryoCompare {
+    background: #4787e8;
+    color: #fff;
+}
+#JHRdance div.content.chaRed {
     background: #fde1e1;
 		color: red;
 }
-#JHRdance div.content.kyoriCompare.chaBlue {
+#JHRdance div.content.chaBlue {
     background: #d2e0f3;
 		color: blue;
 }
