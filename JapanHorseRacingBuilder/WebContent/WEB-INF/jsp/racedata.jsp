@@ -224,7 +224,7 @@
 			BigDecimal futanJuryo;
 		%>
 		<tr>
-			<td class="waku<%out.print(data.getWakuban()); %>"><% out.print(data.getUmaban()); %></td>
+			<td class="waku<%out.print(data.getWakuban()); %> bold"><% out.print(data.getUmaban()); %></td>
 			<td class="bamei">
 				<div class="bamei">
 					<span class="bamei"><% out.print(bamei); %></span>
@@ -284,9 +284,9 @@
 
 						//現レースと過去レースの距離を比較します
 						if(raceData.getKyori() > view.getKyori()){
-							kyoriCompare = "<div class=\"content chaBlue bold\"><span>↙</span></div>";
+							kyoriCompare = "<div class=\"content kyoriCompare chaBlue bold\"><span>↙</span></div>";
 						}else if(raceData.getKyori() < view.getKyori()){
-							kyoriCompare = "<div class=\"content chaRed bold\"><span>↖</span></div>";
+							kyoriCompare = "<div class=\"content kyoriCompare chaRed bold\"><span>↖</span></div>";
 						}else{
 							kyoriCompare = "<div class=\"content bold\"><span>-</span></div>";
 						}
@@ -372,7 +372,7 @@
 							</div>
 						</td>
 <%						}
-				}catch(NullPointerException|IndexOutOfBoundsException e){
+				}catch(IndexOutOfBoundsException e){
 					switch(t){
 					case 0:
 						out.print("<td></td><td></td><td></td><td></td>");

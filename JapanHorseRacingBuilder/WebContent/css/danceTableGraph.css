@@ -699,6 +699,14 @@ line-height: 15px;
     background: #c6f5ca;
     color: #272727;
 }
+#JHRdance div.content.kyoriCompare.chaRed {
+    background: #fde1e1;
+		color: red;
+}
+#JHRdance div.content.kyoriCompare.chaBlue {
+    background: #d2e0f3;
+		color: blue;
+}
 /***		詰脚-行脚が正の場合のセル背景		********/
 #JHRdance td.srun.redBack {
 	background: #e29a2a;
