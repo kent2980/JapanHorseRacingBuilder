@@ -99,7 +99,7 @@
      Short torokuTosu;
      %>
 
-	<div id="title">
+	<div id="pc title">
 			<div id="logo">
 			<a href="Index?date=<%out.print(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now())); %>">
 				<!-- <img src="../picture/logo.jpg" alt="トップページへのリンク" class="logo"> -->
@@ -199,10 +199,10 @@
 			<th class="bamei">馬名</th>
 			<th class="pc kishu">騎手</th>
 			<th class="pc odds">人<p>気</th>
-			<th colspan="2" class="kako">1走前</th>
-			<th colspan="2" class="kako">2走前</th>
-			<th colspan="2" class="kako">3走前</th>
-			<th colspan="2" class="kako">4走前</th>
+			<th colspan="2" class="pc kako">1走前</th>
+			<th colspan="2" class="pc kako">2走前</th>
+			<th colspan="2" class="pc kako">3走前</th>
+			<th colspan="2" class="pc kako">4走前</th>
 			<th class="drun">DRun</th>
 		</tr>
 
@@ -367,7 +367,7 @@
 							srunBack = " brackBack";
 						}
 			%>
-						<td class="srun<%out.print(srunBack); %>">
+						<td class="pc srun<%out.print(srunBack); %>">
 			<%
 							if(view.getIjoKubunCode().equals("0")){
 			%>
@@ -434,29 +434,29 @@
 						</td>
 
 					<!-- モバイル表示用のHTML -->
-
+<!--
 						<td class="sp kakoRace">
-							<span><%out.print(kakoKyosomei); %></span>
+							<span><%//out.print(kakoKyosomei); %></span>
 						</td>
-
+  -->
 <%						}
 				}catch(IndexOutOfBoundsException e){
 					switch(t){
 					case 0:
-						out.print("<td></td><td></td><td></td><td></td>");
-						out.print("<td></td><td></td><td></td><td></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
 						break;
 					case 1:
-						out.print("<td></td><td></td><td></td>");
-						out.print("<td></td><td></td><td></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
 						break;
 					case 2:
-						out.print("<td></td><td></td>");
-						out.print("<td></td><td></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td>");
 						break;
 					case 3:
-						out.print("<td></td>");
-						out.print("<td></td>");
+						out.print("<td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td>");
 					}
 					break;
 				}

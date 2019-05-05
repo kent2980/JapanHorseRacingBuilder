@@ -110,11 +110,11 @@ span.underGray {
 ***		インデックスページの設定		***************************************************
 *********************************************************************************/
 #nowRacing {
-	width: 1080px;
+	/**width: 1080px;**/
 	margin: auto;
 }
 div#torokuRace {
-    width: 1080px;
+    /**width: 1080px;**/
 		margin: auto;
 }
 #index .torokubaButton {
@@ -171,7 +171,6 @@ div#torokuRace {
 	border-radius: 0 0 16px 16px;
     position: fixed;
     top: 0;
-    width: 100%;
     z-index: 10000;
 }
 
@@ -184,13 +183,6 @@ div#torokuRace {
     font-size: 1.6em;
     margin: 1em  0 0 8em;
     min-width: 7.2em;
-}
-
-#kyosomei {
-	padding-left: 1.5em;
-	margin-top: 1.3em;
-	min-width: 25em;
-	height: 4.5em;
 }
 
 #title .raceSelect {
@@ -324,16 +316,6 @@ div#torokuRace {
 #graphButton.ninki:active #ninkiChart {
 	visibility:visible;
 }
-
-#result div#timeChart {
-    width: 960px;
-		  margin: 0.5em 15px 0 auto;
-}
-#dance div#timeChart {
-    width: 1240px;
-    margin: 8.5em auto 2.5em auto;
-}
-
 #result .sideBy.graph {
     padding-top: 8em;
     margin-bottom: 1.5em;
@@ -944,8 +926,8 @@ font-weight: 600;
 
 /**		テーブルの表示領域を設定します		**/
 .tableTitle {
-  margin: auto;
-  width: 100vw;
+  margin: 0;
+  width: 375px;
   font-size: 14px;
 }
 
@@ -958,23 +940,23 @@ font-weight: 600;
 	display: table-cell !important;
 }
 
-/**		過去走の表示領域を設定します	**/
-#JHRdance th.kako {
-    width: 100px;
-    max-width: 100px;
-}
-
 /**		過去レース詳細画面の表示領域を設定します		**/
 .kakoRace {
-	width: 68px;
-	max-width: 68px;
+	width: 90px;
+	max-width: 90px;
 }
 
 /**馬名セルの表示領域を設定します		**/
-td.bamei {
-	width: 200px;
-	max-width: 200px;
+#JHRdance td.bamei th.bamei {
+	width: 75%;
 }
+#JHRdance th.drun {
+	width: 20%;
+}
+#JHRdance th.umaban {
+	width: 5%;
+}
+
 
 span.ninki {
 	display: inline;
