@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.List" import="java.util.stream.Collectors" import="java.time.LocalDateTime"
 	import="java.time.format.DateTimeFormatter" import="java.time.ZoneId" import="com.google.common.base.Function" import="com.google.common.collect.Lists" import="com.pckeiba.entity.JvdRaceShosai"
 	import="com.pckeiba.entity.JvdTokubetsuTorokuba" import="com.racing.model.RaceShosai" import="com.racing.model.TokubetsuTorokuba" import="com.pckeiba.datamodel.RaceData"
-	import="com.pckeiba.enumutil.*" import="com.racing.model.convert.*" import="java.time.LocalDate"%>
+	import="com.pckeiba.enumutil.*" import="com.racing.model.convert.*" import="java.time.LocalDate"  import="com.racing.model.convert.PckeibaConvert"%>
 <%
 	RaceShosai raceShosai = (RaceShosai) request.getAttribute("raceShosai");
 	TokubetsuTorokuba torokuba = (TokubetsuTorokuba) request.getAttribute("torokuba");
@@ -23,6 +23,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css"
 	rel="stylesheet" />
@@ -65,7 +66,7 @@
 							LocalDateTime hassoJikoku = data.getHassoJikoku().toInstant().atZone(ZoneId.systemDefault())
 									.toLocalDateTime();
 							DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-							String kyosomei = new KyosomeiConverter(data.getKyosomeiHondai(), data.getKyosoShubetsuCode(), data.getKyosoJokenCodeSaijakunen()).getConvertKyosomei();
+							String kyosomei = PckeibaConvert.KyosomeiConvert(data.getKyosomeiHondai(), data.getKyosoShubetsuCode(), data.getKyosoJokenCodeSaijakunen());
 				%>
 				<tr>
 					<td>
@@ -118,7 +119,7 @@
 								LocalDateTime hassoJikoku = data.getHassoJikoku().toInstant().atZone(ZoneId.systemDefault())
 										.toLocalDateTime();
 								DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-								String kyosomei = new KyosomeiConverter(data.getKyosomeiHondai(), data.getKyosoShubetsuCode(), data.getKyosoJokenCodeSaijakunen()).getConvertKyosomei();
+								String kyosomei = PckeibaConvert.KyosomeiConvert(data.getKyosomeiHondai(), data.getKyosoShubetsuCode(), data.getKyosoJokenCodeSaijakunen());
 				%>
 				<tr>
 					<td>
@@ -173,7 +174,7 @@
 								LocalDateTime hassoJikoku = data.getHassoJikoku().toInstant().atZone(ZoneId.systemDefault())
 										.toLocalDateTime();
 								DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm");
-								String kyosomei = new KyosomeiConverter(data.getKyosomeiHondai(), data.getKyosoShubetsuCode(), data.getKyosoJokenCodeSaijakunen()).getConvertKyosomei();
+								String kyosomei = PckeibaConvert.KyosomeiConvert(data.getKyosomeiHondai(), data.getKyosoShubetsuCode(), data.getKyosoJokenCodeSaijakunen());
 				%>
 				<tr>
 					<td>

@@ -44,7 +44,11 @@ public class IndexServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String date = req.getParameter("date");
-		raceShosai = new RaceShosai(Date.valueOf(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+		try {
+			raceShosai = new RaceShosai(Date.valueOf(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+		}catch(NullPointerException e) {
+			raceShosai = new RaceShosai(Date.valueOf(LocalDate.now()));
+		}
 		torokuba = new TokubetsuTorokuba();
 		req.setAttribute("raceShosai", raceShosai);
 		req.setAttribute("torokuba", torokuba);

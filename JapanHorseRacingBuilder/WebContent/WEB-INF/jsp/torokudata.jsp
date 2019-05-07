@@ -49,6 +49,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css"
 	rel="stylesheet" />
@@ -57,7 +58,13 @@
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
-<title>Insert title here</title>
+<title>
+	<%LocalDate kaisai_Nengappi = raceData.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+	  String kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy/MM/dd").format(kaisai_Nengappi);%>
+	 <%out.print(CodeConvert.valueOf(KeibajoCode.class, raceData.getKeibajoCode()).getContent() + raceData.getRaceBango() + "R "); %>
+	<%out.print(PckeibaConvert.KyosomeiConvert(raceData.getKyosomeiHondai(),raceData.getKyosoShubetsuCode(), raceData.getKyosoJokenCodeSaijakunen()));%>
+	出馬表 | <%out.print(kaisaiNengappi); %>
+</title>
 </head>
 <body id="JHRdance">
 
@@ -67,9 +74,8 @@
      *****************************************************************************************
      ***************************************************************************************** -->
      <%
-     LocalDate kaisai_Nengappi = raceData.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
      //レースデータで使用する変数
-     String kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy年MM月dd日 (E)").format(kaisai_Nengappi);
+     kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy年MM月dd日 (E)").format(kaisai_Nengappi);
      String yobiCode;
      String keibajoCode;
      Short raceBango;
@@ -84,7 +90,7 @@
      Short torokuTosu;
      %>
 
-	<div id="title">
+	<div id="title" class="pc">
 			<div id="logo">
 			<a href="Index?date=<%out.print(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now())); %>">
 				<!-- <img src="../picture/logo.jpg" alt="トップページへのリンク" class="logo"> -->
@@ -118,7 +124,7 @@
 				%>
 			</span> <span class="kyosomei">
 				<%
-					out.print(raceData.getKyosomeiHondai());
+					out.print(PckeibaConvert.KyosomeiConvert(raceData.getKyosomeiHondai(), raceData.getKyosoShubetsuCode(), raceData.getKyosoJokenCodeSaijakunen()));
 				%>
 			</span>
 		</div>
@@ -174,17 +180,31 @@
 <div class="tableTitle">
 	<table id="kako4sou">
 		<tr>
-			<th class="bamei">馬名</th>
-			<th colspan="2" class="kako">1走前</th>
-			<th colspan="2" class="kako">2走前</th>
-			<th colspan="2" class="kako">3走前</th>
-			<th colspan="2" class="kako">4走前</th>
-			<th class="drun">DRun</th>
+			<th class="pc bamei" colspan="1">馬名</th>
+			<th class="sp sp_horizen bamei" colspan="1">馬名</th>
+			<th colspan="2" class="pc kako">1走前</th>
+			<th colspan="2" class="pc kako">2走前</th>
+			<th colspan="2" class="pc kako">3走前</th>
+			<th colspan="2" class="pc kako">4走前</th>
+			<th class="sp_horizen kako">1走前</th>
+			<th class="sp_horizen kako">2走前</th>
+			<th class="sp_horizen kako">3走前</th>
+			<th class="sp_horizen kako">4走前</th>
+			<th class="drun">All</th>
 		</tr>
-		<%
-		for(HorseData dataModel : horseData){
-			JvdTorokubagotoJoho data = (JvdTorokubagotoJoho) dataModel;
 
+<!-- ********************************************************************************************************* -->
+<!-- ここから出馬表の記述を始めます -->
+<!-- ********************************************************************************************************* -->
+
+		<%
+			for(HorseData dataModel : horseData){
+
+				/*************************************************************************************/
+				/** 現在のレース情報を記述します	**********************************************************/
+				/*************************************************************************************/
+
+			JvdTorokubagotoJoho data = (JvdTorokubagotoJoho) dataModel;
 			//競走馬マスタ
 			JvdKyosobaMaster kyosobaMasterSet = kyosobaMasterList.stream()
 													   			 .filter(s -> s.getKettoTorokuBango().equals(data.getKettoTorokuBango()))
@@ -193,19 +213,29 @@
 			String wakuban;
 			String umaban;
 			//馬名を９文字で生成します
-			String bamei = new BameiConverter(data.getBamei()).getBameiConvert();
+			String bamei = PckeibaConvert.NameConvert(data.getBamei(),9);
+			//性齢を生成します
+			String seirei = CodeConvert.valueOf(SeibetsuCode.class, data.getSeibetsuCode()).getContentIsShort();
 			//父馬名を９文字で生成します
-			String father = new BameiConverter(kyosobaMasterSet.getKetto1Bamei()).getBameiConvert();
+			String father = PckeibaConvert.NameConvert(kyosobaMasterSet.getKetto1Bamei(),9);
 			//母馬名を９文字で生成します
-			String mother = new BameiConverter(kyosobaMasterSet.getKetto2Bamei()).getBameiConvert();
-			String kishumeiRyakusho;
+			String mother = PckeibaConvert.NameConvert(kyosobaMasterSet.getKetto2Bamei(),9);
+			String chokyoshi = data.getChokyoshimeiRyakusho().replaceAll("　", "");
+			String tozaiShozoku = CodeConvert.valueOf(TozaiShozokuCode.class, data.getTozaiShozokuCode()).getContentIsShort();
 			BigDecimal futanJuryo;
+			//各データ合算用の変数を準備します
+			List<Double> srunAll = new ArrayList<>();
+			List<Double> tsumeashiAll = new ArrayList<>();
+			List<Double> kohan3fChakusaAll = new ArrayList<>();
 		%>
 		<tr>
-			<td class="bamei">
+
+		<!-- デスクトップ表示用のHTML -->
+
+			<td class="pc bamei">
 				<div class="bamei">
 					<span class="bamei"><% out.print(bamei); %></span>
-					<span class="seirei"><%out.print(CodeConvert.valueOf(SeibetsuCode.class, data.getSeibetsuCode()).getContentIsShort()); %></span>
+					<span class="seirei"><%out.print(seirei); %></span>
 				</div>
 				<span class="parent">父：<%out.print(father); %></span>
 				<br>
@@ -213,24 +243,39 @@
 				<br>
 				<span class="parent">(<%out.print(kyosobaMasterSet.getKetto5Bamei()); %>)</span>
 				<br>
-				<span class="chokyoshi"><%out.print(data.getChokyoshimeiRyakusho().replaceAll("　", "")); %>
-										(<%out.print(CodeConvert.valueOf(TozaiShozokuCode.class, data.getTozaiShozokuCode()).getContentIsShort()); %>)
+				<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)
 				</span>
 			</td>
+
+		<!-- モバイル表示用のHTML -->
+			<!-- 馬名セル -->
+			<td class="sp sp_horizen bamei">
+				<!-- 馬名、性齢 、調教師、所属、騎手、斤量、人気-->
+				<div class="bamei">
+					<span class="bamei"><%out.print(bamei); %></span>
+					<span class="seirei"><%out.print(seirei); %></span>
+					<br>
+					<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)</span>
+					<br>
+					<span class="futanJuryo"><%out.print(data.getFutanJuryo()); %></span>
+				</div>
+			</td>
+
+			<!-- *************************************************************************************** -->
+			<!--	ここから過去レースの記述を始めます	******************************************************** -->
+			<!-- *************************************************************************************** -->
+
 			<%
-			int t = 0;
-			List<Double> srunAll = new ArrayList<>();
-			List<Double> tsumeashiAll = new ArrayList<>();
-			List<Double> kohan3fChakusaAll = new ArrayList<>();
-			for(int i = 0; t < 4; i++){
+			for(int i = 0, t = 0; t < 4; i++){
 				try{
 					UmaDataView view = kakoList.get(i);
 					//	<<過去レースローカル変数>>	******************************************************************
 
-					String kakoKyosomei = new KyosomeiConverter(view.getKyosomeiRyakusho6(), view.getKyosoShubetsuCode(), view.getKyosoJokenCodeSaijakunen()).getConvertKyosomei();
+					String kakoKyosomei = PckeibaConvert.KyosomeiConvert(view.getKyosomeiRyakusho6(), view.getKyosoShubetsuCode(), view.getKyosoJokenCodeSaijakunen());
 					String kakoResult = view.getIjoKubunCode().equals("0")?view.getKakuteiChakujun() + "着":CodeConvert.valueOf(IjoKubunCode.class, view.getIjoKubunCode()).getContentIsShort();
 					String kakoKaisaiNengappi = DateTimeFormatter.ofPattern("yyyy年MM月dd日").format(view.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate());
-					String kakoSohaTime = view.getIjoKubunCode().equals("0")?new SohaTimeConverter(view.getSohaTime()).getSohaTimeHour():"";
+					String kakoSohaTime = view.getIjoKubunCode().equals("0")?PckeibaConvert.SohaTimeHour(view.getSohaTime()):"";
+					String kakoKyosoUrl = "/JapanHorseRacingBuilder/racedata?racecode=" + view.getRaceCode() + "&shubetsu=RA";
 					//************************************************************************************
 					if(view.getKettoTorokuBango().equals(data.getKettoTorokuBango())){
 						t++;
@@ -240,12 +285,42 @@
 						}catch(NullPointerException e){
 							plus = "*";
 						}
-						String ijoKubun = view.getIjoKubunCode();
-						SrunConverter srun = new SrunConverter(view.getSrun55(), data.getFutanJuryo());
-						BigDecimal tsumeashi = view.getTsumeashi();
-						BigDecimal kohan3fChakusa = view.getKohan3fchakusa();
-						if(srun.getConvertSrun() != null & ijoKubun.equals("0")){
-							srunAll.add(srun.getConvertSrun().doubleValue());
+						//過去走のローカル変数
+						String ijoKubun = view.getIjoKubunCode();		/**異常区分**/
+						BigDecimal srun = PckeibaConvert.ConvertSrun(view.getSrun55(), data.getFutanJuryo());		/**SRun**/
+						BigDecimal tsumeashi = view.getTsumeashi();		/**詰脚**/
+						BigDecimal kohan3fChakusa = view.getKohan3fchakusa();		/**後半3F地点着差**/
+						String kyoriCompare = null;		//距離比較
+						String kyoriCompareClass = null;		//距離比較
+						String futanJuryoCompare = null;		//斤量比較
+						String futanJuryoCompareClass = null;		//斤量比較
+
+						//現レースと過去レースの距離を比較します
+						if(raceData.getKyori() > view.getKyori()){
+							kyoriCompare = "↙";
+							kyoriCompareClass = "content kyoriCompare chaBlue bold";
+						}else if(raceData.getKyori() < view.getKyori()){
+							kyoriCompare = "↖";
+							kyoriCompareClass = "content kyoriCompare chaRed bold";
+						}else{
+							kyoriCompare = "-";
+							kyoriCompareClass = "content bold";
+						}
+						//現レースと過去レースの斤量を比較します
+						if(data.getFutanJuryo().compareTo(view.getFutanJuryo()) > 0){
+							futanJuryoCompare = "↙";
+							futanJuryoCompareClass = "content futanJuryoCompare chaBlue bold";
+						}else if(data.getFutanJuryo().compareTo(view.getFutanJuryo()) < 0){
+							futanJuryoCompare = "↖";
+							futanJuryoCompareClass = "content futanJuryoCompare chaRed bold";
+						}else{
+							futanJuryoCompare = "-";
+							futanJuryoCompareClass = "content bold";
+						}
+
+						//過去4走の合算値(SRun,詰脚,後半3F地点着差)
+						if(srun != null & ijoKubun.equals("0")){
+							srunAll.add(srun.doubleValue());
 						}
 						if(tsumeashi != null & ijoKubun.equals("0")){
 							tsumeashiAll.add(tsumeashi.doubleValue());
@@ -265,7 +340,9 @@
 							srunBack = " brackBack";
 						}
 			%>
-						<td class="srun<%out.print(srunBack); %>">
+
+				<!-- デスクトップ表示用のHTML -->
+						<td class="pc srun<%out.print(srunBack); %>">
 			<%
 							if(view.getIjoKubunCode().equals("0")){
 			%>
@@ -273,6 +350,65 @@
 							<div class="content"><span><% out.print(tsumeashi); %></span></div>
 							<div class="senko"><span>行脚</span></div>
 							<div class="content"><span><% out.print(kohan3fChakusa); %></span></div>
+							<div class="kyoriCompare"><span>距離</span></div>
+							<div class ="<%out.print(kyoriCompareClass); %>"><span><%out.print(kyoriCompare); %></span></div>
+							<div class="futanJuryoCompare"><span>斤量</span></div>
+							<div class ="<%out.print(futanJuryoCompareClass); %>"><span><%out.print(futanJuryoCompare); %></span></div>
+			<%
+							}else{
+			%>
+							<span>即<br>定<br>不<br>能</span>
+			<%
+							}
+
+			//SRunの値によってクラスを変化させます
+			String srunClass = "";
+			try{
+				if(srun.compareTo(BigDecimal.valueOf(60)) >= 0){
+					srunClass = " redBack";
+				}else if(srun.compareTo(BigDecimal.valueOf(55)) >= 0){
+					srunClass= " blueBack";
+				}else if(srun.compareTo(BigDecimal.valueOf(50)) >= 0){
+					srunClass = " yellowBack";
+				}else if(srun.compareTo(BigDecimal.valueOf(45)) >= 0){
+					srunClass = " greenBack";
+				}
+			}catch(NullPointerException e){
+				srunClass = " brackBack";
+			}
+			%>
+						</td>
+
+				<!-- スマホ横画面表示用のHTML -->
+				<%
+					String kakoKyosomeiShort = PckeibaConvert.NameConvert(kakoKyosomei, 6);
+				%>
+						<td class="srun sp_horizen<%out.print(srunBack); %>">
+							<a href="<%out.print(kakoKyosoUrl); %>"><span class="kyosomei"><%out.print(kakoKyosomei); %></span></a>
+							<span class="chakujun"><%out.print(view.getKakuteiChakujun() + "着"); %></span>
+			<%
+							if(view.getIjoKubunCode().equals("0")){
+			%>				<div class="kyakushitsu">
+								<div>
+									<span class="content">詰脚</span>
+									<span class="content">距離</span>
+								</div>
+								<div>
+									<span class="content"><% out.print(tsumeashi); %></span>
+									<span class ="content <%out.print(kyoriCompareClass); %>"><%out.print(kyoriCompare); %></span>
+								</div>
+								<div>
+									<span class="content">行脚</span>
+									<span class="content">斤量</span>
+								</div>
+								<div>
+									<span class="content"><% out.print(kohan3fChakusa); %></span>
+									<span class ="content <%out.print(futanJuryoCompareClass); %>"><%out.print(futanJuryoCompare); %></span>
+								</div>
+							</div>
+							<div class="srun<%out.print(srunClass); %>">
+								<span><%out.print("SRun : " + srun); %></span>
+							</div>
 			<%
 							}else{
 			%>
@@ -281,10 +417,13 @@
 							}
 			%>
 						</td>
-						<td class="kakoRace">
+
+					<!-- デスクトップ表示用のHTML -->
+
+						<td class="pc kakoRace">
 							<span class="kaisaiNengappi"><%out.print(kakoKaisaiNengappi); %></span>
 							<br>
-							<span class="kyosomei"><%out.print(kakoKyosomei); %></span>
+							<a href="<%out.print(kakoKyosoUrl); %>"><span class="kyosomei"><%out.print(kakoKyosomei); %></span></a>
 							<br>
 							<div class="kyosoData">
 								<span><%out.print(CodeConvert.valueOf(KeibajoCode.class, view.getKeibajoCode()).getContent()); %></span>
@@ -302,43 +441,40 @@
 								<span><%out.print(kakoSohaTime); %> (<%out.print(view.getKohan3f().compareTo(BigDecimal.ZERO)==0?"-":String.valueOf(view.getKohan3f())); %>)</span>
 								<span class="result"><%out.print(kakoResult); %></span>
 								<br>
-								<%//SRunの値によってクラスを変化させます
-								String srunClass = "";
-								try{
-									if(srun.getConvertSrun().compareTo(BigDecimal.valueOf(60)) >= 0){
-										srunClass = " redBack";
-									}else if(srun.getConvertSrun().compareTo(BigDecimal.valueOf(55)) >= 0){
-										srunClass= " blueBack";
-									}else if(srun.getConvertSrun().compareTo(BigDecimal.valueOf(50)) >= 0){
-										srunClass = " yellowBack";
-									}
-								}catch(NullPointerException e){
-									srunClass = " brackBack";
-								}
-								%>
 								<div class="srun<%out.print(srunClass); %>">
-									<span><%out.print(srun); %></span>
+									<span><%out.print("SRun : " + srun); %></span>
 								</div>
 							</div>
 						</td>
+
+					<!-- モバイル表示用のHTML -->
+<!--
+						<td class="sp kakoRace">
+							<span><%//out.print(kakoKyosomei); %></span>
+						</td>
+  -->
 <%						}
-				}catch(NullPointerException|IndexOutOfBoundsException e){
+				}catch(IndexOutOfBoundsException e){
 					switch(t){
 					case 0:
-						out.print("<td></td><td></td><td></td><td></td>");
-						out.print("<td></td><td></td><td></td><td></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"sp_horizen\"></td><td class=\"sp_horizen\"></td><td class=\"sp_horizen\"></td><td class=\"sp_horizen\"></td>");
 						break;
 					case 1:
-						out.print("<td></td><td></td><td></td>");
-						out.print("<td></td><td></td><td></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"sp_horizen\"></td><td class=\"sp_horizen\"></td><td class=\"sp_horizen\"></td>");
 						break;
 					case 2:
-						out.print("<td></td><td></td>");
-						out.print("<td></td><td></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td><td class=\"pc\"></td>");
+						out.print("<td class=\"sp_horizen\"></td><td class=\"sp_horizen\"></td>");
 						break;
 					case 3:
-						out.print("<td></td>");
-						out.print("<td></td>");
+						out.print("<td class=\"pc\"></td>");
+						out.print("<td class=\"pc\"></td>");
+						out.print("<td class=\"sp_horizen\"></td>");
 					}
 					break;
 				}
