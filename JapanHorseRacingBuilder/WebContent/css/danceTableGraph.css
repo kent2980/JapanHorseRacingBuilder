@@ -17,7 +17,7 @@ body {
 }
 
 img.topIcon {
-    /* width: 130px; */
+  	width: 60px; 
     height: 80%;
     margin: 5px 0 0 20px;
 }
@@ -638,7 +638,8 @@ td.srunCell {
 	line-height: 30px;
 }
 #JHRdance td.chakujun {
-    font-size: 10px;
+    font-size: 14px;
+    -webkit-writing-mode: vertical-rl;
 }
 #JHRdance div.srun {
     background: #efeaea;

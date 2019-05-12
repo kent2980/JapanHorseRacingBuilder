@@ -28,6 +28,7 @@
     import="com.pckeiba.datamodel.HorseData"
     import="com.racing.model.Race"
     import="com.racing.model.Horse"
+    import="com.web.load.HtmlDownload"
 
     import="com.example.entity.UmaDataView"
     import="com.racing.model.convert.*"
@@ -46,11 +47,11 @@
     List<UmaDataView> kakoList = kakoRace.getList();
     List<JvdKyosobaMaster> kyosobaMasterList = kyosobaMaster.getList();
     %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css"
 	rel="stylesheet" />
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
@@ -80,7 +81,7 @@
      String keibajoCode;
      Short raceBango;
      Short jushoKaiji;
-     String kyosomeiHondai;
+     String kyosomeiHondai = PckeibaConvert.KyosomeiConvert(raceData.getKyosomeiRyakusho10(), raceData.getKyosoShubetsuCode(), raceData.getKyosoJokenCodeSaijakunen());
      Short kyori;
      String trackCode;
      String kyosoJokenMeisho;
@@ -88,87 +89,21 @@
      String kyosoKigoCode;
      String juryoShubetsuCode;
      Short torokuTosu;
-     %>
-
-	<div id="title" class="pc">
-			<div id="logo">
-			<a href="Index?date=<%out.print(DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDate.now())); %>">
-				<!-- <img src="../picture/logo.jpg" alt="トップページへのリンク" class="logo"> -->
-				<img src="/JapanHorseRacingBuilder/picture/logo.jpg" alt="トップページへのリンク"
-					class="logo"> <span class="title">Jockeys->Link</span>
-			</a>
-			</div>
-
-		<div id="roundData">
-			<span class="kaisai">
-				<%
-					out.print(kaisaiNengappi);
-				%>
-			</span> <span class="keibajo">
-				<%
-					out.print(CodeConvert.valueOf(KeibajoCode.class, raceData.getKeibajoCode()).getContent());
-				%>
-			</span> <span class="round">
-				<%
-					out.print(raceData.getRaceBango() + "R");
-				%>
-			</span>
-		</div>
-		<div id="kyosomei">
-			<%
-				String jusho_Kaiji = raceData.getJushoKaiji() == 0 ? "" : "第" + raceData.getJushoKaiji() + "回";
-			%>
-			<span class="kaiji">
-				<%
-					out.print(jusho_Kaiji);
-				%>
-			</span> <span class="kyosomei">
-				<%
-					out.print(PckeibaConvert.KyosomeiConvert(raceData.getKyosomeiHondai(), raceData.getKyosoShubetsuCode(), raceData.getKyosoJokenCodeSaijakunen()));
-				%>
-			</span>
-		</div>
-		<div id="raceData">
-			<div id="data">
-				<div class="courseData desctop">
-					<span>
-						<%
-							out.print(raceData.getKyori() + "m");
-						%>
-					</span>
-					-
-					<span>
-						<%
-							out.print(CodeConvert.valueOf(TrackCode.class, raceData.getTrackCode()).getContent());
-						%>
-					</span>
-				</div>
-				<div class="raceData desctop">
-					<span>
-						<%
-							out.println(CodeConvert.valueOf(KyosoJokenCode.class, raceData.getKyosoJokenCodeSaijakunen()).getContent());
-						%>
-					</span> <span>
-						<%
-							out.println(CodeConvert.valueOf(KyosoShubetsuCode.class, raceData.getKyosoShubetsuCode()).getContent());
-						%>
-					</span> <span>
-						<%
-							out.println(CodeConvert.valueOf(KyosoKigoCode.class, raceData.getKyosoKigoCode()).getContent());
-						%>
-					</span> <span>
-						<%
-							out.print(CodeConvert.valueOf(JuryoShubetsuCode.class, raceData.getJuryoShubetsuCode()).getContent());
-						%>
-					</span> <span>
-						<%
-							out.print(raceData.getTorokuTosu() + "頭");
-						%>
-					</span>
-				</div>
-			</div>
-		</div>
-	</div>
+     //最新ニュース
+     List<String> news = null;
+     try{
+         String url = "https://news.yahoo.co.jp/search/?ei=UTF-8&p=" + kyosomeiHondai + "&fr=crmas";
+         HtmlDownload newsLoad = new HtmlDownload();
+         news = newsLoad.read(url, "UTF-8");
+     }catch(Exception e){
+    	 e.printStackTrace();
+     }
+%>
+<header id="title">
+	<a href="/JapanHorseRacingBuilder/Index"><img class="topIcon" alt="競走馬" src="/JapanHorseRacingBuilder/picture/topIcon.png" title="トップページのアイコン"></a>
+	<a href="/JapanHorseRacingBuilder/Index"><span class="title">うまポス！</span></a>
+	<a href="https://twitter.com/search?q=%23<%out.print(kyosomeiHondai); %>&src=typd&lang=ja" target="_blank"><img class="twitter" alt="twitter" src="/JapanHorseRacingBuilder/picture/twitter.png"></a>
+</header>
 
 	<!-- URLジャンプのJavaScript -->
 	<script type="text/javascript">
@@ -177,8 +112,30 @@
 			location.href = browser;
 		}
 	</script>
+<div class="contentArea">
 <div class="tableTitle">
-	<table id="kako4sou">
+			<div class="news">
+				<%
+					try {
+						int i = 0;
+						for (String data : news) {
+							if (data.startsWith("<h2 class=\"t\">")) {
+								data = data.replace("h2", "span");
+								out.print(data);
+							} else if (data.startsWith("<span class=\"iS\">")) {
+								out.print(data);
+								i++;
+							}
+							if (i > 9) {
+								break;
+							}
+						}
+					} catch (NullPointerException e) {
+						out.print("<span>最新のニュースはありません</span>");
+					}
+				%>
+			</div>
+			<table id="kako4sou">
 		<tr>
 			<th class="pc bamei" colspan="1">馬名</th>
 			<th class="sp sp_horizen bamei" colspan="1">馬名</th>
@@ -246,17 +203,18 @@
 				<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)
 				</span>
 			</td>
+			<td class="pc ninki">
 
 		<!-- モバイル表示用のHTML -->
+			<!-- 着順セル-->
+			<!-- 馬番 セル-->
 			<!-- 馬名セル -->
 			<td class="sp sp_horizen bamei">
 				<!-- 馬名、性齢 、調教師、所属、騎手、斤量、人気-->
 				<div class="bamei">
-					<span class="bamei"><%out.print(bamei); %></span>
 					<span class="seirei"><%out.print(seirei); %></span>
 					<br>
 					<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)</span>
-					<br>
 					<span class="futanJuryo"><%out.print(data.getFutanJuryo()); %></span>
 				</div>
 			</td>
@@ -383,43 +341,42 @@
 				<%
 					String kakoKyosomeiShort = PckeibaConvert.NameConvert(kakoKyosomei, 6);
 				%>
-						<td class="srun sp_horizen<%out.print(srunBack); %>">
-							<a href="<%out.print(kakoKyosoUrl); %>"><span class="kyosomei"><%out.print(kakoKyosomei); %></span></a>
-							<span class="chakujun"><%out.print(view.getKakuteiChakujun() + "着"); %></span>
-			<%
-							if(view.getIjoKubunCode().equals("0")){
-			%>				<div class="kyakushitsu">
-								<div>
-									<span class="content">詰脚</span>
-									<span class="content">距離</span>
+							<td class="srun sp_horizen<%out.print(srunBack); %>">
+								<a href="<%out.print(kakoKyosoUrl); %>"><span class="kyosomei"><%out.print(kakoKyosomei); %></span></a>
+								<span class="chakujun"><%out.print(view.getKakuteiChakujun() + "着"); %></span>
+				<%
+								if(view.getIjoKubunCode().equals("0")){
+				%>				<div class="kyakushitsu">
+									<div>
+										<span class="content">詰脚</span>
+										<span class="content">距離</span>
+									</div>
+									<div>
+										<span class="content"><% out.print(tsumeashi); %></span>
+										<span class ="content <%out.print(kyoriCompareClass); %>"><%out.print(kyoriCompare); %></span>
+									</div>
+									<div>
+										<span class="content">行脚</span>
+										<span class="content">斤量</span>
+									</div>
+									<div>
+										<span class="content"><% out.print(kohan3fChakusa); %></span>
+										<span class ="content <%out.print(futanJuryoCompareClass); %>"><%out.print(futanJuryoCompare); %></span>
+									</div>
 								</div>
-								<div>
-									<span class="content"><% out.print(tsumeashi); %></span>
-									<span class ="content <%out.print(kyoriCompareClass); %>"><%out.print(kyoriCompare); %></span>
+								<div class="srun<%out.print(srunClass); %>">
+									<span><%out.print("SRun : " + srun); %></span>
 								</div>
-								<div>
-									<span class="content">行脚</span>
-									<span class="content">斤量</span>
-								</div>
-								<div>
-									<span class="content"><% out.print(kohan3fChakusa); %></span>
-									<span class ="content <%out.print(futanJuryoCompareClass); %>"><%out.print(futanJuryoCompare); %></span>
-								</div>
-							</div>
-							<div class="srun<%out.print(srunClass); %>">
-								<span><%out.print("SRun : " + srun); %></span>
-							</div>
-			<%
-							}else{
-			%>
-							<span>即<br>定<br>不<br>能</span>
-			<%
-							}
-			%>
-						</td>
+				<%
+								}else{
+				%>
+								<span>即<br>定<br>不<br>能</span>
+				<%
+								}
+				%>
+							</td>
 
 					<!-- デスクトップ表示用のHTML -->
-
 						<td class="pc kakoRace">
 							<span class="kaisaiNengappi"><%out.print(kakoKaisaiNengappi); %></span>
 							<br>
@@ -518,5 +475,48 @@
 	%>
 </table>
 </div>
+
+<!--*****************************	 サイドバーの設置	*********************************** -->
+
+<aside class="pc sidebar">
+	<section>
+			<div class="racedata">
+				<span>
+					<%out.print(raceData.getKaisaiKaiji()); %>回<%out.print(raceData.getKaisaiNichiji()); %>日目
+					<%out.print(CodeConvert.valueOf(KeibajoCode.class, raceData.getKeibajoCode()).getContent()); %><%out.print(raceData.getRaceBango()); %>R
+				</span>
+				<h2 class="kyosomei"><%out.print(kyosomeiHondai); %></h2>
+				<span class="kyosoJoho">
+					<% %>
+					<%out.print(CodeConvert.valueOf(KyosoShubetsuCode.class, raceData.getKyosoShubetsuCode()).getContent()); %>
+					<%out.print(CodeConvert.valueOf(KyosoJokenCode.class, raceData.getKyosoJokenCodeSaijakunen()).getContent()); %>
+				</span>
+				<span>
+					<% %>
+					<%out.print(CodeConvert.valueOf(KyosoKigoCode.class, raceData.getKyosoKigoCode()).getContent()); %>
+					<%out.print(CodeConvert.valueOf(JuryoShubetsuCode.class, raceData.getJuryoShubetsuCode()).getContent()); %>
+					<%out.print(raceData.getTorokuTosu()); %>頭
+				</span>
+				<span class="baba">
+					<%out.print(CodeConvert.valueOf(TrackCode.class, raceData.getTrackCode()).getBaba()); %> <%out.print(raceData.getKyori()); %>m
+				</span>
+			</div>
+			<ul>
+				<li>出馬表</li>
+				<li>レース結果</li>
+			</ul>
+			<ul>
+				<li>重賞スケジュール</li>
+				<li>開催スケジュール</li>
+			</ul>
+			<ul>
+				<li>本日のレース</li>
+				<li>特別登録</li>
+			</ul>
+	</section>
+</aside>
+
+</div>
 </body>
+
 </html>

@@ -38,6 +38,9 @@ public class PckeibaConvert {
 	}
 
 	static public BigDecimal ConvertSrun(BigDecimal srun, BigDecimal futanJuryo){
+		if(futanJuryo.equals(BigDecimal.ZERO.setScale(1))) {
+			futanJuryo = BigDecimal.valueOf(55);
+		}
 		if(srun == null) {
 			return null;
 		}

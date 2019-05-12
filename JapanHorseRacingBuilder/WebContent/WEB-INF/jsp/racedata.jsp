@@ -111,8 +111,8 @@
      }
 %>
 <header id="title">
-	<img class="topIcon" alt="競走馬" src="/JapanHorseRacingBuilder/picture/topIcon.png" title="トップページのアイコン">
-	<span class="title">うまポス！</span>
+	<a href="/JapanHorseRacingBuilder/Index"><img class="topIcon" alt="競走馬" src="/JapanHorseRacingBuilder/picture/topIcon.png" title="トップページのアイコン"></a>
+	<a href="/JapanHorseRacingBuilder/Index"><span class="title">うまポス！</span></a>
 	<a href="https://twitter.com/search?q=%23<%out.print(kyosomeiHondai); %>&src=typd&lang=ja" target="_blank"><img class="twitter" alt="twitter" src="/JapanHorseRacingBuilder/picture/twitter.png"></a>
 </header>
 
@@ -205,7 +205,13 @@
 
 		<!-- デスクトップ表示用のHTML -->
 
-			<td class="pc chakujun"><%out.print(data.getKakuteiChakujun()); %><p>着</td>
+			<td class="pc chakujun"><%
+				if(data.getIjoKubunCode().equals("0")){
+					out.print(data.getKakuteiChakujun() + "着");
+				}else{
+					out.print(CodeConvert.valueOf(IjoKubunCode.class, data.getIjoKubunCode()).getContentIsShort());
+				}%>
+			</td>
 			<td class="pc waku waku<%out.print(data.getWakuban()); %> bold"></td>
 			<td class="pc bamei">
 				<div class="bamei">
@@ -236,7 +242,13 @@
 
 		<!-- モバイル表示用のHTML -->
 			<!-- 着順セル-->
-			<td class="sp sp_horizen chakujun"><%out.print(data.getKakuteiChakujun()); %><p>着</td>
+			<td class="sp sp_horizen chakujun"><%
+				if(data.getIjoKubunCode().equals("0")){
+					out.print(data.getKakuteiChakujun() + "着");
+				}else{
+					out.print(CodeConvert.valueOf(IjoKubunCode.class, data.getIjoKubunCode()).getContentIsShort());
+				}%>
+			</td>
 			<!-- 馬番 セル-->
 			<td class="sp sp_horizen waku waku<%out.print(data.getWakuban()); %> bold"></td>
 			<!-- 馬名セル -->
