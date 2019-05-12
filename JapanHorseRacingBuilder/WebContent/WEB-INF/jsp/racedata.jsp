@@ -125,7 +125,7 @@
 	</script>
 <div class="contentArea">
 <div class="tableTitle">
-			<div class="news">
+			<div class="news pc">
 				<%
 					try {
 						int i = 0;
