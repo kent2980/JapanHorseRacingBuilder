@@ -23,7 +23,7 @@ import com.racing.model.TokubetsuTorokuba;
 /**
  * Servlet implementation class IndexServlet
  */
-@WebServlet(description = "トップページのサーブレットクラスです。", urlPatterns = { "/Index" })
+//@WebServlet(description = "トップページのサーブレットクラスです。", urlPatterns = { "/Index" })
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RaceShosai raceShosai;
