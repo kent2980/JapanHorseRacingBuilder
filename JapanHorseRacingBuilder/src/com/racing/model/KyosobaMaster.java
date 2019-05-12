@@ -1,10 +1,13 @@
 package com.racing.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import com.aql.access.JvdKyosobaMasterSession;
+
+import org.apache.ibatis.session.SqlSession;
+
 import com.pckeiba.entity.JvdKyosobaMaster;
+import com.pckeiba.entity.JvdKyosobaMasterExample;
+import com.pckeiba.entity.JvdKyosobaMasterMapper;
 
 public class KyosobaMaster implements Serializable{
 	/**
@@ -13,15 +16,14 @@ public class KyosobaMaster implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<JvdKyosobaMaster> list;
 
-	public KyosobaMaster(List<String> kettoTorokuBango) {
-		try(JvdKyosobaMasterSession rs = new JvdKyosobaMasterSession();){
-			rs.getExample().createCriteria().andKettoTorokuBangoIn(kettoTorokuBango);
-			setList(rs.getMapper().selectByExample(rs.getExample()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public KyosobaMaster(SqlSession session, List<String> kettoTorokuBango) {
+		// MAPPER
+		JvdKyosobaMasterMapper mapper = session.getMapper(JvdKyosobaMasterMapper.class);
+		// EXAMPLE
+		JvdKyosobaMasterExample example = new JvdKyosobaMasterExample();
+		//WHERE
+			example.createCriteria().andKettoTorokuBangoIn(kettoTorokuBango);
+			setList(mapper.selectByExample(example));
 	}
 
 	public List<JvdKyosobaMaster> getList() {

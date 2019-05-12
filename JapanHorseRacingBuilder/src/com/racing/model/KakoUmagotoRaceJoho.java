@@ -1,12 +1,14 @@
 package com.racing.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.aql.access.UmaDataViewSession;
+import org.apache.ibatis.session.SqlSession;
+
 import com.example.entity.UmaDataView;
+import com.example.entity.UmaDataViewExample;
+import com.example.entity.UmaDataViewMapper;
 
 public class KakoUmagotoRaceJoho implements Serializable{
 	/**
@@ -15,18 +17,17 @@ public class KakoUmagotoRaceJoho implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<UmaDataView> list;
 
-	public KakoUmagotoRaceJoho(String raceCode,List<String> kettoTorokuBango) {
-		try(UmaDataViewSession rs = new UmaDataViewSession();){
-			rs.getExample().createCriteria().andKettoTorokuBangoIn(kettoTorokuBango)
+	public KakoUmagotoRaceJoho(SqlSession session, String raceCode,List<String> kettoTorokuBango) {
+		// MAPPER
+		UmaDataViewMapper mapper = session.getMapper(UmaDataViewMapper.class);
+		// EXAMPLE
+		UmaDataViewExample example = new UmaDataViewExample();
+		//WHERE
+			example.createCriteria().andKettoTorokuBangoIn(kettoTorokuBango)
 											.andUmabanNotEqualTo("00")
 											.andDataKubunNotEqualTo("9")
 											.andRaceCodeLessThan(raceCode);
-			setList(rs.getMapper().selectByExample(rs.getExample()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			setList(mapper.selectByExample(example));
 	}
 
 	public List<UmaDataView> getList() {

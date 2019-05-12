@@ -1,15 +1,17 @@
 package com.racing.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.aql.access.JvdUmagotoRaceJohoSession;
+import org.apache.ibatis.session.SqlSession;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.pckeiba.datamodel.HorseData;
 import com.pckeiba.entity.JvdUmagotoRaceJoho;
+import com.pckeiba.entity.JvdUmagotoRaceJohoExample;
+import com.pckeiba.entity.JvdUmagotoRaceJohoMapper;
 
 public class UmagotoRaceJoho implements Serializable,Horse{
 	/**
@@ -22,11 +24,15 @@ public class UmagotoRaceJoho implements Serializable,Horse{
 	private List<String> chokyoshiList;
 	private List<String> banushiList;
 
-	public UmagotoRaceJoho(String raceCode) {
-		try(JvdUmagotoRaceJohoSession rs = new JvdUmagotoRaceJohoSession();){
-			rs.getExample().createCriteria().andRaceCodeEqualTo(raceCode);
-			rs.getExample().setOrderByClause("ijo_kubun_code asc, kakutei_chakujun asc, umaban asc, bamei asc");
-			List<JvdUmagotoRaceJoho> umagoto = rs.getMapper().selectByExample(rs.getExample());
+	public UmagotoRaceJoho(SqlSession session, String raceCode) {
+		// MAPPER
+		JvdUmagotoRaceJohoMapper mapper = session.getMapper(JvdUmagotoRaceJohoMapper.class);
+		// EXAMPLE
+		JvdUmagotoRaceJohoExample example = new JvdUmagotoRaceJohoExample();
+		//WHERE
+			example.createCriteria().andRaceCodeEqualTo(raceCode);
+			example.setOrderByClause("ijo_kubun_code asc, kakutei_chakujun asc, umaban asc, bamei asc");
+			List<JvdUmagotoRaceJoho> umagoto = mapper.selectByExample(example);
 			setList(Lists.transform(umagoto, new Function<JvdUmagotoRaceJoho,HorseData>(){
 				@Override
 				public HorseData apply(JvdUmagotoRaceJoho arg0) {
@@ -45,11 +51,6 @@ public class UmagotoRaceJoho implements Serializable,Horse{
 			setBanushiList(umagoto.stream()
 					.map(s -> s.getBanushiCode())
 					.collect(Collectors.toList()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	public List<String> getKishuList() {

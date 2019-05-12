@@ -1,10 +1,13 @@
 package com.racing.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import com.aql.access.JvdKishuMasterSession;
+
+import org.apache.ibatis.session.SqlSession;
+
 import com.pckeiba.entity.JvdKishuMaster;
+import com.pckeiba.entity.JvdKishuMasterExample;
+import com.pckeiba.entity.JvdKishuMasterMapper;
 
 public class KishuMaster implements Serializable{
 	/**
@@ -13,15 +16,14 @@ public class KishuMaster implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<JvdKishuMaster> list;
 
-	public KishuMaster(List<String> kishuCode) {
-		try(JvdKishuMasterSession rs = new JvdKishuMasterSession();){
-			rs.getExample().createCriteria().andKishuCodeIn(kishuCode);
-			setList(rs.getMapper().selectByExample(rs.getExample()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public KishuMaster(SqlSession session, List<String> kishuCode) {
+		// MAPPER
+		JvdKishuMasterMapper mapper = session.getMapper(JvdKishuMasterMapper.class);
+		// EXAMPLE
+		JvdKishuMasterExample example = new JvdKishuMasterExample();
+		//WHERE{
+			example.createCriteria().andKishuCodeIn(kishuCode);
+			setList(mapper.selectByExample(example));
 	}
 
 	public List<JvdKishuMaster> getList() {

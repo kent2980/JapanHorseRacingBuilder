@@ -1,10 +1,13 @@
 package com.racing.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
-import com.aql.access.JvdBanushiMasterSession;
+
+import org.apache.ibatis.session.SqlSession;
+
 import com.pckeiba.entity.JvdBanushiMaster;
+import com.pckeiba.entity.JvdBanushiMasterExample;
+import com.pckeiba.entity.JvdBanushiMasterMapper;
 
 public class BanushiMaster implements Serializable{
 	/**
@@ -13,15 +16,14 @@ public class BanushiMaster implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private List<JvdBanushiMaster> list;
 
-	public BanushiMaster(List<String> BanushiCode) {
-		try(JvdBanushiMasterSession rs = new JvdBanushiMasterSession();){
-			rs.getExample().createCriteria().andBanushiCodeIn(BanushiCode);
-			setList(rs.getMapper().selectByExample(rs.getExample()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public BanushiMaster(SqlSession session, List<String> BanushiCode) {
+		// MAPPER
+		JvdBanushiMasterMapper mapper = session.getMapper(JvdBanushiMasterMapper.class);
+		// EXAMPLE
+		JvdBanushiMasterExample example = new JvdBanushiMasterExample();
+		//WHERE
+			example.createCriteria().andBanushiCodeIn(BanushiCode);
+			setList(mapper.selectByExample(example));
 	}
 
 	public List<JvdBanushiMaster> getList() {

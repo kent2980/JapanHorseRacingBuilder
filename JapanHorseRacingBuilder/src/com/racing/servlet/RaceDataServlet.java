@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.racing.model.Horse;
 import com.racing.model.KakoUmagotoRaceJoho;
 import com.racing.model.KishuMaster;
@@ -20,12 +22,17 @@ import com.racing.model.TokubetsuTorokuba;
 import com.racing.model.TorokubagotoJoho;
 import com.racing.model.UmagotoRaceJoho;
 
+import com.database.access.PckaibaSqlSessionFactory;
+import com.database.access.PckaibalinkSqlSessionFactory;
+
 /**
  * Servlet implementation class RaceDataServlet
  */
 @WebServlet("/racedata")
 public class RaceDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private final SqlSession pckeibaSession;
+	private final SqlSession pckeibalinkSession;
 
 	private Race raceData;
 	private Horse horseData;
@@ -38,6 +45,8 @@ public class RaceDataServlet extends HttpServlet {
      */
     public RaceDataServlet() {
         super();
+		pckeibaSession = PckaibaSqlSessionFactory.openSession();
+		pckeibalinkSession = PckaibalinkSqlSessionFactory.openSession();
     }
 
 	/**
@@ -49,20 +58,20 @@ public class RaceDataServlet extends HttpServlet {
 
 		switch(shubetsu) {
 		case "TK":
-			raceData = new TokubetsuTorokuba(raceCode);
-			horseData = new TorokubagotoJoho(raceCode);
+			raceData = new TokubetsuTorokuba(pckeibaSession, raceCode);
+			horseData = new TorokubagotoJoho(pckeibaSession, raceCode);
 			break;
 		case "RA":
-			raceData = new RaceShosai(raceCode);
-			UmagotoRaceJoho umagotoJoho = new UmagotoRaceJoho(raceCode);
+			raceData = new RaceShosai(pckeibaSession, raceCode);
+			UmagotoRaceJoho umagotoJoho = new UmagotoRaceJoho(pckeibaSession, raceCode);
 			horseData = umagotoJoho;
-			KishuMaster kishuMaster = new KishuMaster(umagotoJoho.getKishuList());
+			KishuMaster kishuMaster = new KishuMaster(pckeibaSession, umagotoJoho.getKishuList());
 			request.setAttribute("kishuMaster", kishuMaster);
 		}
 
 		List<String> kettoTorokuBango = horseData.getKettotorokubango();
-		kakoRace = new KakoUmagotoRaceJoho(raceCode, kettoTorokuBango);
-		kyosobaMaster = new KyosobaMaster(kettoTorokuBango);
+		kakoRace = new KakoUmagotoRaceJoho(pckeibalinkSession, raceCode, kettoTorokuBango);
+		kyosobaMaster = new KyosobaMaster(pckeibaSession, kettoTorokuBango);
 		request.setAttribute("raceData", raceData);
 		request.setAttribute("umagoto", horseData);
 		request.setAttribute("kakoRace", kakoRace);

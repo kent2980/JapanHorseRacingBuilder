@@ -174,7 +174,7 @@ div#torokuRace {
     height: 40px;
     /* box-shadow: 0 0 1px 1px rgba(75, 75, 75, 0.79); */
     /* border-radius: 0 0 16px 16px; */
-    /* position: fixed; */
+    position: fixed !important;
     top: 0;
     z-index: 10000;
     width: 100%;
@@ -198,6 +198,7 @@ img.twitter {
 .contentArea {
     width: 1700px;
     margin: auto;
+		padding-top: 30px;
 }
 
 #roundData .kaisai {
@@ -995,6 +996,9 @@ span.t {
     background-color: #656565;
     color: #fff;
     margin: 40px;
+}
+.news::-webkit-scrollbar{
+	display: none;
 }
 .news a:link {
 	color: #fff;

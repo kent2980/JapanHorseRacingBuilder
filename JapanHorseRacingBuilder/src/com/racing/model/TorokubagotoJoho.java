@@ -1,15 +1,17 @@
 package com.racing.model;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.aql.access.JvdTorokubagotoJohoSession;
+import org.apache.ibatis.session.SqlSession;
+
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.pckeiba.datamodel.HorseData;
 import com.pckeiba.entity.JvdTorokubagotoJoho;
+import com.pckeiba.entity.JvdTorokubagotoJohoExample;
+import com.pckeiba.entity.JvdTorokubagotoJohoMapper;
 
 public class TorokubagotoJoho implements Serializable,Horse{
 	/**
@@ -20,10 +22,14 @@ public class TorokubagotoJoho implements Serializable,Horse{
 	private List<String> kettotorokubango;
 	private List<String> chokyoshiList;
 
-	public TorokubagotoJoho(String raceCode) {
-		try(JvdTorokubagotoJohoSession rs = new JvdTorokubagotoJohoSession();){
-			rs.getExample().createCriteria().andRaceCodeEqualTo(raceCode);
-			List<JvdTorokubagotoJoho> torokuba = rs.getMapper().selectByExample(rs.getExample());
+	public TorokubagotoJoho(SqlSession session, String raceCode) {
+		// MAPPER
+		JvdTorokubagotoJohoMapper mapper = session.getMapper(JvdTorokubagotoJohoMapper.class);
+		// EXAMPLE
+		JvdTorokubagotoJohoExample example = new JvdTorokubagotoJohoExample();
+		//WHERE
+		example.createCriteria().andRaceCodeEqualTo(raceCode);
+			List<JvdTorokubagotoJoho> torokuba = mapper.selectByExample(example);
 			setList(Lists.transform(torokuba, new Function<JvdTorokubagotoJoho,HorseData>(){
 				@Override
 				public HorseData apply(JvdTorokubagotoJoho arg0) {
@@ -36,11 +42,6 @@ public class TorokubagotoJoho implements Serializable,Horse{
 			setChokyoshiList(torokuba.stream()
 									 .map(s -> s.getChokyoshiCode())
 									 .collect(Collectors.toList()));
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
