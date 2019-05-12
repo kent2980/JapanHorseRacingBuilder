@@ -198,7 +198,6 @@ img.twitter {
     margin: 8px;
 }
 .contentArea {
-    width: 1700px;
     margin: auto;
 		padding-top: 30px;
 }
@@ -946,6 +945,9 @@ font-weight: 600;
 	    height: 900px;
 	    width: 1350px;
 	}
+	.contentArea{
+		width: 1700px;
+	}
 	aside.sidebar {
     width: 290px;
     float: right;
@@ -1129,17 +1131,22 @@ th.drun {
 
 @media screen and (orientation: portrait){
     /*　縦画面で適用　*/
-
+#title span.title{
+	font-size: 30px !important;
+}
 		/**** タイトルバーの設定 *************************************************/
 		#title {
 		    display: flex !important;
 		    padding-left: 1em;
 		    background-color: rgb(255, 255, 255);
-		    height: 115px;
+		    height: 60px;
 		    box-shadow: none;
 		    position: initial;
 		    top: 0;
 		    z-index: 10000;
+		}
+		#title span.title{
+			width: 160px;
 		}
 		#title .kyosomei {
 		    font-size: 1.3em !important;
