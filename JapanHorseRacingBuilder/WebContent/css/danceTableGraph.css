@@ -16,6 +16,12 @@ body {
     display: flex;
 }
 
+img.topIcon {
+    /* width: 130px; */
+    height: 80%;
+    margin: 5px 0 0 20px;
+}
+
 /*******************************************
 *************共通文字設定*******************
 ********************************************/
@@ -162,15 +168,36 @@ div#torokuRace {
 ********************************************/
 
 #title {
-	display:flex !important;
-	padding-left: 1em;
-	background-color: rgb(255, 255, 255);
-	height: 115px;
-	box-shadow: 1px 1px 1px 1px rgba(75, 75, 75, 0.79);
-	border-radius: 0 0 16px 16px;
-    position: fixed;
+    display: flex !important;
+    /* padding-left: 1em; */
+    /* background-color: rgb(255, 255, 255); */
+    height: 40px;
+    /* box-shadow: 0 0 1px 1px rgba(75, 75, 75, 0.79); */
+    /* border-radius: 0 0 16px 16px; */
+    /* position: fixed; */
     top: 0;
     z-index: 10000;
+    width: 100%;
+    background: linear-gradient(to top,#e0e0e0, #ffffff);
+    width: 100%;
+    margin-bottom: 10px;
+    border-style: groove;
+    border-width: 0.5px;
+}
+#title span.title{
+    display: inline-block;
+    /* vertical-align: middle; */
+    height: 100%;
+    margin: 5px 0 0 10px;
+}
+img.twitter {
+    height: 60%;
+    /* width: 80%; */
+    margin: 8px;
+}
+.contentArea {
+    width: 1700px;
+    margin: auto;
 }
 
 #roundData .kaisai {
@@ -422,18 +449,19 @@ table.danceIndex {
 	width: 100%;
 }
 
-.tableTitle {
-    padding-top: 150px;
-}
 
 .index {
 	padding-left: 20px;
 }
 
 th {
-	height: 2.4em;
-	background-color: rgb(71, 71, 71);
-	color: rgb(255, 255, 255);
+    /* height: 2.4em; */
+    /* background-color: rgb(71, 71, 71); */
+    background: linear-gradient(to top,#000, #696969);
+    color: rgb(255, 255, 255);
+    border-style: outset;
+    font-size: 14px;
+    font-weight: 100;
 }
 
 table,td {
@@ -907,17 +935,13 @@ font-weight: 600;
 /************************************************************************/
 /**		PC画面での表示設定		**/
 @media screen and (min-width: 1024px) {
-	body{
-		width: 1700px;
-		margin: auto;
-	}
 	.tableTitle {
-		margin: 0 10px;
-		float: left;
-    overflow: auto;
-    height: 800px;
-		width: 1350px;
-}
+	    margin: 0 10px;
+	    float: left;
+	    overflow: auto;
+	    height: 900px;
+	    width: 1350px;
+	}
 	aside.sidebar {
     width: 290px;
     float: right;
@@ -929,6 +953,8 @@ ul {
     border-width: 1px;
     border-color: #b9b9b9;
     line-height: 60px;
+    margin: 0;
+    padding: 0;
 }
 li {
 	list-style-type: circle;
@@ -938,6 +964,7 @@ li {
 	display: -o-box;
 	display: -ms-box;
 	display: -webkit-box;
+	padding-left: 10px;
 }
 li:hover {
     background: #bdbbbb5c;
@@ -947,13 +974,30 @@ table {
 	margin: auto;
 }
 .sidebar div {
-    border-bottom-style: groove;
-    border-width: thin;
+    border-bottom-style: groove !important;
+    border-width: thin !important;
     line-height: 15px;
     padding-bottom: 20px;
 }
 .sidebar div span {
-	display: inline-block;
+    display: block;
+    line-height: 40px;
+}
+.news {
+    clear: both;
+}
+span.t {
+    display: block;
+}
+.news {
+    overflow: auto;
+    height: 200px;
+    background-color: #656565;
+    color: #fff;
+    margin: 40px;
+}
+.news a:link {
+	color: #fff;
 }
 }
 .pc {
