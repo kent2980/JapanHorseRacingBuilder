@@ -22,17 +22,14 @@ import com.racing.model.TokubetsuTorokuba;
 import com.racing.model.TorokubagotoJoho;
 import com.racing.model.UmagotoRaceJoho;
 
-import com.database.access.PckaibaSqlSessionFactory;
-import com.database.access.PckaibalinkSqlSessionFactory;
-
 /**
  * Servlet implementation class RaceDataServlet
  */
 @WebServlet("/racedata")
 public class RaceDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final SqlSession pckeibaSession;
-	private final SqlSession pckeibalinkSession;
+	private final SqlSession pckeibaSession = Init.getPckeibaSession();
+	private final SqlSession pckeibalinkSession = Init.getPckeibaLinkSession();
 
 	private Race raceData;
 	private Horse horseData;
@@ -45,8 +42,6 @@ public class RaceDataServlet extends HttpServlet {
      */
     public RaceDataServlet() {
         super();
-		pckeibaSession = PckaibaSqlSessionFactory.openSession();
-		pckeibalinkSession = PckaibalinkSqlSessionFactory.openSession();
     }
 
 	/**

@@ -9,14 +9,12 @@ import java.time.format.DateTimeFormatter;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
 
-import com.database.access.PckaibaSqlSessionFactory;
 import com.racing.model.RaceShosai;
 import com.racing.model.TokubetsuTorokuba;
 
@@ -28,14 +26,13 @@ public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RaceShosai raceShosai;
 	private TokubetsuTorokuba torokuba;
-	private final SqlSession pckeibaSession;
+	private final SqlSession pckeibaSession = Init.getPckeibaSession();
 
     /**
      * @see HttpServlet#HttpServlet()
      */
     public IndexServlet() {
         super();
-		pckeibaSession = PckaibaSqlSessionFactory.openSession();
     }
 
 	/**
