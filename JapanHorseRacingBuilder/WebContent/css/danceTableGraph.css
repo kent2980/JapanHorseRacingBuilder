@@ -17,7 +17,7 @@ body {
 }
 
 img.topIcon {
-  	width: 60px; 
+  	width: 60px;
     height: 80%;
     margin: 5px 0 0 20px;
 }
@@ -190,6 +190,7 @@ div#torokuRace {
     height: 100%;
     margin: 5px 0 0 10px;
     font-size: 20px;
+		width: 100px;
 }
 img.twitter {
     height: 60%;
@@ -998,6 +999,7 @@ span.t {
     background-color: #656565;
     color: #fff;
     margin: 40px;
+		display: block !important;
 }
 .news::-webkit-scrollbar{
 	display: none;
@@ -1007,7 +1009,7 @@ span.t {
 }
 }
 .pc {
-	display: table-cell !important;
+	display: table-cell;
 }
 .sp {
 	display: none !important;
@@ -1036,15 +1038,10 @@ span.t {
 	display: table-cell !important;
 }
 /**** タイトルバーの設定 *************************************************/
-#title {
-    display: flex !important;
-    padding-left: 1em;
-    background-color: rgb(255, 255, 255);
-    height: 115px;
-    box-shadow: none;
-    position: initial;
-    top: 0;
-    z-index: 10000;
+.contentArea {
+    width: auto;
+    margin: auto;
+		padding-top: 50px;
 }
 #title .kyosomei {
     font-size: 1.3em !important;
@@ -1081,6 +1078,7 @@ td.srun.sp_horizen div.kyakushitsu {
 }
 td.srun.sp_horizen div.srun{
 	clear: both;
+	width: auto !important;
 }
 #JHRdance td.waku {
     width: 4px;

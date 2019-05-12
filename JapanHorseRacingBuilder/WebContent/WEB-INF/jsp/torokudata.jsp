@@ -114,7 +114,7 @@
 	</script>
 <div class="contentArea">
 <div class="tableTitle">
-			<div class="news">
+			<div class="news pc">
 				<%
 					try {
 						int i = 0;
@@ -211,6 +211,8 @@
 			<td class="sp sp_horizen bamei">
 				<!-- 馬名、性齢 、調教師、所属、騎手、斤量、人気-->
 				<div class="bamei">
+					<span class="bamei"><%out.print(bamei); %></span>
+					<br>
 					<span class="seirei"><%out.print(seirei); %></span>
 					<br>
 					<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)</span>
