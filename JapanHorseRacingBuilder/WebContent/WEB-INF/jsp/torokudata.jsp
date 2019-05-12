@@ -203,7 +203,6 @@
 				<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)
 				</span>
 			</td>
-			<td class="pc ninki">
 
 		<!-- モバイル表示用のHTML -->
 			<!-- 着順セル-->
