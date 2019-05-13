@@ -595,8 +595,21 @@
 				</span>
 			</div>
 			<ul>
-				<li><a href="/JapanHorseRacingBuilder/racedata?racecode=<%out.print(raceData.getRaceCode()); %>&shubetsu=DANCE" class="link">出馬表</a></li>
-				<li><a href="/JapanHorseRacingBuilder/racedata?racecode=<%out.print(raceData.getRaceCode()); %>&shubetsu=RA" class="link">レース結果</a></li>
+				<%
+				switch(shubetsu){
+				case "RA":
+				%>
+					<li><a href="/JapanHorseRacingBuilder/racedata?racecode=<%out.print(raceData.getRaceCode()); %>&shubetsu=DANCE" class="link">出馬表</a></li>
+					<li class="selectLi">レース結果</li>
+				<%
+					break;
+				case "DANCE":
+				%>
+					<li class="selectLi">出馬表</li>
+					<li><a href="/JapanHorseRacingBuilder/racedata?racecode=<%out.print(raceData.getRaceCode()); %>&shubetsu=RA" class="link">レース結果</a></li>
+				<%
+				}
+				%>
 			</ul>
 			<ul>
 				<li>重賞スケジュール</li>

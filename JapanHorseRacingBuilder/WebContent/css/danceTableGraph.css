@@ -1015,6 +1015,10 @@ a.link:link {
 a.link:visited {
 	color: #000;
 }
+li.selectLi {
+    background: linear-gradient(to right, #5c5d5e, #d4d8dd) !important;
+		color: #fff;
+}
 }
 .pc {
 	display: table-cell;
