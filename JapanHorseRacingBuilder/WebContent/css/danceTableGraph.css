@@ -965,11 +965,7 @@ ul {
 li {
 	list-style-type: circle;
 	height: 50px;
-	display: -webkit-box;
-	display: -moz-box;
-	display: -o-box;
-	display: -ms-box;
-	display: -webkit-box;
+	display: block;
 	padding-left: 10px;
 }
 li:hover {
@@ -1008,6 +1004,16 @@ span.t {
 }
 .news a:link {
 	color: #fff;
+}
+.link{
+	display: block;
+	text-decoration:none;
+}
+a.link:link {
+	color: #000;
+}
+a.link:visited {
+	color: #000;
 }
 }
 .pc {

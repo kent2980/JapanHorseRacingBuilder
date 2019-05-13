@@ -12,7 +12,7 @@ public class HtmlDownload {
 	public static void main(String[] args) {
 		try {
 			//ダウンロードする対象のURLと文字コード
-			String url = "https://news.yahoo.co.jp/search/?ei=UTF-8&p=ヴィクトリアマイル&fr=crmas";
+			String url = "https://race.netkeiba.com/?pid=odds&id=p201905020811&mode=top";
 			String charset = "UTF-8";
 
 			//HTMLを取得
@@ -21,7 +21,6 @@ public class HtmlDownload {
 
 			//取得したHTMLを出力
 			for(String str : contents) {
-				if(str.startsWith("<span class=\"iS\">"))
 				System.out.println(str);
 			}
 		}catch(Exception e) {

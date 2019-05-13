@@ -80,7 +80,7 @@
 						%>
 					</td>
 					<td>
-						<a href="racedata?racecode=<%out.print(data.getRaceCode()); %>&shubetsu=RA">
+						<a href="racedata?racecode=<%out.print(data.getRaceCode()); %>&shubetsu=DANCE">
 							<%
 								out.print(kyosomei);
 							%>
@@ -133,7 +133,7 @@
 						%>
 					</td>
 					<td>
-						<a href="racedata?racecode=<%out.print(data.getRaceCode()); %>&shubetsu=RA">
+						<a href="racedata?racecode=<%out.print(data.getRaceCode()); %>&shubetsu=DANCE">
 							<%
 								out.print(kyosomei);
 							%>
@@ -188,7 +188,7 @@
 						%>
 					</td>
 					<td>
-						<a href="racedata?racecode=<%out.print(data.getRaceCode()); %>&shubetsu=RA">
+						<a href="racedata?racecode=<%out.print(data.getRaceCode()); %>&shubetsu=DANCE">
 							<%
 								out.print(kyosomei);
 							%>

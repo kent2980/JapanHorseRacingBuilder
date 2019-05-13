@@ -13,6 +13,11 @@
 	import="java.util.stream.Collectors"
 	import="java.util.NoSuchElementException"
 	import="java.text.Normalizer"
+	import="java.util.Collections"
+	import="java.util.Comparator"
+
+	import="com.google.common.base.Function"
+	import="com.google.common.collect.Lists"
 
     import="com.pckeiba.entity.JvdRaceShosai"
     import="com.pckeiba.entity.JvdUmagotoRaceJoho"
@@ -144,12 +149,22 @@
 					} catch (NullPointerException e) {
 						out.print("<span>最新のニュースはありません</span>");
 					}
+
+			//種別ごとに馬名のcolspanを変化させます
+			int colspan = 0;
+			switch(shubetsu){
+			case "RA":
+				colspan = 5;
+				break;
+			case "DANCE":
+				colspan = 4;
+			}
 				%>
 			</div>
 			<table id="kako4sou">
 		<tr>
-			<th class="pc bamei" colspan="5">馬名</th>
-			<th class="sp sp_horizen bamei" colspan="3">馬名</th>
+			<th class="pc bamei" colspan="<%out.print(colspan); %>">馬名</th>
+			<th class="sp sp_horizen bamei" colspan="<%out.print(colspan - 2); %>">馬名</th>
 			<th colspan="2" class="pc kako">1走前</th>
 			<th colspan="2" class="pc kako">2走前</th>
 			<th colspan="2" class="pc kako">3走前</th>
@@ -166,13 +181,27 @@
 <!-- ********************************************************************************************************* -->
 
 		<%
-			for(HorseData dataModel : horseData){
+		//リスト内部のホースデータを馬毎レース情報にキャストします
+		List<JvdUmagotoRaceJoho> dataList = Lists.transform(horseData, new Function<HorseData,JvdUmagotoRaceJoho>(){
+			@Override
+			public JvdUmagotoRaceJoho apply(HorseData arg0) {
+				return (JvdUmagotoRaceJoho)arg0;
+			}
+		});
+		//種別ごとに並び替えを行います
+		switch(shubetsu){
+		case "DANCE":
+			dataList = dataList.stream()
+							   .sorted(Comparator.comparing(JvdUmagotoRaceJoho::getUmaban))
+							   .collect(Collectors.toList());
+			break;
+		}
+			for(JvdUmagotoRaceJoho data : dataList){
 
 				/*************************************************************************************/
 				/** 現在のレース情報を記述します	**********************************************************/
 				/*************************************************************************************/
 
-			JvdUmagotoRaceJoho data = (JvdUmagotoRaceJoho) dataModel;
 			//競走馬マスタ
 			JvdKyosobaMaster kyosobaMasterSet = kyosobaMasterList.stream()
 													   			 .filter(s -> s.getKettoTorokuBango().equals(data.getKettoTorokuBango()))
@@ -204,7 +233,9 @@
 		<tr>
 
 		<!-- デスクトップ表示用のHTML -->
-
+			<%
+			if(shubetsu.equals("RA")){
+			%>
 			<td class="pc chakujun"><%
 				if(data.getIjoKubunCode().equals("0")){
 					out.print(data.getKakuteiChakujun() + "着");
@@ -212,6 +243,9 @@
 					out.print(CodeConvert.valueOf(IjoKubunCode.class, data.getIjoKubunCode()).getContentIsShort());
 				}%>
 			</td>
+			<%
+			}
+			%>
 			<td class="pc waku waku<%out.print(data.getWakuban()); %> bold"></td>
 			<td class="pc bamei">
 				<div class="bamei">
@@ -241,6 +275,9 @@
 			</td>
 
 		<!-- モバイル表示用のHTML -->
+			<%
+			if(shubetsu.equals("RA")){
+			%>
 			<!-- 着順セル-->
 			<td class="sp sp_horizen chakujun"><%
 				if(data.getIjoKubunCode().equals("0")){
@@ -249,6 +286,9 @@
 					out.print(CodeConvert.valueOf(IjoKubunCode.class, data.getIjoKubunCode()).getContentIsShort());
 				}%>
 			</td>
+			<%
+			}
+			%>
 			<!-- 馬番 セル-->
 			<td class="sp sp_horizen waku waku<%out.print(data.getWakuban()); %> bold"></td>
 			<!-- 馬名セル -->
@@ -555,8 +595,8 @@
 				</span>
 			</div>
 			<ul>
-				<li>出馬表</li>
-				<li>レース結果</li>
+				<li><a href="/JapanHorseRacingBuilder/racedata?racecode=<%out.print(raceData.getRaceCode()); %>&shubetsu=DANCE" class="link">出馬表</a></li>
+				<li><a href="/JapanHorseRacingBuilder/racedata?racecode=<%out.print(raceData.getRaceCode()); %>&shubetsu=RA" class="link">レース結果</a></li>
 			</ul>
 			<ul>
 				<li>重賞スケジュール</li>

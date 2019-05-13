@@ -56,7 +56,7 @@ public class RaceDataServlet extends HttpServlet {
 			raceData = new TokubetsuTorokuba(pckeibaSession, raceCode);
 			horseData = new TorokubagotoJoho(pckeibaSession, raceCode);
 			break;
-		case "RA":
+		default:
 			raceData = new RaceShosai(pckeibaSession, raceCode);
 			UmagotoRaceJoho umagotoJoho = new UmagotoRaceJoho(pckeibaSession, raceCode);
 			horseData = umagotoJoho;
@@ -77,7 +77,7 @@ public class RaceDataServlet extends HttpServlet {
 		case "TK":
 			di = request.getRequestDispatcher("/WEB-INF/jsp/torokudata.jsp");
 			break;
-		case "RA":
+		default:
 			di = request.getRequestDispatcher("/WEB-INF/jsp/racedata.jsp");
 		}
 
