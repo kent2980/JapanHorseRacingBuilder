@@ -5,20 +5,8 @@
 <%
 	RaceShosai raceShosai = (RaceShosai) request.getAttribute("raceShosai");
 	TokubetsuTorokuba torokuba = (TokubetsuTorokuba) request.getAttribute("torokuba");
-	List<JvdRaceShosai> raceList = Lists.transform(raceShosai.getList(),
-			new Function<RaceData, JvdRaceShosai>() {
-				@Override
-				public JvdRaceShosai apply(RaceData arg0) {
-					return (JvdRaceShosai) arg0;
-				}
-			});
-	List<JvdTokubetsuTorokuba> torokuList = Lists.transform(torokuba.getList(),
-			new Function<RaceData, JvdTokubetsuTorokuba>() {
-				@Override
-				public JvdTokubetsuTorokuba apply(RaceData arg0) {
-					return (JvdTokubetsuTorokuba) arg0;
-				}
-			});
+	List<JvdRaceShosai> raceList = raceShosai.getList();
+	List<JvdTokubetsuTorokuba> torokuList = torokuba.getList();
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
