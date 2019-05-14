@@ -11,7 +11,7 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 /**
  * セッションファクトリ.
  */
-public final class PckaibalinkSqlSessionFactory {
+public final class PckeibalinkSqlSessionFactory {
     /**
      * シングルトン　インスタンス.
      */

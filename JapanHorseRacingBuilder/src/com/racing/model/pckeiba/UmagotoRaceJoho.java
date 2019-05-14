@@ -1,19 +1,19 @@
-package com.racing.model;
+package com.racing.model.pckeiba;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.apache.ibatis.session.SqlSession;
-
+import com.database.access.PckeibaSession;
 import com.google.common.base.Function;
 import com.google.common.collect.Lists;
 import com.pckeiba.datamodel.HorseData;
 import com.pckeiba.entity.JvdUmagotoRaceJoho;
 import com.pckeiba.entity.JvdUmagotoRaceJohoExample;
 import com.pckeiba.entity.JvdUmagotoRaceJohoMapper;
+import com.racing.model.Horse;
 
-public class UmagotoRaceJoho implements Serializable,Horse{
+public class UmagotoRaceJoho extends PckeibaSession implements Serializable,Horse{
 	/**
 	 *
 	 */
@@ -24,7 +24,7 @@ public class UmagotoRaceJoho implements Serializable,Horse{
 	private List<String> chokyoshiList;
 	private List<String> banushiList;
 
-	public UmagotoRaceJoho(SqlSession session, String raceCode) {
+	public UmagotoRaceJoho(String raceCode) {
 		// MAPPER
 		JvdUmagotoRaceJohoMapper mapper = session.getMapper(JvdUmagotoRaceJohoMapper.class);
 		// EXAMPLE

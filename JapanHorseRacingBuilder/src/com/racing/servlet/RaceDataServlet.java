@@ -10,17 +10,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.session.SqlSession;
-
+import com.database.access.PckeibaSqlSessionFactory;
+import com.database.access.PckeibalinkSqlSessionFactory;
 import com.racing.model.Horse;
-import com.racing.model.KakoUmagotoRaceJoho;
-import com.racing.model.KishuMaster;
-import com.racing.model.KyosobaMaster;
 import com.racing.model.Race;
-import com.racing.model.RaceShosai;
-import com.racing.model.TokubetsuTorokuba;
-import com.racing.model.TorokubagotoJoho;
-import com.racing.model.UmagotoRaceJoho;
+import com.racing.model.pckeiba.KakoUmagotoRaceJoho;
+import com.racing.model.pckeiba.KishuMaster;
+import com.racing.model.pckeiba.KyosobaMaster;
+import com.racing.model.pckeiba.RaceShosai;
+import com.racing.model.pckeiba.TokubetsuTorokuba;
+import com.racing.model.pckeiba.TorokubagotoJoho;
+import com.racing.model.pckeiba.UmagotoRaceJoho;
 
 /**
  * Servlet implementation class RaceDataServlet
@@ -28,10 +28,9 @@ import com.racing.model.UmagotoRaceJoho;
 @WebServlet("/racedata")
 public class RaceDataServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private final SqlSession pckeibaSession = Init.getPckeibaSession();
-	private final SqlSession pckeibalinkSession = Init.getPckeibaLinkSession();
 
-	private Race raceData;
+	private TokubetsuTorokuba torokuba;
+	private RaceShosai raceShosai;
 	private Horse horseData;
 	private KakoUmagotoRaceJoho kakoRace;
 	private KyosobaMaster kyosobaMaster;
@@ -48,26 +47,32 @@ public class RaceDataServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//MySQLのセッションを確認します
+		PckeibaSqlSessionFactory.openSession();
+		PckeibalinkSqlSessionFactory.openSession();
+
 		String raceCode = request.getParameter("racecode");
 		shubetsu = request.getParameter("shubetsu");
 
 		switch(shubetsu) {
 		case "TK":
-			raceData = new TokubetsuTorokuba(pckeibaSession, raceCode);
-			horseData = new TorokubagotoJoho(pckeibaSession, raceCode);
+			torokuba = new TokubetsuTorokuba(raceCode);
+			horseData = new TorokubagotoJoho(raceCode);
+			System.out.println(torokuba.getList().size());
+			request.setAttribute("torokuba", torokuba);
 			break;
 		default:
-			raceData = new RaceShosai(pckeibaSession, raceCode);
-			UmagotoRaceJoho umagotoJoho = new UmagotoRaceJoho(pckeibaSession, raceCode);
+			raceShosai = new RaceShosai(raceCode);
+			UmagotoRaceJoho umagotoJoho = new UmagotoRaceJoho(raceCode);
 			horseData = umagotoJoho;
-			KishuMaster kishuMaster = new KishuMaster(pckeibaSession, umagotoJoho.getKishuList());
+			KishuMaster kishuMaster = new KishuMaster(umagotoJoho.getKishuList());
 			request.setAttribute("kishuMaster", kishuMaster);
+			request.setAttribute("raceShosai", raceShosai);
 		}
 
 		List<String> kettoTorokuBango = horseData.getKettotorokubango();
-		kakoRace = new KakoUmagotoRaceJoho(pckeibalinkSession, raceCode, kettoTorokuBango);
-		kyosobaMaster = new KyosobaMaster(pckeibaSession, kettoTorokuBango);
-		request.setAttribute("raceData", raceData);
+		kakoRace = new KakoUmagotoRaceJoho(raceCode, kettoTorokuBango);
+		kyosobaMaster = new KyosobaMaster(kettoTorokuBango);
 		request.setAttribute("umagoto", horseData);
 		request.setAttribute("kakoRace", kakoRace);
 		request.setAttribute("kyosobaMaster", kyosobaMaster);

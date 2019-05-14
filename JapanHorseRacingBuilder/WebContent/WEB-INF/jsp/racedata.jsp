@@ -29,15 +29,14 @@
     import="com.pckeiba.datamodel.RaceData"
     import="com.pckeiba.datamodel.HorseData"
 
-    import="com.racing.model.Race"
     import="com.racing.model.Horse"
-    import="com.racing.model.RaceShosai"
-    import="com.racing.model.UmagotoRaceJoho"
-    import="com.racing.model.KakoUmagotoRaceJoho"
-    import="com.racing.model.KyosobaMaster"
-    import="com.racing.model.KishuMaster"
-    import="com.racing.model.ChokyoshiMaster"
-    import="com.racing.model.BanushiMaster"
+    import="com.racing.model.pckeiba.RaceShosai"
+    import="com.racing.model.pckeiba.UmagotoRaceJoho"
+    import="com.racing.model.pckeiba.KakoUmagotoRaceJoho"
+    import="com.racing.model.pckeiba.KyosobaMaster"
+    import="com.racing.model.pckeiba.KishuMaster"
+    import="com.racing.model.pckeiba.ChokyoshiMaster"
+    import="com.racing.model.pckeiba.BanushiMaster"
     import="com.racing.model.convert.PckeibaConvert"
     import="com.web.load.HtmlDownload"
 
@@ -49,11 +48,11 @@
     <%
     //変数を宣言します
     String shubetsu = request.getParameter("shubetsu");
-    Race race = (Race)request.getAttribute("raceData");
+    RaceShosai race = (RaceShosai)request.getAttribute("raceShosai");
     UmagotoRaceJoho horse = (UmagotoRaceJoho)request.getAttribute("umagoto");
     KakoUmagotoRaceJoho kakoRace = (KakoUmagotoRaceJoho)request.getAttribute("kakoRace");
     KyosobaMaster kyosobaMaster = (KyosobaMaster)request.getAttribute("kyosobaMaster");
-    JvdRaceShosai raceData = (JvdRaceShosai)race.getList().get(0);
+    JvdRaceShosai raceData = race.getRaceShosai();
     List<HorseData> horseData = horse.getList();
     List<UmaDataView> kakoList = kakoRace.getList();
     List<JvdKyosobaMaster> kyosobaMasterList = kyosobaMaster.getList();

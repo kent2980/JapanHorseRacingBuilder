@@ -2,9 +2,10 @@ package com.racing.model;
 
 import java.util.List;
 
+import com.database.access.PckeibaSession;
 import com.pckeiba.datamodel.RaceData;
 
-public class Race {
+public class Race extends PckeibaSession {
 	protected List<RaceData> list;
 
 	public List<RaceData> getList() {

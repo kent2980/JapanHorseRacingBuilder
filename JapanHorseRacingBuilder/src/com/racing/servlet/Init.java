@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.ibatis.session.SqlSession;
-import com.database.access.PckaibaSqlSessionFactory;
-import com.database.access.PckaibalinkSqlSessionFactory;
+import com.database.access.PckeibaSqlSessionFactory;
+import com.database.access.PckeibalinkSqlSessionFactory;
 
 /**
  * Servlet implementation class Init
@@ -25,8 +25,8 @@ public class Init extends HttpServlet {
      */
     public Init() {
         super();
-        pckeibaSession = PckaibaSqlSessionFactory.openSession();
-        pckeibaLinkSession = PckaibalinkSqlSessionFactory.openSession();
+        pckeibaSession = PckeibaSqlSessionFactory.openSession();
+        pckeibaLinkSession = PckeibalinkSqlSessionFactory.openSession();
     }
 
 	/**

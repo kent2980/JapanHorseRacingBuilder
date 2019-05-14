@@ -13,10 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.ibatis.session.SqlSession;
-
-import com.racing.model.RaceShosai;
-import com.racing.model.TokubetsuTorokuba;
+import com.database.access.PckeibaSqlSessionFactory;
+import com.racing.model.pckeiba.RaceShosai;
+import com.racing.model.pckeiba.TokubetsuTorokuba;
 
 /**
  * Servlet implementation class IndexServlet
@@ -26,7 +25,6 @@ public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RaceShosai raceShosai;
 	private TokubetsuTorokuba torokuba;
-	private final SqlSession pckeibaSession = Init.getPckeibaSession();
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -45,13 +43,16 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		//MySQLのセッションを確認します
+		PckeibaSqlSessionFactory.openSession();
+
 		String date = req.getParameter("date");
 		try {
-			raceShosai = new RaceShosai(pckeibaSession, Date.valueOf(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
+			raceShosai = new RaceShosai(Date.valueOf(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
 		}catch(NullPointerException e) {
-			raceShosai = new RaceShosai(pckeibaSession, Date.valueOf(LocalDate.now()));
+			raceShosai = new RaceShosai(Date.valueOf(LocalDate.now()));
 		}
-		torokuba = new TokubetsuTorokuba(pckeibaSession);
+		torokuba = new TokubetsuTorokuba();
 		req.setAttribute("raceShosai", raceShosai);
 		req.setAttribute("torokuba", torokuba);
 		if(LocalDate.now().getDayOfWeek() == DayOfWeek.SATURDAY) {
