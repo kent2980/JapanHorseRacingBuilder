@@ -12,8 +12,8 @@ public class HtmlDownload {
 	public static void main(String[] args) {
 		try {
 			//ダウンロードする対象のURLと文字コード
-			String url = "https://race.netkeiba.com/?pid=odds&id=p201905020811&mode=top";
-			String charset = "UTF-8";
+			String url = "https://db.netkeiba.com/horse/2016104880/";
+			String charset = "JISAutoDetect";
 
 			//HTMLを取得
 			HtmlDownload downloader = new HtmlDownload();
@@ -21,6 +21,7 @@ public class HtmlDownload {
 
 			//取得したHTMLを出力
 			for(String str : contents) {
+				if(str.contains("id=\"HorseMainPhoto\""))
 				System.out.println(str);
 			}
 		}catch(Exception e) {

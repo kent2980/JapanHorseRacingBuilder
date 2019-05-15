@@ -53,7 +53,7 @@
     KakoUmagotoRaceJoho kakoRace = (KakoUmagotoRaceJoho)request.getAttribute("kakoRace");
     KyosobaMaster kyosobaMaster = (KyosobaMaster)request.getAttribute("kyosobaMaster");
     JvdRaceShosai raceData = race.getRaceShosai();
-    List<HorseData> horseData = horse.getList();
+    List<JvdUmagotoRaceJoho> horseData = horse.getList();
     List<UmaDataView> kakoList = kakoRace.getList();
     List<JvdKyosobaMaster> kyosobaMasterList = kyosobaMaster.getList();
     //騎手マスター
@@ -180,22 +180,15 @@
 <!-- ********************************************************************************************************* -->
 
 		<%
-		//リスト内部のホースデータを馬毎レース情報にキャストします
-		List<JvdUmagotoRaceJoho> dataList = Lists.transform(horseData, new Function<HorseData,JvdUmagotoRaceJoho>(){
-			@Override
-			public JvdUmagotoRaceJoho apply(HorseData arg0) {
-				return (JvdUmagotoRaceJoho)arg0;
-			}
-		});
 		//種別ごとに並び替えを行います
 		switch(shubetsu){
 		case "DANCE":
-			dataList = dataList.stream()
+			horseData = horseData.stream()
 							   .sorted(Comparator.comparing(JvdUmagotoRaceJoho::getUmaban))
 							   .collect(Collectors.toList());
 			break;
 		}
-			for(JvdUmagotoRaceJoho data : dataList){
+			for(JvdUmagotoRaceJoho data : horseData){
 
 				/*************************************************************************************/
 				/** 現在のレース情報を記述します	**********************************************************/

@@ -5,70 +5,67 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.database.access.PckeibaSession;
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
-import com.pckeiba.datamodel.HorseData;
 import com.pckeiba.entity.JvdTorokubagotoJoho;
 import com.pckeiba.entity.JvdTorokubagotoJohoExample;
 import com.pckeiba.entity.JvdTorokubagotoJohoMapper;
-import com.racing.model.Horse;
+import com.racing.model.DataInterface;
 
-public class TorokubagotoJoho extends PckeibaSession implements Serializable,Horse{
+public class TorokubagotoJoho extends PckeibaSession implements Serializable, DataInterface<JvdTorokubagotoJoho> {
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	private List<HorseData> list;
+	private List<JvdTorokubagotoJoho> list;
 	private List<String> kettotorokubango;
 	private List<String> chokyoshiList;
+	private String raceCode;
 
 	public TorokubagotoJoho(String raceCode) {
+		this.raceCode = raceCode;
+		addDataResouce();
+	}
+
+	@Override
+	public void addDataResouce() {
 		// MAPPER
 		JvdTorokubagotoJohoMapper mapper = session.getMapper(JvdTorokubagotoJohoMapper.class);
 		// EXAMPLE
 		JvdTorokubagotoJohoExample example = new JvdTorokubagotoJohoExample();
-		//WHERE
+		// WHERE
 		example.createCriteria().andRaceCodeEqualTo(raceCode);
-			List<JvdTorokubagotoJoho> torokuba = mapper.selectByExample(example);
-			setList(Lists.transform(torokuba, new Function<JvdTorokubagotoJoho,HorseData>(){
-				@Override
-				public HorseData apply(JvdTorokubagotoJoho arg0) {
-					return (HorseData)arg0;
-				}
-			}));
-			setKettotorokubango(torokuba.stream()
-									.map(s -> s.getKettoTorokuBango())
-									.collect(Collectors.toList()));
-			setChokyoshiList(torokuba.stream()
-									 .map(s -> s.getChokyoshiCode())
-									 .collect(Collectors.toList()));
+		list = mapper.selectByExample(example);
+		setKettotorokubango();
+		setChokyoshiList();
 	}
 
-	@Override
-	public List<HorseData> getList() {
-		return list;
+	public List<String> getChokyoshiList() {
+		return chokyoshiList;
 	}
 
-	@Override
 	public List<String> getKettotorokubango() {
 		return kettotorokubango;
 	}
 
 	@Override
-	public List<String> getChokyoshiList() {
-		return chokyoshiList;
+	public List<JvdTorokubagotoJoho> getList() {
+		return list;
 	}
 
-	private void setList(List<HorseData> list) {
-		this.list = list;
+	private void setChokyoshiList() {
+		this.chokyoshiList = list.stream().map(s -> s.getChokyoshiCode()).collect(Collectors.toList());
 	}
 
-	private void setKettotorokubango(List<String> kettotorokubango) {
-		this.kettotorokubango = kettotorokubango;
+	private void setKettotorokubango() {
+		this.kettotorokubango = list.stream().map(s -> s.getKettoTorokuBango()).collect(Collectors.toList());
 	}
 
-	private void setChokyoshiList(List<String> chokyoshiList) {
-		this.chokyoshiList = chokyoshiList;
+	public String getRaceCode() {
+		return raceCode;
+	}
+
+	public void setRaceCode(String raceCode) {
+		this.raceCode = raceCode;
+		addDataResouce();
 	}
 
 }

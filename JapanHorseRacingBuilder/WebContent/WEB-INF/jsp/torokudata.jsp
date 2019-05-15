@@ -40,12 +40,12 @@
     <%
     //変数を宣言します
     String shubetsu = request.getParameter("shubetsu");
-    TokubetsuTorokuba race = (TokubetsuTorokuba)request.getAttribute("torokuba");
-    TorokubagotoJoho horse = (TorokubagotoJoho)request.getAttribute("umagoto");
+    TokubetsuTorokuba race = (TokubetsuTorokuba)request.getAttribute("tokubetsuToroku");
+    TorokubagotoJoho horse = (TorokubagotoJoho)request.getAttribute("torokuba");
     KakoUmagotoRaceJoho kakoRace = (KakoUmagotoRaceJoho)request.getAttribute("kakoRace");
     KyosobaMaster kyosobaMaster = (KyosobaMaster)request.getAttribute("kyosobaMaster");
     JvdTokubetsuTorokuba raceData = race.getTokubetsuTorokuba();
-    List<HorseData> horseData = horse.getList();
+    List<JvdTorokubagotoJoho> horseData = horse.getList();
     List<UmaDataView> kakoList = kakoRace.getList();
     List<JvdKyosobaMaster> kyosobaMasterList = kyosobaMaster.getList();
     %>
@@ -157,13 +157,12 @@
 <!-- ********************************************************************************************************* -->
 
 		<%
-			for(HorseData dataModel : horseData){
+			for(JvdTorokubagotoJoho data : horseData){
 
 				/*************************************************************************************/
 				/** 現在のレース情報を記述します	**********************************************************/
 				/*************************************************************************************/
 
-			JvdTorokubagotoJoho data = (JvdTorokubagotoJoho) dataModel;
 			//競走馬マスタ
 			JvdKyosobaMaster kyosobaMasterSet = kyosobaMasterList.stream()
 													   			 .filter(s -> s.getKettoTorokuBango().equals(data.getKettoTorokuBango()))
