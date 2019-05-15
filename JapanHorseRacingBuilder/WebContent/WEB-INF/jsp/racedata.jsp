@@ -26,10 +26,6 @@
     import="com.pckeiba.entity.JvdChokyoshiMaster"
     import="com.pckeiba.entity.JvdBanushiMaster"
 
-    import="com.pckeiba.datamodel.RaceData"
-    import="com.pckeiba.datamodel.HorseData"
-
-    import="com.racing.model.Horse"
     import="com.racing.model.pckeiba.RaceShosai"
     import="com.racing.model.pckeiba.UmagotoRaceJoho"
     import="com.racing.model.pckeiba.KakoUmagotoRaceJoho"

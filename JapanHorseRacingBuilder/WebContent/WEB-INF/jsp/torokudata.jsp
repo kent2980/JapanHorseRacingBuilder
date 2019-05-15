@@ -25,11 +25,7 @@
     import="com.racing.model.pckeiba.TorokubagotoJoho"
     import="com.racing.model.pckeiba.KakoUmagotoRaceJoho"
 
-    import="com.example.entity.UmaDataView"
-    import="com.pckeiba.datamodel.RaceData"
-    import="com.pckeiba.datamodel.HorseData"
-    import="com.racing.model.Race"
-    import="com.racing.model.Horse"
+    import="com.example.entity.UmaDataView""
     import="com.web.load.HtmlDownload"
 
     import="com.example.entity.UmaDataView"
