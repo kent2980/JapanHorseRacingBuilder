@@ -16,6 +16,7 @@ import com.racing.model.pckeiba.KakoUmagotoRaceJoho;
 import com.racing.model.pckeiba.KishuMaster;
 import com.racing.model.pckeiba.KyosobaMaster;
 import com.racing.model.pckeiba.RaceShosai;
+import com.racing.model.pckeiba.TanpukuOdds;
 import com.racing.model.pckeiba.TokubetsuTorokuba;
 import com.racing.model.pckeiba.TorokubagotoJoho;
 import com.racing.model.pckeiba.UmagotoRaceJoho;
@@ -35,6 +36,7 @@ public class RaceDataServlet extends HttpServlet {
 	private KyosobaMaster kyosobaMaster;
 	private String shubetsu;
 	private List<String> kettoTorokuBango;
+	private TanpukuOdds odds;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -62,12 +64,14 @@ public class RaceDataServlet extends HttpServlet {
 			kettoTorokuBango = torokuba.getKettotorokubango();
 			break;
 		default:
+			odds = new TanpukuOdds(raceCode);
 			raceShosai = new RaceShosai(raceCode);
 			horseData = new UmagotoRaceJoho(raceCode);
 			KishuMaster kishuMaster = new KishuMaster(horseData.getKishuList());
 			request.setAttribute("kishuMaster", kishuMaster);
 			request.setAttribute("raceShosai", raceShosai);
 			request.setAttribute("umagoto", horseData);
+			request.setAttribute("odds", odds);
 			kettoTorokuBango = horseData.getKettotorokubango();
 		}
 		kakoRace = new KakoUmagotoRaceJoho(raceCode, kettoTorokuBango);

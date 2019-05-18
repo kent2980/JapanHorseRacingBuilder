@@ -1,6 +1,10 @@
 package com.racing.model.convert;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import com.pckeiba.enumutil.CodeConvert;
 import com.pckeiba.enumutil.KyosoJokenCode;
@@ -47,5 +51,23 @@ public class PckeibaConvert {
 		BigDecimal hosei = BigDecimal.valueOf(55).subtract(futanJuryo).multiply(BigDecimal.valueOf(0.3)).setScale(3,BigDecimal.ROUND_HALF_UP);
 		BigDecimal hoseiSrun = srun.add(hosei);
 		return hoseiSrun.add(BigDecimal.valueOf(12)).multiply(BigDecimal.valueOf(4.5)).setScale(2,BigDecimal.ROUND_HALF_UP);
+	}
+
+	public static String getNenrei(Date seinenGappi) {
+		//生年月日の型をLocalDateに変換します
+		LocalDate seinenGappi_ = seinenGappi.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		//現在の日付
+		LocalDate now = LocalDate.now();
+		//int型の年に変換します
+		int tanjoNen = seinenGappi_.getYear();
+		int nowYear = now.getYear();
+		//年齢を返します
+		return (nowYear - tanjoNen) + "歳";
+	}
+
+	public static String getDateString(Date seinenGappi) {
+		//生年月日をLocalDateに変換します
+		LocalDate seinanGappi_ = seinenGappi.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		return DateTimeFormatter.ofPattern("yyyy年MM月dd日").format(seinanGappi_);
 	}
 }

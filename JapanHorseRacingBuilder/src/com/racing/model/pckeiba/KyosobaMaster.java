@@ -3,7 +3,10 @@ package com.racing.model.pckeiba;
 import java.io.Serializable;
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.database.access.PckeibaSession;
+import com.database.access.PckeibaSqlSessionFactory;
 import com.pckeiba.entity.JvdKyosobaMaster;
 import com.pckeiba.entity.JvdKyosobaMasterExample;
 import com.pckeiba.entity.JvdKyosobaMasterMapper;
@@ -44,6 +47,14 @@ public class KyosobaMaster extends PckeibaSession implements Serializable, DataI
 	public void setKettoTorokuBango(List<String> kettoTorokuBango) {
 		this.kettoTorokuBango = kettoTorokuBango;
 		addDataResouce();
+	}
+
+	public static JvdKyosobaMaster getKyosobaMaster(String kettoTorokuBango) {
+		SqlSession session = PckeibaSqlSessionFactory.openSession();
+		JvdKyosobaMasterMapper mapper = session.getMapper(JvdKyosobaMasterMapper.class);
+		JvdKyosobaMasterExample example = new JvdKyosobaMasterExample();
+		example.createCriteria().andKettoTorokuBangoEqualTo(kettoTorokuBango);
+		return mapper.selectByExample(example).get(0);
 	}
 
 }

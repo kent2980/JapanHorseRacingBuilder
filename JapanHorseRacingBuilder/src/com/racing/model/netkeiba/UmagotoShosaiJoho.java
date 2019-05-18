@@ -1,6 +1,7 @@
 package com.racing.model.netkeiba;
 
 import java.io.IOException;
+import java.io.Serializable;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -8,12 +9,18 @@ import org.jsoup.select.Elements;
 
 import com.web.load.WebScraping;
 
-public class UmagotoShosaiJoho {
+public class UmagotoShosaiJoho implements Serializable{
 
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
 	private String kettoTorokuBango;
 	private String bamei;
 	private String mainPhotoUrl;
 	private String nextRace;
+
+	public UmagotoShosaiJoho() {}
 
 	public UmagotoShosaiJoho(String kettoTorokuBango) throws IOException {
 		setKettoTorokuBango(kettoTorokuBango);

@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.apache.ibatis.session.SqlSession;
+
 import com.database.access.PckeibaLinkSession;
+import com.database.access.PckeibalinkSqlSessionFactory;
 import com.example.entity.UmaDataView;
 import com.example.entity.UmaDataViewExample;
 import com.example.entity.UmaDataViewMapper;
@@ -49,6 +52,14 @@ public class KakoUmagotoRaceJoho extends PckeibaLinkSession implements Serializa
 											.andDataKubunNotEqualTo("9")
 											.andRaceCodeLessThan(raceCode);
 		list = mapper.selectByExample(example);
+	}
+
+	public static List<UmaDataView> getUmaKakoData(String kettoTorokuBango) {
+		SqlSession session = PckeibalinkSqlSessionFactory.openSession();
+		UmaDataViewMapper mapper = session.getMapper(UmaDataViewMapper.class);
+		UmaDataViewExample example = new UmaDataViewExample();
+		example.createCriteria().andKettoTorokuBangoEqualTo(kettoTorokuBango);
+		return mapper.selectByExample(example);
 	}
 
 }

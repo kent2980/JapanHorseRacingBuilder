@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.database.access.PckeibaSession;
+import com.database.access.PckeibaSqlSessionFactory;
 import com.pckeiba.entity.JvdChokyoshiMaster;
 import com.pckeiba.entity.JvdChokyoshiMasterExample;
 import com.pckeiba.entity.JvdChokyoshiMasterMapper;
@@ -52,4 +53,10 @@ public class ChokyoshiMaster extends PckeibaSession implements Serializable, Dat
 		addDataResouce();
 	}
 
+	public static JvdChokyoshiMaster getChokyoshiMaster(String chokyoshiCode) {
+		JvdChokyoshiMasterMapper mapper = PckeibaSqlSessionFactory.openSession().getMapper(JvdChokyoshiMasterMapper.class);
+		JvdChokyoshiMasterExample example = new JvdChokyoshiMasterExample();
+		example.createCriteria().andChokyoshiCodeEqualTo(chokyoshiCode);
+		return mapper.selectByExample(example).get(0);
+	}
 }

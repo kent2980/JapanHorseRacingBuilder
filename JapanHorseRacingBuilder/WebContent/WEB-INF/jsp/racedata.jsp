@@ -25,14 +25,9 @@
     import="com.pckeiba.entity.JvdKishuMaster"
     import="com.pckeiba.entity.JvdChokyoshiMaster"
     import="com.pckeiba.entity.JvdBanushiMaster"
+    import="com.pckeiba.entity.JvdTanpukuOdds"
 
-    import="com.racing.model.pckeiba.RaceShosai"
-    import="com.racing.model.pckeiba.UmagotoRaceJoho"
-    import="com.racing.model.pckeiba.KakoUmagotoRaceJoho"
-    import="com.racing.model.pckeiba.KyosobaMaster"
-    import="com.racing.model.pckeiba.KishuMaster"
-    import="com.racing.model.pckeiba.ChokyoshiMaster"
-    import="com.racing.model.pckeiba.BanushiMaster"
+    import="com.racing.model.pckeiba.*"
     import="com.racing.model.convert.PckeibaConvert"
     import="com.web.load.HtmlDownload"
 
@@ -48,10 +43,12 @@
     UmagotoRaceJoho horse = (UmagotoRaceJoho)request.getAttribute("umagoto");
     KakoUmagotoRaceJoho kakoRace = (KakoUmagotoRaceJoho)request.getAttribute("kakoRace");
     KyosobaMaster kyosobaMaster = (KyosobaMaster)request.getAttribute("kyosobaMaster");
+    TanpukuOdds oddsMaster = (TanpukuOdds)request.getAttribute("odds");
     JvdRaceShosai raceData = race.getRaceShosai();
     List<JvdUmagotoRaceJoho> horseData = horse.getList();
     List<UmaDataView> kakoList = kakoRace.getList();
     List<JvdKyosobaMaster> kyosobaMasterList = kyosobaMaster.getList();
+    List<JvdTanpukuOdds> oddsList = oddsMaster.getList();
     //騎手マスター
     KishuMaster kishuMaster = (KishuMaster)request.getAttribute("kishuMaster");
     List<JvdKishuMaster> kishuMasterList = kishuMaster.getList();
@@ -201,6 +198,11 @@
 			//現出馬表のローカル変数
 			String wakuban;
 			String umaban;
+			JvdTanpukuOdds odds = oddsList.stream()
+										 .filter(s -> s.getUmaban().equals(data.getUmaban()))
+										 .findFirst().get();
+			int tanshoNinki = odds.getTanshoNinkijun();
+			BigDecimal tanshoOdds = odds.getTanshoOdds();
 			//馬名を９文字で生成します
 			String bamei = PckeibaConvert.NameConvert(data.getBamei(),9);
 			//性齢を生成します
@@ -237,7 +239,9 @@
 			<td class="pc waku waku<%out.print(data.getWakuban()); %> bold"></td>
 			<td class="pc bamei">
 				<div class="bamei">
-					<span class="bamei"><% out.print(data.getUmaban() + "  " + bamei); %></span>
+					<a href="/JapanHorseRacingBuilder/UmagotoData?kettoBango=<%out.print(data.getKettoTorokuBango()); %>">
+						<span class="bamei"><% out.print(data.getUmaban() + "  " + bamei); %></span>
+					</a>
 					<span class="seirei"><%out.print(seirei); %></span>
 				</div>
 				<span class="parent">父：<%out.print(father); %></span>
@@ -257,9 +261,9 @@
 				<span><%out.print(CodeConvert.valueOf(KishuMinaraiCode.class, data.getKishuMinaraiCode()).getContentKigo() + data.getFutanJuryo() + "kg"); %></span>
 			</td>
 			<td class="pc ninki">
-				<span><% out.print(data.getTanshoNinkijun()); %>人気</span>
+				<span><%=tanshoNinki%>人気</span>
 				<br>
-				<span>(<%out.print(data.getTanshoOdds()); %>)</span>
+				<span>(<%=tanshoOdds%>)</span>
 			</td>
 
 		<!-- モバイル表示用のHTML -->
@@ -283,7 +287,7 @@
 			<td class="sp sp_horizen bamei">
 				<!-- 馬名、性齢 、調教師、所属、騎手、斤量、人気-->
 				<div class="bamei">
-					<span class="bamei"><%out.print(data.getUmaban() + "  " + bamei); %></span>
+					<a href="/JapanHorseRacingBuilder/UmagotoData?kettoBango=<%out.print(data.getKettoTorokuBango()); %>"><span class="bamei"><%out.print(data.getUmaban() + "  " + bamei); %></span></a>
 					<span class="seirei"><%out.print(seirei); %></span>
 					<br>
 					<span class="chokyoshi"><%out.print(chokyoshi); %>(<%out.print(tozaiShozoku); %>)</span>
@@ -291,7 +295,7 @@
 					<span class="kishumei"><%out.print(kishumei); %></span>
 					<span class="futanJuryo"><%out.print(data.getFutanJuryo()); %></span>
 					<br>
-					<span class="ninki"><%out.print(data.getTanshoNinkijun() + "人気"); %>(<%out.print(data.getTanshoOdds()); %>)</span>
+					<span class="ninki"><%=tanshoNinki%>(<%=tanshoOdds%>)</span>
 				</div>
 			</td>
 

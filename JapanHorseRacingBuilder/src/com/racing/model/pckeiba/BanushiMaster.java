@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.database.access.PckeibaSession;
+import com.database.access.PckeibaSqlSessionFactory;
 import com.pckeiba.entity.JvdBanushiMaster;
 import com.pckeiba.entity.JvdBanushiMasterExample;
 import com.pckeiba.entity.JvdBanushiMasterMapper;
@@ -63,4 +64,14 @@ public class BanushiMaster extends PckeibaSession implements Serializable, DataI
 		addDataResouce();
 	}
 
+	public static JvdBanushiMaster getBanushiMaster(String banushiCode) {
+		// MAPPER
+		JvdBanushiMasterMapper mapper = PckeibaSqlSessionFactory.openSession().getMapper(JvdBanushiMasterMapper.class);
+		// EXAMPLE
+		JvdBanushiMasterExample example = new JvdBanushiMasterExample();
+		// WHERE
+		example.createCriteria().andBanushiCodeEqualTo(banushiCode);
+		return mapper.selectByExample(example).get(0);
+
+	}
 }
