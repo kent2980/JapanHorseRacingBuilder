@@ -27,9 +27,14 @@
     import="com.pckeiba.entity.JvdBanushiMaster"
     import="com.pckeiba.entity.JvdTanpukuOdds"
 
-    import="com.racing.model.pckeiba.*"
-    import="com.racing.model.convert.PckeibaConvert"
-    import="com.web.load.HtmlDownload"
+    import="jhrb.sql.access.RaceShosai"
+    import="jhrb.sql.access.UmagotoRaceJoho"
+    import="jhrb.sql.access.KakoUmagotoRaceJoho"
+    import="jhrb.sql.access.KyosobaMaster"
+    import="jhrb.sql.access.TanpukuOdds"
+    import="jhrb.sql.access.KishuMaster"
+    import="jhrb.sql.convert.PckeibaConvert"
+    import="jhrb.web.session.HtmlDownload"
 
     import="com.example.entity.UmaDataView"
     import="com.racing.model.convert.*"
@@ -62,9 +67,6 @@
 	rel="stylesheet" />
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
 <link rel="shortcut icon" href="/JapanHorseRacingBuilder/icon/kyosoba_3.ico">
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 <title>
 	<%LocalDate kaisai_Nengappi = raceData.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	  String kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy/MM/dd").format(kaisai_Nengappi);%>
@@ -197,12 +199,20 @@
 														   .findFirst().get();
 			//現出馬表のローカル変数
 			String wakuban;
-			String umaban;
+			String umaban = data.getUmaban();
+			String tanshoNinki;
+			String tanshoOdds;
+			try{
 			JvdTanpukuOdds odds = oddsList.stream()
-										 .filter(s -> s.getUmaban().equals(data.getUmaban()))
+										 .filter(s -> s.getUmaban().equals(umaban))
 										 .findFirst().get();
-			int tanshoNinki = odds.getTanshoNinkijun();
-			BigDecimal tanshoOdds = odds.getTanshoOdds();
+			tanshoNinki = String.valueOf(odds.getTanshoNinkijun());
+			tanshoOdds = String.valueOf(odds.getTanshoOdds());
+			}catch(NoSuchElementException e){
+				e.getStackTrace();
+				tanshoNinki = "-";
+				tanshoOdds = "-";
+			}
 			//馬名を９文字で生成します
 			String bamei = PckeibaConvert.NameConvert(data.getBamei(),9);
 			//性齢を生成します
@@ -615,6 +625,10 @@
 </aside>
 
 </div>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 </body>
 
 </html>

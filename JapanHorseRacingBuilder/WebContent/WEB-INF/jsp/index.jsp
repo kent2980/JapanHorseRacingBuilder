@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" import="java.util.List" import="java.util.stream.Collectors" import="java.time.LocalDateTime"
 	import="java.time.format.DateTimeFormatter" import="java.time.ZoneId" import="com.google.common.base.Function" import="com.google.common.collect.Lists" import="com.pckeiba.entity.JvdRaceShosai"
-	import="com.pckeiba.entity.JvdTokubetsuTorokuba" import="com.racing.model.pckeiba.RaceShosai" import="com.racing.model.pckeiba.TokubetsuTorokuba" import="com.pckeiba.datamodel.RaceData"
-	import="com.pckeiba.enumutil.*" import="com.racing.model.convert.*" import="java.time.LocalDate"  import="com.racing.model.convert.PckeibaConvert"%>
+	import="com.pckeiba.entity.JvdTokubetsuTorokuba" import="jhrb.sql.access.RaceShosai" import="jhrb.sql.access.TokubetsuTorokuba" import="com.pckeiba.datamodel.RaceData"
+	import="com.pckeiba.enumutil.*" import="com.racing.model.convert.*" import="java.time.LocalDate"  import="jhrb.sql.convert.PckeibaConvert"%>
 <%
 	RaceShosai raceShosai = (RaceShosai) request.getAttribute("raceShosai");
 	TokubetsuTorokuba torokuba = (TokubetsuTorokuba) request.getAttribute("torokuba");
@@ -17,9 +17,6 @@
 	rel="stylesheet" />
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
 <link rel="shortcut icon" href="/JapanHorseRacingBuilder/icon/kyosoba_3.ico">
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 <title>Insert title here</title>
 </head>
 <body id="index">
@@ -237,5 +234,9 @@
 %>
 		</table>
 	</div>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 </body>
 </html>

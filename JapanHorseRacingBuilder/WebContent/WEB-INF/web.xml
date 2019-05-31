@@ -3,11 +3,11 @@
   <display-name>JapanHorseRacingBuilder</display-name>
   <servlet>
     <servlet-name>index</servlet-name>
-    <servlet-class>com.racing.servlet.IndexServlet</servlet-class>
+    <servlet-class>jhrb.servlet.IndexServlet</servlet-class>
   </servlet>
   <servlet>
     <servlet-name>Init</servlet-name>
-    <servlet-class>com.racing.servlet.Init</servlet-class>
+    <servlet-class>jhrb.servlet.Init</servlet-class>
     <load-on-startup>0</load-on-startup>
   </servlet>
   <servlet-mapping>

@@ -19,17 +19,17 @@
     import="com.pckeiba.entity.JvdTokubetsuTorokuba"
     import="com.pckeiba.entity.JvdTorokubagotoJoho"
 
-    import="com.racing.model.pckeiba.RaceShosai"
-    import="com.racing.model.pckeiba.KyosobaMaster"
-    import="com.racing.model.pckeiba.TokubetsuTorokuba"
-    import="com.racing.model.pckeiba.TorokubagotoJoho"
-    import="com.racing.model.pckeiba.KakoUmagotoRaceJoho"
+    import="jhrb.sql.access.RaceShosai"
+    import="jhrb.sql.access.KyosobaMaster"
+    import="jhrb.sql.access.TokubetsuTorokuba"
+    import="jhrb.sql.access.TorokubagotoJoho"
+    import="jhrb.sql.access.KakoUmagotoRaceJoho"
 
     import="com.example.entity.UmaDataView"
-    import="com.web.load.HtmlDownload"
+    import="jhrb.web.session.HtmlDownload"
 
     import="com.example.entity.UmaDataView"
-    import="com.racing.model.convert.*"
+    import="jhrb.sql.convert.*"
     import="com.pckeiba.enumutil.*"
     import="java.time.ZoneId"
     %>
@@ -54,9 +54,6 @@
 	rel="stylesheet" />
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
 <link rel="shortcut icon" href="/JapanHorseRacingBuilder/icon/kyosoba_3.ico">
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 <title>
 	<%LocalDate kaisai_Nengappi = raceData.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 	  String kaisaiNengappi = DateTimeFormatter.ofPattern("yyyy/MM/dd").format(kaisai_Nengappi);%>
@@ -515,6 +512,10 @@
 </aside>
 
 </div>
+
+<script type="text/javascript"
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 </body>
 
 </html>

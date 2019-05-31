@@ -2,8 +2,8 @@
 
 	import="java.util.List"
 
-	import="com.racing.model.netkeiba.*"
-	import="com.racing.model.pckeiba.*"
+	import="jhrb.web.netkeiba.*"
+	import="jhrb.sql.access.*"
 
 	import="com.example.entity.UmaDataView"
 	import="com.pckeiba.entity.JvdKyosobaMaster"
@@ -12,7 +12,7 @@
 	import="com.pckeiba.entity.JvdSeisanshaMaster"
 	import="com.pckeiba.entity.JvdKyosobaSeiseki"
 
-	import="com.racing.model.convert.PckeibaConvert"
+	import="jhrb.sql.convert.PckeibaConvert"
 	import="com.pckeiba.enumutil.*"
 	%>
 <%
@@ -33,8 +33,6 @@
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css" rel="stylesheet" />
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
 <link rel="shortcut icon" href="/JapanHorseRacingBuilder/icon/kyosoba_3.ico">
-<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
 <title>ここにページタイトルを入力</title>
 </head>
 <body id="umagoto">
@@ -99,5 +97,10 @@
 
 	</div>
 
+	<canvas id="mainCanvas"></canvas>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/paper.js/0.12.0/paper-full.js"></script>
+<script type="text/javascript" src="/JapanHorseRacingBuilder/js/main.js"></script>
 </body>
 </html>
