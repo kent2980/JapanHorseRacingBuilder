@@ -1,0 +1,166 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>Test for jQuery.Timeline Ver.2.0.0a3</title>
+
+<link rel="stylesheet" href="/jqtl-v2/dist/index.furtive.min.css?v=1502988515">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+<link rel="stylesheet" href="/jqtl-v2/dist/jquery.timeline.min.css?v=1544691960">
+<link rel="stylesheet" href="/jqtl-v2/dist/jquery.timeline.tester.css?v=1552391632">
+
+</head>
+<body>
+<div class="wrap">
+<form id="form-tester" role="form" method="post" action="/jqtl-v2/index.php">
+<nav id="header" class="grd-row bg--off-white px1">
+<div class="grd-row-col-3-6--sm">
+<a href="javascript:;" id="reset-env" class="h4" title="To reload with resetting an environment">jQuery.Timeline 2.0.0a3 Tester <span class="fnt--mid-gray" style="font-size:1rem;">( <i class="fas fa-redo"></i> )</span></a>
+</div>
+<div class="grd-row">
+<div class="grd-row">
+<label for="jquery-version" class="mx1">jQuery</label>
+<select id="jquery-version" class="" name="jquery_ver" data-current-ver="3.3.1">
+<option value="3.3.1" selected>3.3.1</option>
+<option value="3.3.0">3.3.0</option>
+<option value="3.2.1">3.2.1</option>
+<option value="3.2.0">3.2.0</option>
+<option value="3.1.1">3.1.1</option>
+<option value="3.1.0">3.1.0</option>
+<option value="3.0.0">3.0.0</option>
+<option value="2.2.4">2.2.4</option>
+<option value="2.2.3">2.2.3</option>
+<option value="2.2.2">2.2.2</option>
+<option value="2.2.1">2.2.1</option>
+<option value="2.2.0">2.2.0</option>
+<option value="2.1.4">2.1.4</option>
+<option value="2.1.3">2.1.3</option>
+<option value="2.1.1">2.1.1</option>
+<option value="2.1.0">2.1.0</option>
+<option value="2.0.3">2.0.3</option>
+<option value="2.0.2">2.0.2</option>
+<option value="2.0.1">2.0.1</option>
+<option value="2.0.0">2.0.0</option>
+<option value="1.12.4">1.12.4</option>
+<option value="1.12.3">1.12.3</option>
+<option value="1.12.2">1.12.2</option>
+<option value="1.12.1">1.12.1</option>
+<option value="1.12.0">1.12.0</option>
+<option value="1.11.3">1.11.3</option>
+<option value="1.11.2">1.11.2</option>
+<option value="1.11.1">1.11.1</option>
+<option value="1.11.0">1.11.0</option>
+<option value="1.10.2">1.10.2</option>
+<option value="1.10.1">1.10.1</option>
+<option value="1.10.0">1.10.0</option>
+<option value="1.9.1">1.9.1</option>
+<option value="1.9.0">1.9.0</option>
+</select>
+</div>
+<div class="grd-row">
+<label for="bootstrap-version" class="mx1">Bootstrap</label>
+<select id="bootstrap-version" class="" name="bootstrap_ver" data-current-ver="">
+<option value="">no used</option>
+<option value="4.3.1">4.3.1</option>
+<option value="4.2.1">4.2.1</option>
+<option value="4.1.3">4.1.3</option>
+<option value="4.0.0">4.0.0</option>
+<option value="3.4.1">3.4.1</option>
+<option value="3.3.7">3.3.7</option>
+</select>
+</div>
+<div class="grd-row">
+<label for="user-locale" class="mx1">Locale</label>
+<select id="user-locale" class="" name="user_locale" data-current-locale="ja-JP">
+<option value="ja-JP" selected>ja-JP</option>
+<option value="ja">ja</option>
+</select>
+</div>
+<div class="grd-row tg-list-item">
+<input id="toggle-timeline-type" class="tgl tgl-flip" name="timeline_type_point" type="checkbox" data-current-type="bar">
+<label for="toggle-timeline-type" class="tgl-btn" data-tg-off="Bar" data-tg-on="Point"></label>
+</div>
+<div class="grd-row">
+<button type="button" id="apply-env" class="btn--gray btn--s mx1" title="Apply to environment you choose frameworks" disabled>Apply</button>
+</div>
+</div>
+</nav>
+<section id="main">
+<div id="my-timeline">
+<ul class="timeline-events">
+<li data-timeline-node='{"start":"2019-08-26 10:49","end":"2019-08-28 04:14","row":5,"bgColor":"#671a71","color":"#FFFFFF","label":"Amet metus aliquam in diam Lorem sed cursus","content":"Magna, ornare, nulla nulla Proin arcu metus arcu Proin Integer iaculis metus adipiscing quam. ornare, Proin magna, magna, risus. auctor, ornare, magna, risus. metus, iaculis mollis quam. risus. ornare, iaculis Proin metus, magna, arcu arcu pretium magna, pretium Integer nulla."}'></li><li data-timeline-node='{"start":"2019-06-17 21:55","end":"2019-06-20 12:24","row":5,"bgColor":"#5d1c2e","color":"#FFFFFF","label":"Ipsum Nulla Nam ipsum elementum in ornare in","content":"Aliquam mauris, erat.Aenean Aliquam Duis bibendum varius.Nullam feugiat. ipsum, tempor Aliquam feugiat. ipsum, tempor mauris, nunc. ipsum, cursus. bibendum tempor Aliquam posuere Aliquam bibendum mauris, erat.Aenean bibendum varius.Nullam magna, ipsum, ipsum, a, posuere erat.Aenean bibendum Aliquam tempor ipsum, Aliquam a,."}'></li><li data-timeline-node='{"start":"2019-08-20 15:20","end":"2019-08-21 15:31","row":1,"bgColor":"#ca20df","color":"#FFFFFF","label":"Eleifend amet condimentum condimentum porta facilisis eleifend sem","content":"Posuere lacus. diam. ultrices ipsum, mattis. mattis. posuere bibendum. posuere. risus lacus. posuere. lacus. lobortis suscipit, est, tempor risus diam. posuere. ultrices feugiat ultrices ipsum, ipsum, mattis. ipsum, convallis est, lobortis est, risus diam. lacus. posuere. diam. ultrices lacus. est,."}'></li><li data-timeline-node='{"start":"2019-07-14 14:53","end":"2019-07-15 22:39","row":4,"bgColor":"#616d2d","color":"#FFFFFF","label":"Suspendisse Suspendisse finibus at finibus taciti convallis dapibus","content":"Risus diam. Mauris maximus auctor. lorem risus auctor. turpis himenaeos. consequat. risus. risus risus. turpis laoreet risus consequat. himenaeos. lorem risus laoreet erat feugiat velit lorem est, turpis feugiat. feugiat. turpis lorem erat risus turpis lorem consequat. est, auctor. himenaeos."}'></li><li data-timeline-node='{"start":"2019-07-18 21:30","end":"2019-07-21 18:43","row":5,"bgColor":"#b3376a","color":"#FFFFFF","label":"Tempor mattis tempor felis nisi vel mattis mi","content":"Laoreet. tempor erat.Aenean bibendum sed ornare sollicitudin sollicitudin erat.Aenean lectus. dui. tempor iaculis lacus, est. sollicitudin laoreet. lacus, lacus, iaculis molestie, tempor sed rutrum diam est. sollicitudin molestie, bibendum molestie, iaculis lectus. sollicitudin iaculis vehicula lectus. erat.Aenean rutrum sollicitudin vehicula."}'></li><li data-timeline-node='{"start":"2019-08-09 04:25","end":"2019-08-11 20:34","row":3,"bgColor":"#09d153","color":"#FFFFFF","label":"Enim himenaeos lobortis turpis dolor lacus consectetur himenaeos","content":"Fusce mauris porttitor Fusce facilisis. posuere, auctor quis, Vivamus quis, metus mauris facilisis. metus Vivamus metus facilisis. Vivamus posuere quam Fusce quis, posuere, porttitor Fusce metus ultricies. Fusce ultrices magna, magna, posuere, metus quam auctor metus metus vel quam ultrices."}'></li><li data-timeline-node='{"start":"2019-07-05 11:37","end":"2019-07-06 14:25","row":2,"bgColor":"#a0a86a","color":"#101010","label":"Ut est quam posuere quis feugiat fermentum est","content":"Fusce vehicula commodo sem eget.Pellentesque vehicula nulla, facilisi. cursus. lorem. cursus. rutrum facilisi. cursus. ipsum. ac nulla, facilisi. sit eget.Pellentesque ac commodo erat lorem. ipsum erat commodo erat eget.Pellentesque erat sit lorem. commodo aliquam, ac eget.Pellentesque Fusce erat ac Fusce."}'></li><li data-timeline-node='{"start":"2019-08-07 17:11","end":"2019-08-10 03:29","row":5,"bgColor":"#7bba3b","color":"#101010","label":"Felis erat ipsum magna felis tempus porttitor metus","content":"Eget lorem. amet neque Curabitur neque sollicitudin vel erat.Aenean erat.Aenean vel neque eget ornare at facilisis eget neque amet neque erat.Aenean facilisis lorem. Curabitur ornare laoreet. sollicitudin sollicitudin facilisis at vel Curabitur est, convallis ornare commodo ullamcorper. eget commodo amet."}'></li><li data-timeline-node='{"start":"2019-08-10 00:58","end":"2019-08-11 16:39","row":2,"bgColor":"#d842f5","color":"#FFFFFF","label":"Quis posuere sociosqu dolor sociosqu Fusce sollicitudin Fusce","content":"Consequat. ut, metus posuere scelerisque lacinia, pretium ut, sagittis efficitur. scelerisque pharetra. purus sit ut, sagittis posuere sagittis pharetra. purus scelerisque augue erat augue purus efficitur. pharetra. efficitur. efficitur. metus metus scelerisque sit consequat. metus ut, erat consequat. Fusce tempus."}'></li><li data-timeline-node='{"start":"2019-08-06 18:52","end":"2019-08-08 10:14","row":3,"bgColor":"#f0287a","color":"#FFFFFF","label":"Sem sapien eu varius taciti tempus tempus tempus","content":"Euismod quis lacus, rutrum porttitor dignissim massa Cras dignissim ex. porttitor nisi porttitor est. Cras nisi Morbi pharetra. interdum est. nisi lacus, euismod rutrum ex. euismod porttitor quis ex. porttitor massa posuere. massa sapien, Cras quis pharetra. porttitor porttitor dignissim."}'></li><li data-timeline-node='{"start":"2019-06-18 07:05","end":"2019-06-19 13:03","row":4,"bgColor":"#67185d","color":"#FFFFFF","label":"Ut tellus est est Sed tellus ut tellus","content":"Augue enim purus ex. purus ullamcorper. purus interdum efficitur. a, interdum erat ex. nisi Sed a, Nulla mattis. Nulla per per ipsum. a, purus Nulla interdum Sed a, ex. erat enim augue ex. ex. purus per ex. per ullamcorper. per."}'></li><li data-timeline-node='{"start":"2019-06-21 16:13","end":"2019-06-22 20:43","row":3,"bgColor":"#a6f3c7","color":"#101010","label":"Laoreet vulputate auctor Mauris Sed ipsum Mauris vulputate","content":"Dapibus volutpat justo pharetra quam auctor. tellus Lorem mattis, euismod, mattis, pharetra pulvinar auctor. quam mattis, volutpat rhoncus. volutpat auctor. velit rhoncus. mattis, Lorem rhoncus. justo quam Nulla auctor. velit rhoncus. sociosqu justo justo velit volutpat Lorem mattis, sociosqu velit."}'></li><li data-timeline-node='{"start":"2019-06-15 02:26","end":"2019-06-17 09:59","row":2,"bgColor":"#636cd8","color":"#FFFFFF","label":"Ligula mattis eu ipsum posuere ipsum mattis eu","content":"Porta conubia elit, Curabitur Vestibulum sem Curabitur elit, ad feugiat. tellus, conubia conubia erat.Aenean Curabitur taciti lacus, tellus, elit, Vestibulum Curabitur urna, ad Fusce porta ad urna, sem ad Morbi Curabitur sem tellus, porta conubia Morbi taciti porta taciti ad."}'></li><li data-timeline-node='{"start":"2019-06-11 09:46","end":"2019-06-13 02:42","row":2,"bgColor":"#42507c","color":"#FFFFFF","label":"Suscipit lacinia eu nibh blandit blandit molestie aliquam","content":"Fusce leo mi, Ut dui. posuere Nam Nam magna, a Sed leo suscipit, Fusce Nam dictum Ut magna, a leo ut. leo dui. suscipit, a dictum pulvinar a a ut. posuere mi, hendrerit. auctor a Sed a mi, auctor suscipit,."}'></li><li data-timeline-node='{"start":"2019-06-29 12:54","end":"2019-07-01 08:57","row":5,"bgColor":"#1e9ecc","color":"#FFFFFF","label":"Ligula porttitor dolor Class nibh facilisi nibh dolor","content":"Nec dapibus, dui, elementum elementum Duis mauris Duis accumsan dui, hendrerit, ultricies. Duis hendrerit, mauris congue accumsan accumsan nec dapibus, mauris eget.Pellentesque dapibus, mauris Lorem ultricies. elementum Duis mauris ultricies. dui, ultricies. elementum dui, elementum Duis hendrerit nec congue elementum."}'></li><li data-timeline-node='{"start":"2019-07-05 18:08","end":"2019-07-06 19:17","row":4,"bgColor":"#5a9cbb","color":"#FFFFFF","label":"Odio scelerisque leo posuere ex non ex a","content":"Duis mauris. commodo at quam. quam. nunc mauris. commodo conubia metus eget.Pellentesque conubia metus commodo metus at quam. blandit. quam. eget.Pellentesque ipsum, ipsum, a Duis ipsum, quam. at Duis eget.Pellentesque euismod ipsum, mauris. eget.Pellentesque at erat.Aenean tempus, nunc justo. metus."}'></li><li data-timeline-node='{"start":"2019-06-15 16:07","end":"2019-06-17 13:27","row":4,"bgColor":"#095209","color":"#FFFFFF","label":"Felis felis felis consequat bibendum mauris faucibus pulvinar","content":"Ligula leo ultricies. pharetra pharetra eget.Pellentesque dapibus, iaculis pharetra ultricies. eros ligula ligula Lorem eros iaculis leo leo consectetur ligula dapibus, ultricies. lacinia, consectetur eros pharetra eu lacinia, eu ligula laoreet a, laoreet pharetra leo dapibus, eros torquent mi. iaculis."}'></li><li data-timeline-node='{"start":"2019-06-12 09:48","end":"2019-06-14 23:48","row":4,"bgColor":"#fd2c04","color":"#FFFFFF","label":"Sed maximus per nec at at euismod mattis","content":"Maximus facilisis consequat himenaeos. nec elementum. tempor sem himenaeos. euismod, nec libero Ut maximus elementum. nulla, consequat et elementum. libero nulla, consequat elementum. maximus sollicitudin maximus nulla, nec libero nec facilisis consequat Ut nulla, tempor quis, et euismod, tempor sollicitudin."}'></li><li data-timeline-node='{"start":"2019-06-25 16:39","end":"2019-06-28 07:44","row":5,"bgColor":"#13a30a","color":"#FFFFFF","label":"Integer molestie aliquam sem fermentum Duis scelerisque libero","content":"Nulla metus pulvinar. vulputate nulla id est. eget.Pellentesque ex nulla nulla sociosqu Curabitur Curabitur sociosqu eget, est. metus id ex Curabitur eget, nulla eget, metus sociosqu sociosqu sociosqu est. Maecenas id Curabitur est. nulla nulla eget.Pellentesque pulvinar elementum. sociosqu eget,."}'></li><li data-timeline-node='{"start":"2019-07-26 08:25","end":"2019-07-29 04:35","row":3,"bgColor":"#3ba59c","color":"#FFFFFF","label":"Ornare ex ullamcorper nibh dolor ex Class volutpat","content":"Mi, lorem volutpat nunc nunc lorem lacinia euismod litora mi, sapien, lacinia imperdiet, lorem euismod volutpat velit lacinia nibh litora lorem lacinia imperdiet, lacinia litora finibus imperdiet, litora litora euismod euismod sapien, mi, mauris, Vestibulum turpis Vestibulum mi, euismod sapien,."}'></li><li data-timeline-node='{"start":"2019-08-22 05:41","end":"2019-08-23 06:35","row":1,"bgColor":"#2924ad","color":"#FFFFFF","label":"Augue hendrerit mi torquent augue mi pharetra ipsum","content":"Hendrerit id hendrerit hendrerit consequat urna. felis lorem consequat id finibus urna. risus hendrerit consequat orci Maecenas Maecenas Maecenas Maecenas id orci felis felis felis a consequat nisi. finibus varius finibus nisi. id varius nisi. lorem felis Maecenas orci finibus."}'></li><li data-timeline-node='{"start":"2019-06-21 07:30","end":"2019-06-24 01:15","row":4,"bgColor":"#5df5fc","color":"#101010","label":"Risus sed euismod magna ullamcorper ullamcorper conubia torquent","content":"Dui. ex a, aliquam lorem. consectetur amet, sociosqu a, a, lacus, est aliquam sociosqu consectetur In sociosqu lorem. est a, dui. lacus, amet, tristique dui. pretium tristique dapibus aliquam dapibus sociosqu pretium ex est pretium dui. a, est tristique amet,."}'></li><li data-timeline-node='{"start":"2019-08-07 08:30","end":"2019-08-09 22:56","row":5,"bgColor":"#cf6d48","color":"#FFFFFF","label":"Tincidunt nibh pulvinar ornare aliquet Fusce nibh ut","content":"Placerat ipsum, lacinia ultricies pharetra Curabitur lacinia Curabitur placerat consectetur ultricies a Phasellus mi, Phasellus placerat ultricies Curabitur lacinia mi, Curabitur dui Curabitur dui pulvinar. Phasellus mi, consectetur vehicula consectetur mi, vehicula dui a dui placerat ipsum, ultricies consectetur ultricies."}'></li><li data-timeline-node='{"start":"2019-06-25 15:40","end":"2019-06-26 18:16","row":2,"bgColor":"#034be4","color":"#FFFFFF","label":"Molestie mi lorem viverra ex ipsum maximus lorem","content":"Taciti ut Duis Aliquam consequat rutrum Curabitur taciti velit erat.Aenean purus ut consequat purus consequat Aliquam at. rutrum Lorem vel nunc. erat.Aenean Aliquam rutrum sem erat.Aenean rutrum Aliquam taciti at. vel Aliquam purus at. nunc. sem sem velit ut velit."}'></li><li data-timeline-node='{"start":"2019-07-23 17:03","end":"2019-07-26 01:41","row":2,"bgColor":"#93782f","color":"#FFFFFF","label":"Tincidunt magna et rutrum inceptos finibus inceptos rutrum","content":"Eu. sed, convallis bibendum. amet, eu. ac, consequat consequat scelerisque sapien, libero sapien, consequat sed, amet, metus, tempor. tempor. sapien, ac, tempor. amet, amet, dui, dui, consequat tempor. sapien, leo eu. convallis metus, metus, dui, dui, risus. tempor. convallis consequat."}'></li><li data-timeline-node='{"start":"2019-06-23 03:42","end":"2019-06-25 23:45","row":2,"bgColor":"#2b6a8d","color":"#FFFFFF","label":"At commodo finibus aptent massa sit nunc imperdiet","content":"Lacus. cursus. himenaeos. augue lacus. tempus, interdum lacus. euismod, interdum tempus, pharetra efficitur. euismod, lacus. himenaeos. commodo nulla, vehicula pharetra ut, dapibus efficitur. pharetra commodo dapibus dapibus augue dapibus orci ut, adipiscing vehicula interdum adipiscing vehicula commodo augue pharetra efficitur."}'></li><li data-timeline-node='{"start":"2019-07-14 17:40","end":"2019-07-16 00:24","row":3,"bgColor":"#45c198","color":"#101010","label":"Facilisis laoreet bibendum finibus ullamcorper Vivamus facilisi fermentum","content":"Erat erat ornare tempor. placerat eget, molestie erat tempor. placerat placerat maximus, maximus, erat Integer auctor vitae erat Integer ex, ex, Vestibulum Sed eget, quis quis ornare placerat Sed Integer vitae eget, tempor. ornare quis vitae erat auctor maximus, eget,."}'></li><li data-timeline-node='{"start":"2019-06-30 05:54","end":"2019-07-02 03:49","row":4,"bgColor":"#2b2e1b","color":"#FFFFFF","label":"Enim ut mauris Lorem Duis erat sed sapien","content":"Rutrum. vitae ullamcorper. turpis Mauris risus vitae elit. bibendum vitae ullamcorper. viverra turpis turpis nulla neque turpis viverra lacinia nulla Mauris lacinia nulla nulla turpis viverra vitae bibendum viverra viverra Nam sapien neque arcu, lacinia turpis elit. Mauris lacinia vitae."}'></li><li data-timeline-node='{"start":"2019-06-16 23:35","end":"2019-06-18 04:18","row":5,"bgColor":"#984bda","color":"#FFFFFF","label":"Urna metus amet magna adipiscing Vivamus nibh metus","content":"Auctor. sed. maximus Vivamus lacus, finibus, mattis, lacus, Suspendisse ut, euismod lacus, Suspendisse taciti auctor. maximus nec Suspendisse finibus, finibus, taciti taciti auctor. finibus, lacus, justo. Vivamus Vivamus nec taciti Suspendisse ut, sapien, finibus, auctor. justo. maximus euismod justo. euismod."}'></li><li data-timeline-node='{"start":"2019-06-11 15:48","end":"2019-06-13 16:53","row":1,"bgColor":"#d31cae","color":"#FFFFFF","label":"Posuere cursus est cursus In est congue mattis","content":"Dui. pulvinar dignissim lorem dignissim molestie dui. lorem bibendum accumsan conubia lorem molestie ipsum, molestie conubia dignissim ipsum, pulvinar eget.Pellentesque accumsan pulvinar ipsum, bibendum ipsum, lorem ipsum, pulvinar ornare consequat a, accumsan consequat molestie ornare eget.Pellentesque ipsum, molestie a, ornare."}'></li> </ul>
+</div>
+<div id="my-timeline-2nd" class="my1">
+<ul class="timeline-events">
+<li data-timeline-node='{"start":"2019-06-04 08:52","end":"2019-06-07 00:05","row":1,"bgColor":"#d88ec7","color":"#101010","label":"Turpis tortor eleifend condimentum tellus tellus ligula eget","content":"Magna, laoreet litora lorem ut. maximus fermentum odio. maximus nisl nisl ut. ultricies. Duis fermentum nisl auctor Donec Duis sociosqu ligula litora maximus odio. odio. auctor lorem elementum. ligula magna, Donec ligula ultricies. ut. nisl lorem fermentum laoreet ligula magna,."}'></li><li data-timeline-node='{"start":"2019-06-24 10:11","end":"2019-06-26 15:43","row":1,"bgColor":"#38e009","color":"#101010","label":"Ultricies eros mi cursus ex diam tortor cursus","content":"Condimentum. pharetra. condimentum. Integer Integer dolor, in, auctor, auctor, sem, convallis Morbi lacus. amet, ad condimentum. odio. odio. dolor, lacus. convallis vitae ad convallis condimentum. odio. lacus. amet, amet, amet, dolor, in, Morbi vitae amet, pharetra. convallis odio. condimentum. amet,."}'></li><li data-timeline-node='{"start":"2019-06-13 17:45","end":"2019-06-14 21:08","row":1,"bgColor":"#806684","color":"#FFFFFF","label":"Nibh Aliquam sed ullamcorper facilisis justo convallis ullamcorper","content":"Erat fermentum sociosqu Ut fermentum ligula tristique faucibus Class risus. per sociosqu fermentum ligula. ligula fermentum mattis, urna, erat fermentum per ligula. mattis, ligula. fermentum ligula iaculis tristique Class risus. faucibus urna, tristique iaculis fermentum sociosqu tristique Maecenas fermentum sociosqu."}'></li><li data-timeline-node='{"start":"2019-06-11 03:28","end":"2019-06-12 16:33","row":1,"bgColor":"#d2c39a","color":"#101010","label":"Hendrerit accumsan lacinia hendrerit maximus aliquam lacinia rutrum","content":"Pharetra dolor dolor ligula Etiam ut, ut, ac ac nibh. metus blandit. blandit. sem pretium blandit. ligula pretium sem lorem. nibh. eu. blandit. pharetra molestie, dolor, dolor dolor Etiam ac suscipit, dolor, Etiam molestie, suscipit, suscipit, ac suscipit, ac ac."}'></li><li data-timeline-node='{"start":"2019-08-18 05:29","end":"2019-08-21 00:43","row":1,"bgColor":"#5e7d14","color":"#FFFFFF","label":"Sed porttitor facilisi tempus Suspendisse ullamcorper tempus ac","content":"Quam Class vestibulum tellus tellus inceptos Maecenas rutrum Maecenas vestibulum quam Class est. cursus. leo Class tellus est. suscipit, suscipit, ut vulputate Maecenas vestibulum est. Maecenas quam est. quam elementum. vulputate Class cursus. vestibulum ut est. est. Maecenas finibus, Maecenas."}'></li><li data-timeline-node='{"start":"2019-07-26 16:42","end":"2019-07-29 13:23","row":1,"bgColor":"#f941bc","color":"#FFFFFF","label":"Ut vestibulum tempor a erat vehicula metus vehicula","content":"Mollis eu bibendum. Aliquam Aliquam mollis bibendum. Mauris Mauris ut, Mauris lacinia aliquet. aliquet. diam. Aliquam molestie, laoreet cursus molestie, cursus laoreet interdum laoreet interdum aliquet. bibendum. Mauris ut, nibh Aliquam Mauris bibendum. Aliquam nibh Mauris Mauris lacus. non laoreet."}'></li><li data-timeline-node='{"start":"2019-08-20 00:59","end":"2019-08-22 19:16","row":1,"bgColor":"#207a38","color":"#FFFFFF","label":"Porttitor urna conubia urna bibendum bibendum amet amet","content":"Lacinia, mollis et, lacinia, lacinia, eleifend sed, adipiscing adipiscing et, lacinia, nunc. sed, eget, Cras rutrum. rutrum. mollis eu. sed, facilisi. eleifend nunc. mollis et, nunc. facilisi. lacinia, sed, metus, nibh. metus, orci mollis facilisi. mollis lacinia, metus, adipiscing nibh."}'></li><li data-timeline-node='{"start":"2019-08-08 23:21","end":"2019-08-10 02:30","row":1,"bgColor":"#e8a820","color":"#101010","label":"Cursus at Sed porttitor enim tempor mattis porttitor","content":"Sagittis metus, massa dapibus finibus hendrerit, hendrerit. ultricies ultricies hendrerit, non, finibus ultricies hendrerit, hendrerit. molestie, ornare, ornare, hendrerit, hendrerit. molestie, inceptos ultricies metus, metus, hendrerit. dapibus inceptos pretium elit. inceptos dapibus metus, hendrerit. molestie, sagittis non, elit. hendrerit, ultricies."}'></li><li data-timeline-node='{"start":"2019-08-04 10:19","end":"2019-08-06 09:13","row":1,"bgColor":"#eee27d","color":"#101010","label":"Porttitor facilisis arcu tellus Curabitur turpis turpis arcu","content":"Dui. vitae felis. euismod bibendum. rutrum justo, euismod ex sapien, finibus, erat.Aenean nisi Proin ex erat.Aenean felis. sapien, finibus, euismod justo, finibus, felis. finibus, justo, eget, sapien, justo, felis. finibus, bibendum. dui. sapien, justo, finibus, tempus, Proin dui. tempus, eget,."}'></li><li data-timeline-node='{"start":"2019-06-29 21:16","end":"2019-07-01 19:13","row":1,"bgColor":"#a704d6","color":"#FFFFFF","label":"Eu eu eu quis nostra imperdiet nostra sed","content":"Est, tempor hendrerit, ex tempor tempor accumsan massa vel dui varius.Nullam purus tempor lorem varius.Nullam ornare, vel ex mauris. ornare, mauris. varius.Nullam est, felis vel dui ornare, ornare, varius.Nullam massa dui ornare, purus ornare, tempor ultrices est, mauris. varius.Nullam dui."}'></li> </ul>
+</div>
+<div id="viewer" class="bg--off-white brdr--mid-gray my1">
+<label class="h5 px1">The timeline event details are displayed in this block.<br class="hidden-md"> Until then, there are displaying sponsor advertisements.</label>
+<div class="view-body bg--white m0 p1">
+<div class="timeline-event-view">
+<ins class="adsbygoogle" style="display:block;width:inherit;height:max-content;" data-ad-client="ca-pub-8602791446931111" data-ad-slot="6050360069" data-ad-format="auto" data-full-width-responsive="true"></ins></div>
+</div>
+</div>
+</section>
+<footer class="bg--off-white px1">
+<div id="controller" class="grd-row p1">
+<div id="methods">
+<label class="h5">Method Tester</label>
+<div class="method-list">
+
+<div class="popover--wrapper">
+<button type="button" class="btn" id="method-alignment">Alignment</button>
+<div class="popover--content">
+<label class="popover--title">Position:</label>
+<select id="alignment-position">
+<option value="begin">begin(left)</option>
+<option value="end">end(right)</option>
+<option value="current">current</option>
+<option value="latest">lateset</option>
+<option value="1">eventId: 1</option>
+</select>
+</div>
+</div>
+<button type="button" class="btn" id="method-hide">Hide</button>
+<button type="button" class="btn" id="method-show">Show</button>
+<button type="button" class="btn" id="method-add-event">Add Event</button>
+<button type="button" class="btn" id="method-remove-event">Remove Event</button>
+<button type="button" class="btn" id="method-update-event">Update Event</button>
+<button type="button" class="btn" id="method-reload">Reload</button>
+<button type="button" class="btn" id="method-reset">Reset (Reload)</button>
+<button type="button" class="btn" id="method-destroy">Destroy</button>
+</div>
+</div>
+<div id="advanced">
+<label class="h5">Advanced</label>
+<div class="grd-row advanced-list">
+<div class="tg-list-item">
+<label class="h6">Multiple</label>
+<input class="tgl tgl-light" id="toggle-multiple" name="multiple_timeline" type="checkbox">
+<label class="tgl-btn" for="toggle-multiple"></label>
+</div>
+</div>
+</div>
+</div>
+<div id="copyright" class="txt--center">
+&copy; 2019 Monaural Sound ka2.org, Powered by MAGIC METHODS
+</div>
+</footer>
+</form>
+</div>
+<div class="custom-loader"></div>
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script defer src="../js/jquery.timeline.min.js?v=1544691980"></script>
+
+<script defer src="/jqtl-v2/dist/jquery.timeline.tester.js?v=1552390075"></script>
+</body>
+</html>

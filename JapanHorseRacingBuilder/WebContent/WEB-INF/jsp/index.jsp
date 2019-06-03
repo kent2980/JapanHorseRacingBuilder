@@ -16,12 +16,26 @@
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css"
 	rel="stylesheet" />
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
+<link href="/JapanHorseRacingBuilder/css/jquery.timeline.min.css" rel="stylesheet">
 <link rel="shortcut icon" href="/JapanHorseRacingBuilder/icon/kyosoba_3.ico">
 <title>Insert title here</title>
 </head>
 <body id="index">
 	<button class="torokubaButton"><span>特別登録</span></button>
 	<div id="nowRacing">
+		<!-- ************ <ここからタイムラインを表示> **************** -->
+
+<div id="myTimeline">
+  <ul class="timeline-events">
+    <li data-timeline-node="{ start:'2017-05-26 10:00',end:'2017-05-26 13:00',content:'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }">Event Label</li>
+    <li data-timeline-node="{ start:'2017-05-26 23:10',end:'2017-05-27 1:30',content:'<p>In this way, you can include <em>HTML tags</em> in the event body.<br>:<br>:</p>' }">Event Title</li>
+  </ul>
+</div>
+
+<div class="timeline-event-view"></div>
+
+		<!-- ************ <タイムライン表示ここまで> ***************** -->
+
 		<h1>本日のレース</h1>
 		<%
 			try {
@@ -235,8 +249,13 @@
 		</table>
 	</div>
 
-<script type="text/javascript"
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" src="/JapanHorseRacingBuilder/js/jquery.timeline.min.js"></script>
 <script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
+<script>
+$(function () {
+  $("#myTimeline").timeline();
+});
+</script>
 </body>
 </html>
