@@ -1,11 +1,7 @@
 package jhrb.servlet;
 
 import java.io.IOException;
-import java.sql.Date;
-import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,7 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jhrb.sql.access.RaceShosai;
+import jhrb.sql.access.KaisaiSchedule;
+import jhrb.sql.access.SelectYearRaceShosai;
 import jhrb.sql.access.TokubetsuTorokuba;
 import jhrb.sql.session.PckeibaSqlSessionFactory;
 
@@ -23,8 +20,9 @@ import jhrb.sql.session.PckeibaSqlSessionFactory;
 //@WebServlet(description = "トップページのサーブレットクラスです。", urlPatterns = { "/Index" })
 public class IndexServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private RaceShosai raceShosai;
 	private TokubetsuTorokuba torokuba;
+	private KaisaiSchedule schedule;
+	private SelectYearRaceShosai selectRaceShosai;
 
     /**
      * @see HttpServlet#HttpServlet()
@@ -43,21 +41,33 @@ public class IndexServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		//MySQLのセッションを確認します
-		PckeibaSqlSessionFactory.openSession();
 
-		String date = req.getParameter("date");
+		PckeibaSqlSessionFactory.openSession();		//MySQLのセッションを確認します
+
+		int year;
 		try {
-			raceShosai = new RaceShosai(Date.valueOf(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd"))));
-		}catch(NullPointerException e) {
-			raceShosai = new RaceShosai(Date.valueOf(LocalDate.now()));
+			year = Integer.valueOf(req.getParameter("date").substring(0, 4));
+		}catch(NumberFormatException|NullPointerException e) {
+			year = LocalDate.now().getYear();
 		}
-		torokuba = new TokubetsuTorokuba();
-		req.setAttribute("raceShosai", raceShosai);
-		req.setAttribute("torokuba", torokuba);
-		if(LocalDate.now().getDayOfWeek() == DayOfWeek.SATURDAY) {
 
-		}
+		/**
+		 * 変数の初期化を行います。
+		 */
+		torokuba = new TokubetsuTorokuba();		//特別登録馬テーブル
+		schedule = new KaisaiSchedule(year);		//開催スケジュールテーブル（指定年）
+		selectRaceShosai = new SelectYearRaceShosai(year);		//レース詳細テーブルの一覧（指定年）
+
+		/**
+		 * オブジェクト固有の情報をサーブレットリクエストにセットします
+		 */
+		req.setAttribute("torokuba", torokuba);
+		req.setAttribute("schedule", schedule);
+		req.setAttribute("selectRaceShosai", selectRaceShosai);
+
+		/**
+		 * サーブレットのリクエスト・レスポンスをjspに渡します
+		 */
 		RequestDispatcher di = req.getRequestDispatcher("/WEB-INF/jsp/index.jsp");
 		di.forward(req, res);
 	}

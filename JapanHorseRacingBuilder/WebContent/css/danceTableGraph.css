@@ -11,6 +11,9 @@ body {
 	/* background-image: url(backimage_003.png);
 	background-image: url(../picture/backimage_003.png); */
 }
+body#index {		/** トップページの背景 **/
+    background-color: #f8fdff;
+}
 
 .sideBy {
     display: flex;
@@ -980,6 +983,205 @@ li:hover {
 table {
 	width: 1250px;
 	margin: auto;
+}
+table#kako4sou td, th {
+    color: black;
+}
+table#raceShosai {
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 3px 4px 2px 1px #625757a3;
+}
+table#raceShosai th,td {
+    border-style: none;
+    border-bottom-style: dashed;
+    background-color: #dad5d5;
+    background: none;
+    color: #3d72c7;
+}
+table#raceShosai tr:hover {
+	background-color: #90aac845;
+}
+table#raceShosai th.raceBango{
+    height: 50px;
+    font-weight: 800;
+    width: 60px;
+    font-size: 20px;
+    border-right-style: inset !important;
+    border-right-color: #4f76be73;
+		color: #fff;
+}
+table#raceShosai th.raceBango span {
+    width: 50px;
+    height: 40px;
+    background-color: #2ca0cb;
+    color: white;
+    display: table-cell;
+    border-radius: 5px;
+    vertical-align: middle;
+}
+table#raceShosai td a {
+    text-decoration: none;
+    color: currentColor;
+    font-weight: 600;
+}
+table#raceShosai td.kyosomei {
+    width: 180px;
+    padding: 0;
+    text-align: left;
+}
+table#raceShosai td.grade {
+    text-align: left;
+    width: 40px;
+    padding: 0;
+}
+table#raceShosai td.jikoku {
+    width: 80px;
+    padding: 0;
+    text-align: center;
+}
+table#raceShosai td.baba {
+    width: 80px;
+    padding: 0;
+}
+table#raceShosai td.kyori {
+    width: 90px;
+    padding: 0;
+}
+table#raceShosai td.raceShosai {
+    text-align: left;
+    padding-left: 40px;
+}
+table#raceShosai td.dance {
+    padding: 0;
+    width: 80px;
+}
+table#raceShosai td.record {
+    padding: 0;
+    width: 80px;
+}
+table#raceShosai span.dance {		/** 出馬表リンクのデザイン  **/
+    width: 60px;
+    background-color: #2ca0cb;
+    color: white;
+    display: inline-block;
+    border-radius: 4px;
+    font-weight: 500;
+}
+table#raceShosai span.record {		/** レース結果リンクのデザイン **/
+    width: 60px;
+    background-color: #f55a58f7;
+    color: white;
+    display: inline-block;
+    border-radius: 4px;
+    font-weight: 500;
+}
+table#raceShosai span.noRecord {		/** 出走してないレース結果文字のデザイン  **/
+    width: 60px;
+    background-color: #8c91927d;
+    color: white;
+    display: inline-block;
+    border-radius: 4px;
+    font-weight: 500;
+}
+/**********************************************************************/
+/****  テーブル設定ここまで *********************************************/
+#index .timeline-container {
+    width: 1200px;
+    position: absolute;
+    margin: 0 auto;
+    padding-left: 480px;
+}
+#index .timeline-horizontal .timeline-dots-wrap {
+    width: 1200px;
+}
+#index .timeline-item.slide-active {
+    background-color: white;
+    box-shadow: inset 0px 1px 3px 1px #232020a8;
+}
+#index .timeline-item.end {
+    display: none;
+}
+#index .timeline-list h1 span {
+    width: 680px;
+    display: inline-block;
+    height: 50px;
+    color: #3d69b0;
+    padding-left: 10px;
+    border-bottom-style: double;
+}
+#index div.jushoList {
+    padding-top: 50px;
+    width: 300px;
+    float: left;
+}
+/**ドロワーメニューボタン**/
+#index button.drawer-toggle.drawer-hamburger {
+    padding-top: 80px;
+    padding-left: 29px;
+		width: 250px;
+		z-index: 60;
+}
+#index span.jushoMenu {
+    width: 160px;
+    font-size: 16px;
+    display: table-cell;
+    text-align: left;
+    padding-left: 20px;
+}
+#index span.drawer-hamburger-icon {
+    width: 2rem;
+    float: left;
+}
+#index .drawer-menu {
+    padding-top: 50px;
+}
+#index .drawer-brand {
+    line-height: 5.75rem;
+}
+#index nav.drawer-nav {
+    z-index: 60;
+}
+/** 横並びメニュー  **/
+#index	.leftMenu {
+		width: 350px;
+		padding-top: 150px;
+		padding-left: 65px;
+		position: fixed;
+		z-index: 10;
+	}
+	#index .leftMenu ul {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    color: white;
+    box-shadow: 1px 1px 2px 0px #0000007a;
+    padding-top: 2px;
+}
+
+#index .leftMenu li {
+	text-align: center;
+	height: 80px;
+	border-color: black;
+	border-style: inset;
+	margin: 10px;
+	padding: 0;
+	border-width: 0.1px;
+	text-decoration: none;
+	background-color: #00bcd4;
+}
+#index .leftMenu a {
+    text-decoration: none;
+    color: white;
+    font-weight: 800;
+    font-size: 35px;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    padding-top: 10px;
+		z-index: 50;
 }
 .sidebar div {
     border-bottom-style: groove !important;
