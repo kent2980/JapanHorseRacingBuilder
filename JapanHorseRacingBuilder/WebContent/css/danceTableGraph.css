@@ -984,25 +984,57 @@ table {
 	width: 1250px;
 	margin: auto;
 }
-table#kako4sou td, th {
+table#kako4sou td {
     color: black;
 }
-table#raceShosai {
+table#kako4sou td.ninki div {
+    padding-top: 10px;
+}
+
+table#kako4sou td.ninki span.raceRank{
+    display: inline-block;
+    text-align: center;
+    width: 70%;
+    background-color: yellow;
+    font-weight: 800;
+    font-size: 12px;
+    color: #000;
+    border-style: solid;
+    border-width: 1px;
+}
+table#kako4sou td.ninki span.raceRank.shokyu{
+    background-color: red;
+		color: #fff;
+}
+table#kako4sou td.ninki span.raceRank.genkyu{
+    background-color: yellow;
+}
+table#kako4sou td.ninki span.raceRank.kokyu{
+    background-color: blue;
+		color: #fff;
+}
+table#kako4sou td.bamei span.ijoKubun {
+    text-decoration: line-through;
+    color: black;
+}
+
+#index table {
     width: 100%;
     border-radius: 6px;
     box-shadow: 3px 4px 2px 1px #625757a3;
+		border-style: hidden;
 }
-table#raceShosai th,td {
+#index table th,td {
     border-style: none;
     border-bottom-style: dashed;
     background-color: #dad5d5;
     background: none;
     color: #3d72c7;
 }
-table#raceShosai tr:hover {
+#index table tr:hover {
 	background-color: #90aac845;
 }
-table#raceShosai th.raceBango{
+#index table th.raceBango{
     height: 50px;
     font-weight: 800;
     width: 60px;
@@ -1011,7 +1043,7 @@ table#raceShosai th.raceBango{
     border-right-color: #4f76be73;
 		color: #fff;
 }
-table#raceShosai th.raceBango span {
+#index table th.raceBango span {
     width: 50px;
     height: 40px;
     background-color: #2ca0cb;
@@ -1020,47 +1052,48 @@ table#raceShosai th.raceBango span {
     border-radius: 5px;
     vertical-align: middle;
 }
-table#raceShosai td a {
+#index table td a {
     text-decoration: none;
     color: currentColor;
     font-weight: 600;
 }
-table#raceShosai td.kyosomei {
+#index table td.kyosomei {
     width: 180px;
     padding: 0;
     text-align: left;
 }
-table#raceShosai td.grade {
-    text-align: left;
+#index table td.grade {
+    text-align: center;
     width: 40px;
     padding: 0;
 }
-table#raceShosai td.jikoku {
-    width: 80px;
+#index table td.jikoku {
+    width: 60px;
     padding: 0;
     text-align: center;
+    padding-left: 12px;
 }
-table#raceShosai td.baba {
+#index table td.baba {
     width: 80px;
     padding: 0;
 }
-table#raceShosai td.kyori {
+#index table td.kyori {
     width: 90px;
     padding: 0;
 }
-table#raceShosai td.raceShosai {
+#index table td.raceShosai {
     text-align: left;
     padding-left: 40px;
 }
-table#raceShosai td.dance {
+#index table td.dance {
     padding: 0;
     width: 80px;
 }
-table#raceShosai td.record {
+#index table td.record {
     padding: 0;
     width: 80px;
 }
-table#raceShosai span.dance {		/** 出馬表リンクのデザイン  **/
+#index table span.dance {		/** 出馬表リンクのデザイン  **/
     width: 60px;
     background-color: #2ca0cb;
     color: white;
@@ -1068,7 +1101,7 @@ table#raceShosai span.dance {		/** 出馬表リンクのデザイン  **/
     border-radius: 4px;
     font-weight: 500;
 }
-table#raceShosai span.record {		/** レース結果リンクのデザイン **/
+#index table span.record {		/** レース結果リンクのデザイン **/
     width: 60px;
     background-color: #f55a58f7;
     color: white;
@@ -1076,7 +1109,7 @@ table#raceShosai span.record {		/** レース結果リンクのデザイン **/
     border-radius: 4px;
     font-weight: 500;
 }
-table#raceShosai span.noRecord {		/** 出走してないレース結果文字のデザイン  **/
+#index table span.noRecord {		/** 出走してないレース結果文字のデザイン  **/
     width: 60px;
     background-color: #8c91927d;
     color: white;

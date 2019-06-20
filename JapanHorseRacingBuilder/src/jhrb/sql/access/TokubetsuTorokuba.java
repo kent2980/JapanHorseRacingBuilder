@@ -10,6 +10,10 @@ import com.pckeiba.entity.JvdTokubetsuTorokubaMapper;
 import jhrb.datainterface.DataInterface;
 import jhrb.sql.session.PckeibaSession;
 
+/**
+ * @deprecated 非推奨のクラスです。[jhrb.sql.input.access.TokubetsuTorokuba]に置き換えられました。
+ * @author kent2
+ */
 public class TokubetsuTorokuba extends PckeibaSession<JvdTokubetsuTorokuba> implements DataInterface<JvdTokubetsuTorokuba>{
 
 	public TokubetsuTorokuba(String raceCode) {

@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import jhrb.sql.access.KaisaiSchedule;
+import jhrb.sql.input.access.KaisaiSchedule;
 import jhrb.sql.access.SelectYearRaceShosai;
-import jhrb.sql.access.TokubetsuTorokuba;
+import jhrb.sql.input.access.TokubetsuTorokuba;
 import jhrb.sql.session.PckeibaSqlSessionFactory;
 
 /**
@@ -54,7 +54,7 @@ public class IndexServlet extends HttpServlet {
 		/**
 		 * 変数の初期化を行います。
 		 */
-		torokuba = new TokubetsuTorokuba();		//特別登録馬テーブル
+		torokuba = new TokubetsuTorokuba(year);		//特別登録馬テーブル
 		schedule = new KaisaiSchedule(year);		//開催スケジュールテーブル（指定年）
 		selectRaceShosai = new SelectYearRaceShosai(year);		//レース詳細テーブルの一覧（指定年）
 

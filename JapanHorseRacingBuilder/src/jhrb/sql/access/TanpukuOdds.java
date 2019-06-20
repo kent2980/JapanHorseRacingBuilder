@@ -12,6 +12,11 @@ import jhrb.datainterface.DataInterface;
 import jhrb.sql.session.PckeibaSession;
 import jhrb.sql.session.PckeibaSqlSessionFactory;
 
+/**
+ *
+ * @author kent2
+ * @deprecated 非推奨のクラスです。jhrb.sql.input.access.TanpukuOddsに置き換えられました。
+ */
 public class TanpukuOdds extends PckeibaSession<JvdTanpukuOdds> implements DataInterface<JvdTanpukuOdds> {
 
 	public TanpukuOdds(String raceCode) {

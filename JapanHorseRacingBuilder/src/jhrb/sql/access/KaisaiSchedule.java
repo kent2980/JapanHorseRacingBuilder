@@ -115,6 +115,19 @@ public class KaisaiSchedule extends PckeibaInputSession<JvdKaisaiSchedule, Integ
 											.collect(Collectors.toList());
 		return list_;
 	}
+	/**
+	 * 引数の日付と一致する開催スケジュールから、競馬場コードのリストを返します。
+	 * @param date 開催日
+	 * @return 競馬場コードのリスト
+	 */
+	public List<String> getKeibajoCodeList(Date date) {
+		List<String> keibajoCode = list.stream()
+									   .filter(s -> s.getKaisaiNengappi().equals(date))
+									   .map(s -> s.getKeibajoCode())
+									   .distinct()
+									   .collect(Collectors.toList());
+		return keibajoCode;
+	}
 
 	public static void main(String[] args) {
 		KaisaiSchedule sc = new KaisaiSchedule(2018);

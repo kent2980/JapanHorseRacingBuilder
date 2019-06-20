@@ -28,12 +28,13 @@
     import="com.pckeiba.entity.JvdTanpukuOdds"
 
     import="jhrb.sql.access.RaceShosai"
-    import="jhrb.sql.access.UmagotoRaceJoho"
+    import="jhrb.sql.input.access.UmagotoRaceJoho"
     import="jhrb.sql.access.KakoUmagotoRaceJoho"
     import="jhrb.sql.access.KyosobaMaster"
-    import="jhrb.sql.access.TanpukuOdds"
+    import="jhrb.sql.input.access.TanpukuOdds"
     import="jhrb.sql.access.KishuMaster"
     import="jhrb.sql.convert.PckeibaConvert"
+    import="jhrb.pckeiba.util.KyosoJokenComparetor"
     import="jhrb.web.session.HtmlDownload"
 
     import="com.example.entity.UmaDataView"
@@ -66,6 +67,7 @@
 <link href="https://fonts.googleapis.com/earlyaccess/roundedmplus1c.css"
 	rel="stylesheet" />
 <link href="/JapanHorseRacingBuilder/css/danceTableGraph.css" rel="stylesheet">
+<link rel="stylesheet" href="/JapanHorseRacingBuilder/css/modaal.min.css">
 <link rel="shortcut icon" href="/JapanHorseRacingBuilder/icon/kyosoba_3.ico">
 <title>
 	<%LocalDate kaisai_Nengappi = raceData.getKaisaiNengappi().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
@@ -121,6 +123,8 @@
 			var browser = document.fm.s.value;
 			location.href = browser;
 		}
+
+		let bamei = new Array();
 	</script>
 <div class="contentArea">
 <div class="tableTitle">
@@ -175,14 +179,14 @@
 <!-- ********************************************************************************************************* -->
 
 		<%
-		//種別ごとに並び替えを行います
-		switch(shubetsu){
-		case "DANCE":
+			//種別ごとに並び替えを行います
+				switch(shubetsu){
+				case "DANCE":
 			horseData = horseData.stream()
 							   .sorted(Comparator.comparing(JvdUmagotoRaceJoho::getUmaban))
 							   .collect(Collectors.toList());
 			break;
-		}
+				}
 			for(JvdUmagotoRaceJoho data : horseData){
 
 				/*************************************************************************************/
@@ -198,23 +202,29 @@
 														   .filter(s -> s.getKishuCode().equals(data.getKishuCode()))
 														   .findFirst().get();
 			//現出馬表のローカル変数
+			JvdTanpukuOdds odds = null;
 			String wakuban;
 			String umaban = data.getUmaban();
 			String tanshoNinki;
 			String tanshoOdds;
+			int intTanshoOdds;
 			try{
-			JvdTanpukuOdds odds = oddsList.stream()
+			odds = oddsList.stream()
 										 .filter(s -> s.getUmaban().equals(umaban))
 										 .findFirst().get();
 			tanshoNinki = String.valueOf(odds.getTanshoNinkijun());
 			tanshoOdds = String.valueOf(odds.getTanshoOdds());
+			intTanshoOdds = odds.getTanshoNinkijun();
 			}catch(NoSuchElementException e){
 				e.getStackTrace();
 				tanshoNinki = "-";
 				tanshoOdds = "-";
+				intTanshoOdds = 0;
 			}
 			//馬名を９文字で生成します
 			String bamei = PckeibaConvert.NameConvert(data.getBamei(),9);
+			String kettoTorokuBango = data.getKettoTorokuBango();		//血統登録番号
+			String kyosoJoken = raceData.getKyosoJokenCodeSaijakunen();		//競争条件
 			//性齢を生成します
 			String seirei = CodeConvert.valueOf(SeibetsuCode.class, data.getSeibetsuCode()).getContentIsShort() + data.getBarei();
 			//父馬名を９文字で生成します
@@ -229,6 +239,33 @@
 			List<Double> srunAll = new ArrayList<>();
 			List<Double> tsumeashiAll = new ArrayList<>();
 			List<Double> kohan3fChakusaAll = new ArrayList<>();
+			//前走からの競走馬データ
+
+			String zensoKyosoJoken =null;
+			try{
+				zensoKyosoJoken  = kakoRace.getList(kettoTorokuBango).get(0).getKyosoJokenCodeSaijakunen();
+			}catch(IndexOutOfBoundsException e){
+				zensoKyosoJoken = "000";
+			}
+			//過去走からの競走馬データ
+			BigDecimal aveTanshoNinki = kakoRace.getAverageNinki(kettoTorokuBango);						//平均単勝人気<BigDecimal>を取得
+			String averageTanshoNinki = aveTanshoNinki == null ? "-" : aveTanshoNinki.toString();		//オブジェクトがNullの場合は、ハイフンを代入します。
+			BigDecimal aveChakujun = kakoRace.getAverageKakuteiChakujun(kettoTorokuBango);				//平均着順<BigDecimal>を取得
+			String averageChakujun = aveChakujun == null ? "-" : aveChakujun.toString();				//オブジェクトがNullの場合は、ハイフンを代入します。
+			int kyosoJokenCompare = new KyosoJokenComparetor().compare(kyosoJoken, zensoKyosoJoken);	//前走との競争条件比較（昇級・降級）チェック
+			//異常区分の条件分岐
+			String ijoKubunNow = "";	//発走取り消しの場合のHTMLクラス
+			Boolean shussoKahi = null;
+			String ijoKubunCode = data.getIjoKubunCode();
+			if(ijoKubunCode.equals("0") | ijoKubunCode.equals("4") | ijoKubunCode.equals("5") | ijoKubunCode.equals("6") | ijoKubunCode.equals("7")){
+				shussoKahi = true;
+			}else{
+				shussoKahi = false;
+			}
+			if (!shussoKahi | intTanshoOdds < 0) {
+				ijoKubunNow = "ijoKubun";
+			}
+
 		%>
 		<tr>
 
@@ -250,7 +287,7 @@
 			<td class="pc bamei">
 				<div class="bamei">
 					<a href="/JapanHorseRacingBuilder/UmagotoData?kettoBango=<%out.print(data.getKettoTorokuBango()); %>">
-						<span class="bamei"><% out.print(data.getUmaban() + "  " + bamei); %></span>
+						<span class="bamei <%=ijoKubunNow %>"><% out.print(data.getUmaban() + "  " + bamei); %></span>
 					</a>
 					<span class="seirei"><%out.print(seirei); %></span>
 				</div>
@@ -271,9 +308,38 @@
 				<span><%out.print(CodeConvert.valueOf(KishuMinaraiCode.class, data.getKishuMinaraiCode()).getContentKigo() + data.getFutanJuryo() + "kg"); %></span>
 			</td>
 			<td class="pc ninki">
-				<span><%=tanshoNinki%>人気</span>
-				<br>
-				<span>(<%=tanshoOdds%>)</span>
+			<%if(shussoKahi & intTanshoOdds >= 0){ %>
+				<div>
+					<span><%=tanshoNinki%>人気</span>
+					<br>
+					<span>(<%=tanshoOdds%>)</span>
+					<p>
+					<span>平均</span>
+					<br>
+					<span><%=averageTanshoNinki %>人気</span>
+					<br>
+					<span><%=averageChakujun %>着</span>
+					<p>
+					<%String raceRank = null;
+					String rankClass = null;
+					switch(kyosoJokenCompare){
+					case 0:
+						raceRank = "現級";
+						rankClass = "genkyu";
+						break;
+					case 1:
+						raceRank = "昇級";
+						rankClass = "shokyu";
+						break;
+					case -1:
+						raceRank = "降級";
+						rankClass = "kokyu";
+					}%>
+					<span class="raceRank <%= rankClass %>"><%=raceRank %></span>
+				</div>
+			<%}else{ %>
+				<span class="chaRed bold">出<br>走<br>取<br>消</span>
+			<%} %>
 			</td>
 
 		<!-- モバイル表示用のHTML -->
@@ -558,8 +624,23 @@
 				<div class="content"><span><% out.print(TsumeashiAve); %></span></div>
 				<div class="senko"><span>行脚</span></div>
 				<div class="content"><span><% out.print(Kohan3fchakusaAve); %></span></div>
+
+			<%-- ******* <javascriptにサーブレットから値を渡します> ************************************************************ --%>
+				<script>
+
+				let <%=data.getBamei() %> = ["<%=drun %>", "<%=TsumeashiAve %>", "<%=Kohan3fchakusaAve %>"];
+				bamei.push("<%=data.getBamei() %>");
+				console.log(bamei);
+				console.log(<%=data.getBamei() %>);
+
+				</script>
+			<%-- ******* <javascriptここまで> *************************************************************************** --%>
+
 			</td>
+
 	</tr>
+
+
 	<%
 	}
 	%>
@@ -620,15 +701,26 @@
 			<ul>
 				<li>本日のレース</li>
 				<li>特別登録</li>
+				<li><a href="#modal" class="modal">グラフチャート</a></li>
 			</ul>
 	</section>
 </aside>
 
 </div>
 
+<div id="modal" style="display:none;">
+	<p>これはサンプルです。</p>
+</div>
+
+
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script type="text/javascript" src="/JapanHorseRacingBuilder/js/pop.js"></script>
+<script type="text/javascript" src="/JapanHorseRacingBuilder/js/modaal.min.js"></script>
+
+<script type="text/javascript">
+	$('.modal').modaal();
+</script>
 </body>
 
 </html>

@@ -71,6 +71,15 @@ public class RaceShosai extends PckeibaSession<JvdRaceShosai> implements DataInt
 				   .findFirst().get();
 	}
 
+	/**
+	 * JvdRaceShosaiからDataKubunを返します。
+	 * @return データ区分
+	 */
+	public String getDataKubun() {
+		String dataKubun = this.getRaceShosai().getDataKubun();
+		return dataKubun;
+	}
+
 	public void setRaceCode(String raceCode) {
 		this.raceCode = raceCode;
 		String dateCode = raceCode.substring(0, 8);

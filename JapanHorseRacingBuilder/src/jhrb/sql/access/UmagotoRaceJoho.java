@@ -12,6 +12,11 @@ import jhrb.datainterface.DataInterface;
 import jhrb.pckeiba.list.KishuCodeList;
 import jhrb.sql.session.PckeibaSession;
 
+/**
+ *
+ * @author kent2
+ * @deprecated 非推奨のクラスです。
+ */
 public class UmagotoRaceJoho extends PckeibaSession<JvdUmagotoRaceJoho> implements Serializable,DataInterface<JvdUmagotoRaceJoho>{
 	/**
 	 *
@@ -106,4 +111,7 @@ public class UmagotoRaceJoho extends PckeibaSession<JvdUmagotoRaceJoho> implemen
 		addDataResouce();
 	}
 
+	public static void main(String[] args) {
+		UmagotoRaceJoho ra = new UmagotoRaceJoho("");
+	}
 }

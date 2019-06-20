@@ -17,8 +17,8 @@
 	import="com.pckeiba.entity.JvdKaisaiSchedule"
 
 	import="jhrb.sql.access.RaceShosai"
-	import="jhrb.sql.access.TokubetsuTorokuba"
-	import="jhrb.sql.access.KaisaiSchedule"
+	import="jhrb.sql.input.access.TokubetsuTorokuba"
+	import="jhrb.sql.input.access.KaisaiSchedule"
 	import="jhrb.sql.access.SelectYearRaceShosai"
 	import="jhrb.sql.convert.PckeibaConvert"
 
@@ -87,7 +87,6 @@
 </header>
 <main role="main">
 		<!-- コンテンツ -->
-		<span>aaaacvevcdsv</span>
 </main>
 <!-- ******* ドロワーメニューここまで ******* -->
 
@@ -117,7 +116,7 @@
   		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd(E)");	//Formatterを作製
   		String kaisaiDate_ = kaisaiDate.format(dtf);	//整形文字列を生成します
   		boolean raceShosaiFrag = true;
-  		List<String> keibajoCodeList = selectRaceShosai.getKeibajoCodeList(kaisaiList.get(i));
+  		List<String> keibajoCodeList = schedule.getKeibajoCodeList(kaisaiList.get(i));
   		List<JvdRaceShosai> kaisaiRaceList = null;
   		try{
   			kaisaiRaceList = selectRaceShosai.getRaceShosai(kaisaiList.get(i));
@@ -127,8 +126,14 @@
   	%>
     	<div data-time="<%=kaisaiDate_ %>">
     	<!-- ここに出馬表を記述してください。 -->
+
     		<%if(raceShosaiFrag == true){
-    			for(int u = 0; u < keibajoCodeList.size(); u++){%>
+
+    		/*********************************************************************************************************************************************
+        	******** レース詳細データがある場合は、出馬表を表示します。 *************************************************************************************************
+        	************************************************************************************************************************************************/
+
+        		for(int u = 0; u < keibajoCodeList.size(); u++){%>
     		<h1><span><%=CodeConvert.valueOf(KeibajoCode.class, keibajoCodeList.get(u)).getContent() %></span></h1>	<!-- 競馬場コードを変換 -->
     		<table id="raceShosai">
     			<%
@@ -163,7 +168,7 @@
     			<td class="kyori"><%=raceData.getKyori() %>m</td>				<!-- 距離 -->
     			<td class="raceShosai"><%=raceShosai %></td>					<!-- レース詳細 -->
     			<td class="dance">												<!-- 出馬表 -->
-    				<a href="racedata?racecode=<%=raceData.getRaceCode() %>&shubetsu=DANCE">
+    				<a href="racedata?racecode=<%=raceData.getRaceCode() %>&shubetsu=DANCE" target="_brank">
     				<span class="dance">出馬表</span>
     				</a>
     			</td>
@@ -172,7 +177,7 @@
     				if(dataKubun > 0 & dataKubun < 3){ %>
 					<span class="noRecord">結果</span>
 					<%}else if(dataKubun > 2 & dataKubun < 8){ %>
-    				<a href="racedata?racecode=<%=raceData.getRaceCode() %>&shubetsu=RA">
+    				<a href="racedata?racecode=<%=raceData.getRaceCode() %>&shubetsu=RA" target="_brank">
 					<span class="record">結果</span>
 					</a>
 					<%}else if(dataKubun == 9){ %>
@@ -187,6 +192,78 @@
        		</table>
 			<%
     			}
+			}else{
+
+			/*********************************************************************************************************************************************
+	    	********* レース詳細データがない場合は、開催予定重賞を表示します。 *************************************************************************************************
+	    	************************************************************************************************************************************************/
+	    		for(int u = 0; u < keibajoCodeList.size(); u++){%>
+
+		    		<h1><span><%=CodeConvert.valueOf(KeibajoCode.class, keibajoCodeList.get(u)).getContent() %></span></h1>	<!-- 競馬場コードを変換 -->
+		    		<table>
+					<%
+					JvdKaisaiSchedule scheduleDate = schedule.getKaisaiSchedule(kaisaiList.get(i), keibajoCodeList.get(u));							//開催スケジュール<日付、競馬場コード>
+					try{
+					List<JvdTokubetsuTorokuba> tokubetsuToroku = torokuba.getJvdTokubetsuTorokuba(kaisaiList.get(i), keibajoCodeList.get(u));		//特別登録馬のリスト%>
+
+					<%for(JvdTokubetsuTorokuba raceData: tokubetsuToroku){
+
+		    			String kyosomei = PckeibaConvert.KyosomeiConvert(raceData.getKyosomeiHondai(), raceData.getKyosoShubetsuCode(), raceData.getKyosoJokenCodeSaijakunen());
+						String baba = CodeConvert.valueOf(TrackCode.class, raceData.getTrackCode()).getBaba();String kyosoJoken = CodeConvert.valueOf(KyosoJokenCode.class, raceData.getKyosoJokenCodeSaijakunen()).getContent().replace("以下", "下");		//競争条件
+		    			String kyosoShubetsu = CodeConvert.valueOf(KyosoShubetsuCode.class, raceData.getKyosoShubetsuCode()).getContent();		//競争種別
+		    			String juryoShubetsu = CodeConvert.valueOf(JuryoShubetsuCode.class, raceData.getJuryoShubetsuCode()).getContent();		//重量種別
+		    			String kyosoKigo = CodeConvert.valueOf(KyosoKigoCode.class, raceData.getKyosoKigoCode()).getContent();					//競争記号
+		    			String raceShosai = juryoShubetsu + "・" + kyosoShubetsu + kyosoJoken + kyosoKigo + " " + raceData.getTorokuTosu() + "頭";	//レース詳細
+		    			String raceGrade = CodeConvert.valueOf(GradeCode.class, raceData.getGradeCode()).getContent();	//レースグレード
+					%>
+						<tr>
+			   				<th class="raceBango"><span><%=raceData.getRaceBango() %>R</span></th>	<!-- レース番号セル -->
+			    			<td class="grade"><%if(!raceData.getGradeCode().equals("D") & !raceData.getGradeCode().equals("E")){ %><%=raceGrade %><%} %></td>		<!-- レースグレード -->
+			    			<td class="kyosomei">	<!-- 競争名セル -->
+			    				<a href="racedata?racecode=<%=raceData.getRaceCode() %>&shubetsu=TK">	<!-- レース出馬表ページのリンク -->
+			    					<%=kyosomei %>		<!-- 競争名 -->
+			    				</a>
+			    			</td>
+			    			<td class="baba"><%=baba %></td>								<!-- 馬場 -->
+			    			<td class="kyori"><%=raceData.getKyori() %>m</td>				<!-- 距離 -->
+			    			<td class="raceShosai"><%=raceShosai %></td>					<!-- レース詳細 -->
+						</tr>
+	    		<%} %>
+				<%}catch(NullPointerException e){
+
+					/******************************************************************************************************************************
+					******** ここから特別登録のない開催スケジュール******************************************************************************************
+					*******************************************************************************************************************************/
+					if(!scheduleDate.getJusho1TokubetsuKyosoBango().equals("0000")){
+
+	    			String kyosomei = scheduleDate.getJusho1KyosomeiHondai();
+					String baba = CodeConvert.valueOf(TrackCode.class, scheduleDate.getJusho1TrackCode()).getBaba();
+					String kyosoShubetsu = CodeConvert.valueOf(KyosoShubetsuCode.class, scheduleDate.getJusho1KyosoShubetsuCode()).getContent();		//競争種別
+	    			String juryoShubetsu = CodeConvert.valueOf(JuryoShubetsuCode.class, scheduleDate.getJusho1JuryoShubetsuCode()).getContent();		//重量種別
+	    			String kyosoKigo = CodeConvert.valueOf(KyosoKigoCode.class, scheduleDate.getJusho1KyosoKigoCode()).getContent();					//競争記号
+	    			String raceShosai = juryoShubetsu + "・" + kyosoShubetsu + kyosoKigo;	//レース詳細
+	    			String raceGrade = CodeConvert.valueOf(GradeCode.class, scheduleDate.getJusho1GradeCode()).getContent();	//レースグレード
+				%>
+						<tr>
+			   				<th class="raceBango"><span>11R</span></th>	<!-- レース番号セル -->
+			    			<td class="grade"><%if(!scheduleDate.getJusho1GradeCode().equals("D") & !scheduleDate.getJusho1GradeCode().equals("E")){ %><%=raceGrade %><%} %></td>		<!-- レースグレード -->
+			    			<td class="kyosomei">	<!-- 競争名セル -->
+			    					<%=kyosomei %>		<!-- 競争名 -->
+			    			</td>
+			    			<td class="baba"><%=baba %></td>								<!-- 馬場 -->
+			    			<td class="kyori"><%=scheduleDate.getJusho1Kyori() %>m</td>				<!-- 距離 -->
+			    			<td class="raceShosai"><%=raceShosai %></td>					<!-- レース詳細 -->
+						</tr>
+				<%	}else{%>
+
+						<tr>
+							<td>重賞レースの開催は予定されておりません</td>
+						</tr>
+
+				<%}
+				}%>
+					</table>
+				<%}
 			}
 			%>
 		<!-- 出馬表はここまで！ -->

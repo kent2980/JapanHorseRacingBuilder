@@ -14,10 +14,10 @@ import jhrb.sql.access.KakoUmagotoRaceJoho;
 import jhrb.sql.access.KishuMaster;
 import jhrb.sql.access.KyosobaMaster;
 import jhrb.sql.access.RaceShosai;
-import jhrb.sql.access.TanpukuOdds;
+import jhrb.sql.input.access.TanpukuOdds;
 import jhrb.sql.access.TokubetsuTorokuba;
 import jhrb.sql.access.TorokubagotoJoho;
-import jhrb.sql.access.UmagotoRaceJoho;
+import jhrb.sql.input.access.UmagotoRaceJoho;
 import jhrb.sql.session.PckeibaSqlSessionFactory;
 import jhrb.sql.session.PckeibalinkSqlSessionFactory;
 
@@ -67,7 +67,8 @@ public class RaceDataServlet extends HttpServlet {
 			odds = new TanpukuOdds(raceCode);
 			raceShosai = new RaceShosai(raceCode);
 			horseData = new UmagotoRaceJoho(raceCode);
-			KishuMaster kishuMaster = new KishuMaster(horseData.getKishuList());
+			horseData.setDataKubun(raceShosai.getDataKubun());
+			KishuMaster kishuMaster = new KishuMaster(horseData.getKishuCodeList());
 			request.setAttribute("kishuMaster", kishuMaster);
 			request.setAttribute("raceShosai", raceShosai);
 			request.setAttribute("umagoto", horseData);
